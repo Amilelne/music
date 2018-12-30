@@ -5,11 +5,14 @@ scalar URL
 
 type Query {
   appName: String!
-
-  users: [User]! # get all
+  # get all users
+  users: [User]!
+  # login with identifier and credential
+  login(identifier: String!, credential: String!): User!
 }
 type Mutation {
   addUser(data: CreateUserInput!): User!
+  register(data: RegisterInput!): User!
 }
 type User {
   id: ID!
@@ -32,4 +35,11 @@ input CreateUserInput {
   level: Int
   introduction: String
   avatar: URL
+}
+
+# new user register with name, identifier and credential
+input RegisterInput {
+  name: String!
+  identifier: String!
+  credential: String!
 }
