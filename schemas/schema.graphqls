@@ -1,0 +1,35 @@
+# custom scalar type
+scalar DateTime
+# custom url link
+scalar URL
+
+type Query {
+  appName: String!
+
+  users: [User]! # get all
+}
+type Mutation {
+  addUser(data: CreateUserInput!): User!
+}
+type User {
+  id: ID!
+  name: String!
+  role: Int!
+  level: Int!
+  introduction: String
+  avatar: URL
+
+  # timestamp
+  createDate: DateTime!
+  updateDate: DateTime!
+}
+
+# input types
+# user
+input CreateUserInput {
+  name: String!
+  role: Int
+  level: Int
+  introduction: String
+  avatar: URL
+}
