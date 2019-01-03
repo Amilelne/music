@@ -1,5 +1,18 @@
-<div>
-  <h1> Welcome to {{ title }}! </h1>
-</div>
-
-<router-outlet></router-outlet>
+<nz-layout>
+  <nz-header>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'">
+      <li nz-menu-item routerLink="/" routerLinkActive="active">首页</li>
+      <li nz-menu-item routerLink="/courses" routerLinkActive="active">课程</li>
+      <li nz-menu-item routerLink="/practices" routerLinkActive="active"
+        >练习</li
+      >
+      <li nz-menu-item routerLink="/experts" routerLinkActive="active">专家</li>
+      <li nz-menu-item routerLink="/admin" routerLinkActive="active">管理</li>
+      <li nz-menu-item routerLink="/login" routerLinkActive="active">登录</li>
+      <li nz-menu-item routerLink="/register" routerLinkActive="active"
+        >注册</li
+      >
+    </ul>
+  </nz-header>
+  <nz-content> <router-outlet></router-outlet> </nz-content>
+</nz-layout>
