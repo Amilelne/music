@@ -4,11 +4,6 @@ const resolverMap = {
   Query: {
     users: async (obj, args, context, info) => {
       return User.find();
-    },
-    login: async (obj, { identifier, credential }, context, info) => {
-      return UserAuth.findOne({ identifier, credential }).then((user) => {
-        return User.findById(user.userId);
-      });
     }
   },
   Mutation: {
@@ -23,6 +18,14 @@ const resolverMap = {
           credential: data.credential
         });
         return user;
+      });
+    },
+    login: async (obj, { data }, context, info) => {
+      return UserAuth.findOne({
+        identifier: data.identifier,
+        credential: data.credential
+      }).then((user) => {
+        return User.findById(user.userId);
       });
     }
   }

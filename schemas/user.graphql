@@ -7,12 +7,11 @@ type Query {
   appName: String!
   # get all users
   users: [User]!
-  # login with identifier and credential
-  login(identifier: String!, credential: String!): User!
 }
 type Mutation {
   addUser(data: CreateUserInput!): User!
   register(data: RegisterInput!): User!
+  login(data: LoginInput!): User!
 }
 type User {
   id: ID!
@@ -40,6 +39,12 @@ input CreateUserInput {
 # new user register with name, identifier and credential
 input RegisterInput {
   name: String!
+  identifier: String!
+  credential: String!
+}
+
+# login with identifier and credential
+input LoginInput {
   identifier: String!
   credential: String!
 }

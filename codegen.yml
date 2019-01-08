@@ -1,0 +1,9 @@
+overwrite: true
+schema: ./schemas/*.graphql
+documents: ./src/app/core/auth/*.graphql
+generates:
+  ./src/gql.ts:
+    plugins:
+      - 'typescript-common'
+      - 'typescript-client'
+      - 'typescript-apollo-angular'

@@ -1,0 +1,10 @@
+mutation AuthLogin($data: LoginInput!) {
+  login(data: $data) {
+    name
+  }
+}
+mutation AuthRegister($data: RegisterInput!) {
+  register(data: $data) {
+    name
+  }
+}

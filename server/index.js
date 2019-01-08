@@ -5,7 +5,7 @@ const { join } = require('path');
 const { resolvers } = require('./resolvers');
 
 const schemaDir = join(process.cwd(), 'schemas');
-const typeDefs = readFileSync(join(schemaDir, 'schema.graphqls'), 'utf-8');
+const typeDefs = readFileSync(join(schemaDir, 'user.graphql'), 'utf-8');
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
