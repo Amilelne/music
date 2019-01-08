@@ -4,7 +4,7 @@ import {
   LoginInput,
   RegisterInput,
   AuthRegisterGQL
-} from '../../../gql';
+} from '@app/gql';
 
 @Injectable({
   providedIn: 'root'
