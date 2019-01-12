@@ -64,6 +64,8 @@ export class AuthService {
 
   // login
   login(loginInput: LoginInput) {
+    // if there is a token, remove it
+    AuthService.removeToken();
     return this.loginGQL
       .mutate(
         { data: loginInput },
@@ -79,6 +81,8 @@ export class AuthService {
   }
   // register
   register(registerInput: RegisterInput) {
+    // if there is a token, remove it
+    AuthService.removeToken();
     return this.registerGQL
       .mutate(
         { data: registerInput },
