@@ -1,8 +1,6 @@
 const { User, UserAuth } = require('../models');
-const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { conf } = require('../config');
-const { ForbiddenError, AuthenticationError } = require('apollo-server');
+const JWT = require('../utils/jwt.service');
 const RoleGuard = require('../utils/role.guard');
 
 const resolverMap = {
@@ -26,16 +24,9 @@ const resolverMap = {
         identifier: data.identifier,
         credential: await bcrypt.hash(data.credential, 10)
       });
-      // return jwt
-      return jsonwebtoken.sign(
-        {
-          id: user._id,
-          role: user.role,
-          level: user.level
-        },
-        conf('security.jwt_secret'),
-        { expiresIn: '2h' }
-      );
+      // return token
+      const token = JWT.generateToken(user);
+      return { token, user };
     },
     login: async (obj, { data }, context, info) => {
       // find userAuth by credentitial in UserAuth
@@ -43,25 +34,18 @@ const resolverMap = {
         identifier: data.identifier
       });
       if (!userAuth) {
-        throw new Error('Invalid username or password');
+        throw new Error('邮箱或密码有误');
       }
       // check the password
       const valid = await bcrypt.compare(data.credential, userAuth.credential);
       if (!valid) {
-        throw new Error('Invalid username or password');
+        throw new Error('邮箱或密码有误');
       }
       // find user by userId in User
       const user = await User.findById(userAuth.userId);
-      // return jwt
-      return jsonwebtoken.sign(
-        {
-          id: user._id,
-          role: user.role,
-          level: user.level
-        },
-        conf('security.jwt_secret'),
-        { expiresIn: '2h' }
-      );
+      // return token
+      const token = JWT.generateToken(user);
+      return { token, user };
     }
   }
 };

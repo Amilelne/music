@@ -15,7 +15,8 @@ const schema = new Schema(
     },
     identifier: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     credential: {
       type: String,

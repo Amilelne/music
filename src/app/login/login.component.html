@@ -4,22 +4,29 @@
   class="login-form"
   (ngSubmit)="submitForm()"
 >
+  <nz-alert
+    *ngIf="errorState"
+    nzType="error"
+    nzCloseable
+    [nzDescription]="errorMessage"
+  >
+  </nz-alert>
   <nz-form-item>
     <nz-form-control>
       <nz-input-group [nzPrefix]="prefixUser">
         <input
           type="text"
           nz-input
-          formControlName="userName"
-          placeholder="Username"
+          id="email"
+          formControlName="email"
+          placeholder="邮箱"
         />
       </nz-input-group>
       <nz-form-explain
         *ngIf="
-          validateForm.get('userName').dirty &&
-          validateForm.get('userName').errors
+          validateForm.get('email').dirty && validateForm.get('email').errors
         "
-        >Please input your username!</nz-form-explain
+        >请输入邮箱地址</nz-form-explain
       >
     </nz-form-control>
   </nz-form-item>
@@ -30,7 +37,7 @@
           type="password"
           nz-input
           formControlName="password"
-          placeholder="Password"
+          placeholder="密码"
         />
       </nz-input-group>
       <nz-form-explain
@@ -38,20 +45,20 @@
           validateForm.get('password').dirty &&
           validateForm.get('password').errors
         "
-        >Please input your Password!</nz-form-explain
+        >请输入密码</nz-form-explain
       >
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-control>
       <label nz-checkbox formControlName="remember">
-        <span>Remember me</span>
+        <span>记住密码</span>
       </label>
-      <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+      <a class="login-form-forgot" class="login-form-forgot">忘记密码了?</a>
       <button nz-button class="login-form-button" [nzType]="'primary'"
-        >Log in</button
+        >登录</button
       >
-      Or <a href="">register now!</a>
+      或 <a href="">立即注册</a>
     </nz-form-control>
   </nz-form-item>
 </form>

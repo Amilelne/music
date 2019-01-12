@@ -11,8 +11,8 @@ type Query {
 }
 type Mutation {
   addUser(data: CreateUserInput!): User!
-  register(data: RegisterInput!): String!
-  login(data: LoginInput!): String!
+  register(data: RegisterInput!): AuthPayload!
+  login(data: LoginInput!): AuthPayload!
 }
 type User {
   id: ID!
@@ -27,6 +27,11 @@ type User {
   updateDate: DateTime
 }
 
+# payload
+type AuthPayload {
+  token: String!
+  user: User!
+}
 # input types
 # user
 input CreateUserInput {

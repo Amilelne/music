@@ -4,7 +4,7 @@ export type Maybe<T> = T | null;
 export interface CreateUserInput {
   name: string;
 
-  role?: Maybe<number>;
+  role?: Maybe<string>;
 
   level?: Maybe<number>;
 
@@ -45,8 +45,18 @@ export namespace AuthLogin {
   export type Mutation = {
     __typename?: "Mutation";
 
-    login: string;
+    login: Login;
   };
+
+  export type Login = {
+    __typename?: "AuthPayload";
+
+    token: string;
+
+    user: User;
+  };
+
+  export type User = AuthFields.Fragment;
 }
 
 export namespace AuthRegister {
@@ -57,8 +67,18 @@ export namespace AuthRegister {
   export type Mutation = {
     __typename?: "Mutation";
 
-    register: string;
+    register: Register;
   };
+
+  export type Register = {
+    __typename?: "AuthPayload";
+
+    token: string;
+
+    user: User;
+  };
+
+  export type User = AuthFields.Fragment;
 }
 
 export namespace AuthCurrentUser {
@@ -70,14 +90,18 @@ export namespace AuthCurrentUser {
     me: Me;
   };
 
-  export type Me = {
+  export type Me = AuthFields.Fragment;
+}
+
+export namespace AuthFields {
+  export type Fragment = {
     __typename?: "User";
 
     id: string;
 
     name: string;
 
-    role: number;
+    role: string;
 
     level: number;
   };
@@ -104,7 +128,7 @@ export interface User {
 
   name: string;
 
-  role: number;
+  role: string;
 
   level: number;
 
@@ -120,9 +144,16 @@ export interface User {
 export interface Mutation {
   addUser: User;
 
-  register: string;
+  register: AuthPayload;
 
-  login: string;
+  login: AuthPayload;
+}
+
+/** payload */
+export interface AuthPayload {
+  token: string;
+
+  user: User;
 }
 
 // ====================================================
@@ -149,6 +180,19 @@ import * as Apollo from "apollo-angular";
 import gql from "graphql-tag";
 
 // ====================================================
+// GraphQL Fragments
+// ====================================================
+
+export const AuthFieldsFragment = gql`
+  fragment authFields on User {
+    id
+    name
+    role
+    level
+  }
+`;
+
+// ====================================================
 // Apollo Services
 // ====================================================
 
@@ -161,8 +205,15 @@ export class AuthLoginGQL extends Apollo.Mutation<
 > {
   document: any = gql`
     mutation AuthLogin($data: LoginInput!) {
-      login(data: $data)
+      login(data: $data) {
+        token
+        user {
+          ...authFields
+        }
+      }
     }
+
+    ${AuthFieldsFragment}
   `;
 }
 @Injectable({
@@ -174,8 +225,15 @@ export class AuthRegisterGQL extends Apollo.Mutation<
 > {
   document: any = gql`
     mutation AuthRegister($data: RegisterInput!) {
-      register(data: $data)
+      register(data: $data) {
+        token
+        user {
+          ...authFields
+        }
+      }
     }
+
+    ${AuthFieldsFragment}
   `;
 }
 @Injectable({
@@ -188,12 +246,11 @@ export class AuthCurrentUserGQL extends Apollo.Query<
   document: any = gql`
     query AuthCurrentUser {
       me {
-        id
-        name
-        role
-        level
+        ...authFields
       }
     }
+
+    ${AuthFieldsFragment}
   `;
 }
 

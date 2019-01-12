@@ -17,4 +17,16 @@ JWT.getUser = function(token) {
   return user;
 };
 
+JWT.generateToken = function(user) {
+  return jsonwebtoken.sign(
+    {
+      id: user._id,
+      role: user.role,
+      level: user.level
+    },
+    conf('security.jwt_secret'),
+    { expiresIn: '10h' }
+  );
+};
+
 module.exports = JWT;

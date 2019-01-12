@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   private setUser(user: User) {
-    // this._user = user;
+    this._user = user;
     this.isLoggedIn$.next(!!user);
   }
 
@@ -72,10 +72,15 @@ export class AuthService {
         { errorPolicy: 'all', fetchPolicy: 'no-cache' }
       )
       .pipe(
-        tap(({ data: { login } }) => {
-          AuthService.storeToken(login);
+        mergeMap(({ data, errors }) => {
+          if (errors) { return throwError(errors); }
+          else { return of(data); }
+        }),
+        tap(({ data: { login: { token, user } } }) => {
+          console.log(user);
+          AuthService.storeToken(token);
           this.isLoggedIn$.next(true);
-          // this.setUser(user);
+          this.setUser(user);
         })
       );
   }
@@ -89,9 +94,16 @@ export class AuthService {
         { errorPolicy: 'all', fetchPolicy: 'no-cache' }
       )
       .pipe(
-        tap(({ data: { register } }) => {
-          AuthService.storeToken(register);
-          // this.setUser(user);
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        }),
+        tap(({ data: { register: { token, user } } }) => {
+          AuthService.storeToken(token);
+          this.setUser(user);
         })
       );
   }
