@@ -13,11 +13,12 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { GraphQLModule } from './graphql.module';
 import { RegisterComponent } from './register/register.component';
+import { CourseComponent } from './course/course.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, Get404Component, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, Get404Component, RegisterComponent, CourseComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

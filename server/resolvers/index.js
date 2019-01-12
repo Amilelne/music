@@ -7,7 +7,8 @@ const resolverMap = {
   URL,
   Query: {
     appName: async (obj, args, context, info) => {
-      return 'This is music-ai ';
+      if (!context.user) return 'No user';
+      return context.user;
     }
   }
 };

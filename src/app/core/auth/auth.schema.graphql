@@ -1,10 +1,15 @@
 mutation AuthLogin($data: LoginInput!) {
-  login(data: $data) {
-    name
-  }
+  login(data: $data)
 }
 mutation AuthRegister($data: RegisterInput!) {
-  register(data: $data) {
+  register(data: $data)
+}
+
+query AuthCurrentUser {
+  me {
+    id
     name
+    role
+    level
   }
 }

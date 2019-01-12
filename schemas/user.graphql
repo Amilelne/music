@@ -5,32 +5,33 @@ scalar URL
 
 type Query {
   appName: String!
+  me: User!
   # get all users
   users: [User]!
 }
 type Mutation {
   addUser(data: CreateUserInput!): User!
-  register(data: RegisterInput!): User!
-  login(data: LoginInput!): User!
+  register(data: RegisterInput!): String!
+  login(data: LoginInput!): String!
 }
 type User {
   id: ID!
   name: String!
-  role: Int!
+  role: String!
   level: Int!
   introduction: String
   avatar: URL
 
   # timestamp
-  createDate: DateTime!
-  updateDate: DateTime!
+  createDate: DateTime
+  updateDate: DateTime
 }
 
 # input types
 # user
 input CreateUserInput {
   name: String!
-  role: Int
+  role: String
   level: Int
   introduction: String
   avatar: URL

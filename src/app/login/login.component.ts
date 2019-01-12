@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       .login({ identifier, credential })
       .subscribe(
         () => this.router.navigate(['/admin']),
-        errors => console.log(errors)
+        errors => console.log('Subscribe in login :' + errors)
       );
   }
 

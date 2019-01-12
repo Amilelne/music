@@ -45,13 +45,7 @@ export namespace AuthLogin {
   export type Mutation = {
     __typename?: "Mutation";
 
-    login: Login;
-  };
-
-  export type Login = {
-    __typename?: "User";
-
-    name: string;
+    login: string;
   };
 }
 
@@ -63,14 +57,86 @@ export namespace AuthRegister {
   export type Mutation = {
     __typename?: "Mutation";
 
-    register: Register;
+    register: string;
+  };
+}
+
+export namespace AuthCurrentUser {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    me: Me;
   };
 
-  export type Register = {
+  export type Me = {
     __typename?: "User";
 
+    id: string;
+
     name: string;
+
+    role: number;
+
+    level: number;
   };
+}
+
+// ====================================================
+// Scalars
+// ====================================================
+
+// ====================================================
+// Types
+// ====================================================
+
+export interface Query {
+  appName: string;
+
+  me: User;
+  /** get all users */
+  users: (Maybe<User>)[];
+}
+
+export interface User {
+  id: string;
+
+  name: string;
+
+  role: number;
+
+  level: number;
+
+  introduction?: Maybe<string>;
+
+  avatar?: Maybe<Url>;
+  /** timestamp */
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+}
+
+export interface Mutation {
+  addUser: User;
+
+  register: string;
+
+  login: string;
+}
+
+// ====================================================
+// Arguments
+// ====================================================
+
+export interface AddUserMutationArgs {
+  data: CreateUserInput;
+}
+export interface RegisterMutationArgs {
+  data: RegisterInput;
+}
+export interface LoginMutationArgs {
+  data: LoginInput;
 }
 
 // ====================================================
@@ -95,9 +161,7 @@ export class AuthLoginGQL extends Apollo.Mutation<
 > {
   document: any = gql`
     mutation AuthLogin($data: LoginInput!) {
-      login(data: $data) {
-        name
-      }
+      login(data: $data)
     }
   `;
 }
@@ -110,8 +174,24 @@ export class AuthRegisterGQL extends Apollo.Mutation<
 > {
   document: any = gql`
     mutation AuthRegister($data: RegisterInput!) {
-      register(data: $data) {
+      register(data: $data)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AuthCurrentUserGQL extends Apollo.Query<
+  AuthCurrentUser.Query,
+  AuthCurrentUser.Variables
+> {
+  document: any = gql`
+    query AuthCurrentUser {
+      me {
+        id
         name
+        role
+        level
       }
     }
   `;

@@ -3,23 +3,99 @@ import {
   AuthLoginGQL,
   LoginInput,
   RegisterInput,
-  AuthRegisterGQL
+  AuthRegisterGQL,
+  User,
+  AuthCurrentUserGQL
 } from '@app/gql';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { mergeMap, tap, mapTo } from 'rxjs/operators';
+import { of } from 'zen-observable';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  public static AUTH_TOKEN_LOCAL_STORAGE_KEY = 'authToken';
+  isLoggedIn$ = new BehaviorSubject<boolean>(null);
+
+  private _user: User;
+
   constructor(
     private loginGQL: AuthLoginGQL,
-    private registerGQL: AuthRegisterGQL
-  ) {}
-
-  login(loginInput: LoginInput) {
-    return this.loginGQL.mutate({ data: loginInput });
+    private registerGQL: AuthRegisterGQL,
+    private currentUserGQL: AuthCurrentUserGQL,
+    private router: Router
+  ) {
+    // if (AuthService.getToken()) {
+    //   this.currentUserGQL.fetch().subscribe(
+    //     ({ data: { me } }) => this.setUser(me),
+    //     () => {
+    //       AuthService.removeToken();
+    //       this.isLoggedIn$.next(false);
+    //     }
+    //   );
+    // } else {
+    //   this.isLoggedIn$.next(false);
+    // }
+    this.isLoggedIn$.next(false);
   }
 
+  static storeToken(token: string) {
+    localStorage.setItem(this.AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
+  }
+
+  static getToken() {
+    return localStorage.getItem(this.AUTH_TOKEN_LOCAL_STORAGE_KEY);
+  }
+
+  static removeToken() {
+    return localStorage.removeItem(this.AUTH_TOKEN_LOCAL_STORAGE_KEY);
+  }
+
+  private getUser(): User {
+    return this._user;
+  }
+
+  private setUser(user: User) {
+    // this._user = user;
+    this.isLoggedIn$.next(!!user);
+  }
+
+  // login
+  login(loginInput: LoginInput) {
+    return this.loginGQL
+      .mutate(
+        { data: loginInput },
+        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+      )
+      .pipe(
+        tap(({ data: { login } }) => {
+          AuthService.storeToken(login);
+          this.isLoggedIn$.next(true);
+          // this.setUser(user);
+        })
+      );
+  }
+  // register
   register(registerInput: RegisterInput) {
-    return this.registerGQL.mutate({ data: registerInput });
+    return this.registerGQL
+      .mutate(
+        { data: registerInput },
+        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+      )
+      .pipe(
+        tap(({ data: { register } }) => {
+          AuthService.storeToken(register);
+          // this.setUser(user);
+        })
+      );
+  }
+
+  // logout
+  logout() {
+    this.setUser(null);
+    AuthService.removeToken();
+    this.router.navigate(['/login']);
   }
 }

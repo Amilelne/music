@@ -10,9 +10,9 @@ const schema = new Schema(
       maxlength: 30
     },
     role: {
-      type: Number,
+      type: String,
       required: true,
-      default: 1
+      default: 'user'
     },
     level: {
       type: Number,

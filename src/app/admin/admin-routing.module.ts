@@ -12,9 +12,15 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: DashboardComponent, pathMatch: 'full' },
-      { path: 'courses', component: CourseComponent },
-      { path: 'users', component: UserComponent }
+      {
+        path: '',
+        canActivateChild: [AuthGuard],
+        children: [
+          { path: '', component: DashboardComponent, pathMatch: 'full' },
+          { path: 'courses', component: CourseComponent },
+          { path: 'users', component: UserComponent }
+        ]
+      }
     ]
   }
 ];
