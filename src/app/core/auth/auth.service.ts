@@ -7,9 +7,8 @@ import {
   User,
   AuthCurrentUserGQL
 } from '@app/gql';
-import { BehaviorSubject, throwError } from 'rxjs';
-import { mergeMap, tap, mapTo } from 'rxjs/operators';
-import { of } from 'zen-observable';
+import { BehaviorSubject, throwError, of } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -73,11 +72,13 @@ export class AuthService {
       )
       .pipe(
         mergeMap(({ data, errors }) => {
-          if (errors) { return throwError(errors); }
-          else { return of(data); }
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
         }),
-        tap(({ data: { login: { token, user } } }) => {
-          console.log(user);
+        tap(({ login: { token, user } }) => {
           AuthService.storeToken(token);
           this.isLoggedIn$.next(true);
           this.setUser(user);
@@ -101,7 +102,7 @@ export class AuthService {
             return of(data);
           }
         }),
-        tap(({ data: { register: { token, user } } }) => {
+        tap(({ register: { token, user } }) => {
           AuthService.storeToken(token);
           this.setUser(user);
         })
