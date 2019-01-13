@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: '', component: CourseComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'courses', component: CourseComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: '**', component: Get404Component }
 ];

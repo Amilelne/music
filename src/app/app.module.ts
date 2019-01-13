@@ -14,11 +14,20 @@ import en from '@angular/common/locales/en';
 import { GraphQLModule } from './graphql.module';
 import { RegisterComponent } from './register/register.component';
 import { CourseComponent } from './course/course.component';
+import { MenuComponent } from './course/menu/menu.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, Get404Component, RegisterComponent, CourseComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    Get404Component,
+    RegisterComponent,
+    CourseComponent,
+    MenuComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +36,8 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     NgZorroAntdModule,
-    GraphQLModule
+    GraphQLModule,
+    FontAwesomeModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

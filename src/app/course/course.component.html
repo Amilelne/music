@@ -1,3 +1,27 @@
-<p>
-  course works!
-</p>
+<nz-carousel nzAutoPlay>
+  <div nz-carousel-content *ngFor="let imgUrl of imgUrls">
+    <img src="{{ imgUrl }}" class="carouselImg" />
+  </div>
+</nz-carousel>
+<app-menu></app-menu>
+<div class="courseList">
+  <div nz-row [nzGutter]="8">
+    <div nz-col nzSpan="6" *ngFor="let course of courses">
+      <nz-card
+        nzHoverable
+        style="width:240px"
+        [nzCover]="coverTemplate"
+        nzBordered="false"
+      >
+        <nz-card-meta
+          [nzTitle]="course.titel"
+          [nzDescription]="course.desc"
+          nzLoading="true"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate>
+        <img class="courseImg" alt="example" [src]="course.img" />
+      </ng-template>
+    </div>
+  </div>
+</div>
