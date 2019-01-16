@@ -1,6 +1,8 @@
 const { DateTime, URL } = require('@okgrow/graphql-scalars');
 const { merge } = require('lodash');
 const UserResolverMap = require('./user.resolver');
+const CourseResolverMap = require('./course.resolver');
+const TutorialResolverMap = require('./tutorial.resolver');
 
 const resolverMap = {
   DateTime,
@@ -13,4 +15,9 @@ const resolverMap = {
   }
 };
 
-exports.resolvers = merge(resolverMap, UserResolverMap);
+exports.resolvers = merge(
+  resolverMap,
+  UserResolverMap,
+  CourseResolverMap,
+  TutorialResolverMap
+);

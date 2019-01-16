@@ -44,5 +44,12 @@ const schema = new Schema(
   }
 );
 
+schema.pre('remove', async function() {
+  const { Course } = require('./course.model');
+  await Course.updateMany(
+    { tutorials: this._id },
+    { $pull: { tutorials: this._id } }
+  );
+});
 const name = conf('collections.tutorial');
 exports.Tutorial = mongoose.model(name, schema, name);

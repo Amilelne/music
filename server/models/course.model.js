@@ -1,5 +1,6 @@
 const { conf } = require('../config');
 const mongoose = require('../mongoose');
+const { Tutorial } = require('./index');
 const Schema = mongoose.Schema;
 
 const schema = new Schema(
@@ -19,10 +20,13 @@ const schema = new Schema(
       required: true,
       default: 1
     },
-    tutorials: {
-      type: [Schema.Types.ObjectId],
-      required: false
-    },
+    tutorials: [
+      {
+        type: Schema.Types.ObjectId,
+        required: false,
+        ref: 'Tutorial'
+      }
+    ],
     price: {
       type: Schema.Types.Decimal128
     }

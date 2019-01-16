@@ -3,17 +3,6 @@ scalar DateTime
 # custom url link
 scalar URL
 
-type Query {
-  appName: String!
-  me: User!
-  # get all users
-  users: [User]!
-}
-type Mutation {
-  addUser(data: CreateUserInput!): User!
-  register(data: RegisterInput!): AuthPayload!
-  login(data: LoginInput!): AuthPayload!
-}
 type User {
   id: ID!
   name: String!

@@ -1,0 +1,14 @@
+type Mutation {
+  # user
+  addUser(data: CreateUserInput!): User!
+  register(data: RegisterInput!): AuthPayload!
+  login(data: LoginInput!): AuthPayload!
+
+  # course
+  addCourse(data: CreateCourseInput!): Course!
+  deleteCourse(id: ID!): Course!
+
+  # tutorial
+  addTutorial(data: CreateTutorialInput!): Tutorial!
+  deleteTutorial(id: ID!): Tutorial!
+}

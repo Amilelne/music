@@ -1,0 +1,12 @@
+type Query {
+  appName: String!
+  me: User!
+  # get all users
+  users: [User]!
+
+  # course
+  courses: [Course]!
+
+  # tutorial
+  tutorials: [Tutorial]!
+}

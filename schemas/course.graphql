@@ -1,0 +1,36 @@
+type Course {
+  id: ID!
+  title: String!
+  description: String
+  level: Int
+  price: Float
+  tutorials: [Tutorial]
+}
+
+type Tutorial {
+  id: ID!
+  title: String!
+  resourceUrl: String
+  resourceType: Int
+  description: String!
+  level: Int!
+  participants: Int
+  likes: Int
+}
+
+# input types
+input CreateCourseInput {
+  title: String!
+  description: String
+  level: Int
+  price: Float
+  tutorials: [CreateTutorialInput]
+}
+
+input CreateTutorialInput {
+  title: String!
+  resourceUrl: String
+  resourceType: Int
+  description: String!
+  level: Int!
+}
