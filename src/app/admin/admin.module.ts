@@ -9,6 +9,12 @@ import { AdminComponent } from './admin.component';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { CourseListComponent } from './course/course-list/course-list.component';
+import { AddCourseComponent } from './course/add-course/add-course.component';
+import { ReportComponent } from './report/report.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NotificationComponent } from './dashboard/notification/notification.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(en);
 
@@ -17,9 +23,20 @@ registerLocaleData(en);
     DashboardComponent,
     CourseComponent,
     UserComponent,
-    AdminComponent
+    AdminComponent,
+    CourseListComponent,
+    AddCourseComponent,
+    ReportComponent,
+    NotificationComponent
   ],
-  imports: [CommonModule, AdminRoutingModule, NgZorroAntdModule],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    NgZorroAntdModule,
+    NgxChartsModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   providers: [{ provide: NZ_I18N, useValue: en_US }]
 })
 export class AdminModule {}

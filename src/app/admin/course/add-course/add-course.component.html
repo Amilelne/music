@@ -1,0 +1,105 @@
+<form
+  nz-form
+  [formGroup]="validateForm"
+  (ngSubmit)="submitForm($event, validateForm.value)"
+>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <input nz-input formControlName="title" placeholder="请输入课程名称" />
+      <nz-form-explain
+        *ngIf="
+          (validateForm.get('title').dirty &&
+            validateForm.get('title').errors) ||
+          validateForm.get('title').pending
+        "
+      >
+        <ng-container *ngIf="validateForm.get('title').hasError('required')">
+          请输入课程名称!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('title').hasError('duplicated')">
+          该课程名称已经存在！
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('title').pending">
+          验证课程名是否唯一中...
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程类别</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-select
+        [nzMaxMultipleCount]="3"
+        nzMode="multiple"
+        nzPlaceHolder="请选择课程类别"
+        formControlName="kind"
+      >
+        <nz-option
+          *ngFor="let option of listOfKind"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程难度</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-select
+        [nzMaxMultipleCount]="3"
+        nzPlaceHolder="请选择课程难度"
+        formControlName="level"
+      >
+        <nz-option
+          *ngFor="let option of listOfLevel"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程价格</nz-form-label>
+    <nz-form-control>
+      <nz-input-number
+        formControlName="price"
+        [nzMin]="0.0"
+        [nzStep]="0.01"
+        [nzPlaceHolder]="'价格'"
+      ></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程描述</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea
+        formControlName="description"
+        nz-input
+        rows="2"
+        placeholder="课程描述..."
+      ></textarea>
+      <nz-form-explain
+        *ngIf="
+          validateForm.get('description').dirty &&
+          validateForm.get('description').hasError('required')
+        "
+        >请输入该课程的描述!</nz-form-explain
+      >
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="24">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="!validateForm.valid"
+        [nzSize]="large"
+        >提交</button
+      >
+      <button nz-button (click)="resetForm($event)" [nzSize]="large"
+        >重置</button
+      >
+    </nz-form-control>
+  </nz-form-item>
+</form>

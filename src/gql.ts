@@ -1,5 +1,31 @@
 export type Maybe<T> = T | null;
 
+/** input types */
+export interface CreateCourseInput {
+  title: string;
+
+  description?: Maybe<string>;
+
+  level?: Maybe<number>;
+
+  price?: Maybe<number>;
+
+  tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
+}
+
+export interface CreateTutorialInput {
+  id: string;
+
+  title: string;
+
+  resourceUrl?: Maybe<string>;
+
+  resourceType?: Maybe<number>;
+
+  description: string;
+
+  level: number;
+}
 /** input types user */
 export interface CreateUserInput {
   name: string;
@@ -25,6 +51,24 @@ export interface LoginInput {
   identifier: string;
 
   credential: string;
+}
+
+export interface Tutorial {
+  id: string;
+
+  title: string;
+
+  resourceUrl?: Maybe<string>;
+
+  resourceType?: Maybe<number>;
+
+  description: string;
+
+  level: number;
+
+  participants?: Maybe<number>;
+
+  likes?: Maybe<number>;
 }
 
 /** custom url link */
@@ -116,11 +160,25 @@ export namespace AuthFields {
 // ====================================================
 
 export interface Query {
+  courses: (Maybe<Course>)[];
+
   appName: string;
 
   me: User;
   /** get all users */
   users: (Maybe<User>)[];
+}
+
+export interface Course {
+  id: string;
+
+  title: string;
+
+  description?: Maybe<string>;
+
+  level?: Maybe<number>;
+
+  price?: Maybe<number>;
 }
 
 export interface User {
@@ -142,6 +200,10 @@ export interface User {
 }
 
 export interface Mutation {
+  addCourse: Course;
+
+  deleteCourse: Course;
+
   addUser: User;
 
   register: AuthPayload;
@@ -160,6 +222,12 @@ export interface AuthPayload {
 // Arguments
 // ====================================================
 
+export interface AddCourseMutationArgs {
+  data: CreateCourseInput;
+}
+export interface DeleteCourseMutationArgs {
+  id: string;
+}
 export interface AddUserMutationArgs {
   data: CreateUserInput;
 }

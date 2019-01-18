@@ -16,6 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { CourseComponent } from './course/course.component';
 import { MenuComponent } from './course/menu/menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FooterComponent } from './footer/footer.component';
 
 registerLocaleData(en);
 
@@ -26,7 +28,8 @@ registerLocaleData(en);
     Get404Component,
     RegisterComponent,
     CourseComponent,
-    MenuComponent
+    MenuComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     NgZorroAntdModule,
     GraphQLModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxChartsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

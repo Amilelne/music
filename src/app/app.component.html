@@ -8,11 +8,22 @@
       >
       <li nz-menu-item routerLink="/experts" routerLinkActive="active">专家</li>
       <li nz-menu-item routerLink="/admin" routerLinkActive="active">管理</li>
-      <li nz-menu-item routerLink="/login" routerLinkActive="active">登录</li>
-      <li nz-menu-item routerLink="/register" routerLinkActive="active"
+      <li
+        nz-menu-item
+        routerLink="/login"
+        routerLinkActive="active"
+        class="nav-right"
+        >登录</li
+      >
+      <li
+        nz-menu-item
+        routerLink="/register"
+        routerLinkActive="active"
+        class="nav-right"
         >注册</li
       >
     </ul>
   </nz-header>
   <nz-content> <router-outlet></router-outlet> </nz-content>
+  <app-footer></app-footer>
 </nz-layout>
