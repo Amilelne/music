@@ -24,6 +24,7 @@ input CreateCourseInput {
   description: String
   level: Int
   price: Float
+  kind: [Int]
   tutorials: [CreateTutorialInput]
 }
 

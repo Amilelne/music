@@ -1,0 +1,24 @@
+fragment CourseFields on Course {
+  id
+  title
+  description
+  price
+  level
+}
+
+query AdminCourses {
+  courses {
+    ...CourseFields
+  }
+}
+mutation AdminCreateCourse($data: CreateCourseInput!) {
+  addCourse(data: $data) {
+    ...CourseFields
+  }
+}
+
+mutation AdminDeleteCourse($id: ID!) {
+  deleteCourse(id: $id) {
+    ...CourseFields
+  }
+}

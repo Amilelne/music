@@ -1,31 +1,5 @@
 export type Maybe<T> = T | null;
 
-/** input types */
-export interface CreateCourseInput {
-  title: string;
-
-  description?: Maybe<string>;
-
-  level?: Maybe<number>;
-
-  price?: Maybe<number>;
-
-  tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
-}
-
-export interface CreateTutorialInput {
-  id: string;
-
-  title: string;
-
-  resourceUrl?: Maybe<string>;
-
-  resourceType?: Maybe<number>;
-
-  description: string;
-
-  level: number;
-}
 /** input types user */
 export interface CreateUserInput {
   name: string;
@@ -52,10 +26,22 @@ export interface LoginInput {
 
   credential: string;
 }
+/** input types */
+export interface CreateCourseInput {
+  title: string;
 
-export interface Tutorial {
-  id: string;
+  description?: Maybe<string>;
 
+  level?: Maybe<number>;
+
+  price?: Maybe<number>;
+
+  kind?: Maybe<(Maybe<number>)[]>;
+
+  tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
+}
+
+export interface CreateTutorialInput {
   title: string;
 
   resourceUrl?: Maybe<string>;
@@ -65,10 +51,6 @@ export interface Tutorial {
   description: string;
 
   level: number;
-
-  participants?: Maybe<number>;
-
-  likes?: Maybe<number>;
 }
 
 /** custom url link */
@@ -80,6 +62,46 @@ export type DateTime = any;
 // ====================================================
 // Documents
 // ====================================================
+
+export namespace AdminCourses {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    courses: (Maybe<Courses>)[];
+  };
+
+  export type Courses = CourseFields.Fragment;
+}
+
+export namespace AdminCreateCourse {
+  export type Variables = {
+    data: CreateCourseInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addCourse: AddCourse;
+  };
+
+  export type AddCourse = CourseFields.Fragment;
+}
+
+export namespace AdminDeleteCourse {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteCourse: DeleteCourse;
+  };
+
+  export type DeleteCourse = CourseFields.Fragment;
+}
 
 export namespace AuthLogin {
   export type Variables = {
@@ -137,6 +159,22 @@ export namespace AuthCurrentUser {
   export type Me = AuthFields.Fragment;
 }
 
+export namespace CourseFields {
+  export type Fragment = {
+    __typename?: "Course";
+
+    id: string;
+
+    title: string;
+
+    description: Maybe<string>;
+
+    price: Maybe<number>;
+
+    level: Maybe<number>;
+  };
+}
+
 export namespace AuthFields {
   export type Fragment = {
     __typename?: "User";
@@ -160,25 +198,15 @@ export namespace AuthFields {
 // ====================================================
 
 export interface Query {
-  courses: (Maybe<Course>)[];
-
   appName: string;
 
   me: User;
   /** get all users */
   users: (Maybe<User>)[];
-}
-
-export interface Course {
-  id: string;
-
-  title: string;
-
-  description?: Maybe<string>;
-
-  level?: Maybe<number>;
-
-  price?: Maybe<number>;
+  /** course */
+  courses: (Maybe<Course>)[];
+  /** tutorial */
+  tutorials: (Maybe<Tutorial>)[];
 }
 
 export interface User {
@@ -199,16 +227,53 @@ export interface User {
   updateDate?: Maybe<DateTime>;
 }
 
+export interface Course {
+  id: string;
+
+  title: string;
+
+  description?: Maybe<string>;
+
+  level?: Maybe<number>;
+
+  price?: Maybe<number>;
+
+  tutorials?: Maybe<(Maybe<Tutorial>)[]>;
+}
+
+export interface Tutorial {
+  id: string;
+
+  title: string;
+
+  resourceUrl?: Maybe<string>;
+
+  resourceType?: Maybe<number>;
+
+  description: string;
+
+  level: number;
+
+  participants?: Maybe<number>;
+
+  likes?: Maybe<number>;
+}
+
 export interface Mutation {
-  addCourse: Course;
-
-  deleteCourse: Course;
-
+  /** user */
   addUser: User;
 
   register: AuthPayload;
 
   login: AuthPayload;
+  /** course */
+  addCourse: Course;
+
+  deleteCourse: Course;
+  /** tutorial */
+  addTutorial: Tutorial;
+
+  deleteTutorial: Tutorial;
 }
 
 /** payload */
@@ -222,12 +287,6 @@ export interface AuthPayload {
 // Arguments
 // ====================================================
 
-export interface AddCourseMutationArgs {
-  data: CreateCourseInput;
-}
-export interface DeleteCourseMutationArgs {
-  id: string;
-}
 export interface AddUserMutationArgs {
   data: CreateUserInput;
 }
@@ -236,6 +295,18 @@ export interface RegisterMutationArgs {
 }
 export interface LoginMutationArgs {
   data: LoginInput;
+}
+export interface AddCourseMutationArgs {
+  data: CreateCourseInput;
+}
+export interface DeleteCourseMutationArgs {
+  id: string;
+}
+export interface AddTutorialMutationArgs {
+  data: CreateTutorialInput;
+}
+export interface DeleteTutorialMutationArgs {
+  id: string;
 }
 
 // ====================================================
@@ -251,6 +322,16 @@ import gql from "graphql-tag";
 // GraphQL Fragments
 // ====================================================
 
+export const CourseFieldsFragment = gql`
+  fragment CourseFields on Course {
+    id
+    title
+    description
+    price
+    level
+  }
+`;
+
 export const AuthFieldsFragment = gql`
   fragment authFields on User {
     id
@@ -264,6 +345,57 @@ export const AuthFieldsFragment = gql`
 // Apollo Services
 // ====================================================
 
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCoursesGQL extends Apollo.Query<
+  AdminCourses.Query,
+  AdminCourses.Variables
+> {
+  document: any = gql`
+    query AdminCourses {
+      courses {
+        ...CourseFields
+      }
+    }
+
+    ${CourseFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCreateCourseGQL extends Apollo.Mutation<
+  AdminCreateCourse.Mutation,
+  AdminCreateCourse.Variables
+> {
+  document: any = gql`
+    mutation AdminCreateCourse($data: CreateCourseInput!) {
+      addCourse(data: $data) {
+        ...CourseFields
+      }
+    }
+
+    ${CourseFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminDeleteCourseGQL extends Apollo.Mutation<
+  AdminDeleteCourse.Mutation,
+  AdminDeleteCourse.Variables
+> {
+  document: any = gql`
+    mutation AdminDeleteCourse($id: ID!) {
+      deleteCourse(id: $id) {
+        ...CourseFields
+      }
+    }
+
+    ${CourseFieldsFragment}
+  `;
+}
 @Injectable({
   providedIn: "root"
 })

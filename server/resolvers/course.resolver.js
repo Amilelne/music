@@ -8,12 +8,15 @@ const resolveMap = {
   },
   Mutation: {
     addCourse: async (obj, { data }, context, info) => {
-      let tutorials = await Promise.all(
-        data.tutorials.map(async (tutorial) => {
-          let newTutorial = await Tutorial.create(tutorial);
-          return newTutorial._id;
-        })
-      );
+      let tutorials = [];
+      if (data.tutorials !== undefined) {
+        tutorials = await Promise.all(
+          data.tutorials.map(async (tutorial) => {
+            let newTutorial = await Tutorial.create(tutorial);
+            return newTutorial._id;
+          })
+        );
+      }
       let course = await Course.create({
         title: data.title,
         description: data.description,

@@ -1,6 +1,6 @@
 overwrite: true
 schema: ./schemas/*.graphql
-documents: ./src/app/core/auth/*.graphql
+documents: [./src/app/admin/course/*.graphql, ./src/app/core/auth/*.graphql]
 generates:
   ./src/gql.ts:
     plugins:

@@ -7,6 +7,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
+import { CourseService } from '../course.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-course',
@@ -14,7 +16,11 @@ import { Observable, Observer } from 'rxjs';
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private courseService: CourseService
+  ) {
     this.validateForm = this.fb.group({
       title: ['', [Validators.required], [this.titleAsyncValidator]],
       kind: [[], [Validators.required]],
@@ -24,6 +30,8 @@ export class AddCourseComponent implements OnInit {
     });
   }
   validateForm: FormGroup;
+  errorState: boolean;
+  errorMessage: string;
   listOfKind = [
     { value: 0, label: '乐理' },
     { value: 1, label: '视唱' },
@@ -43,7 +51,15 @@ export class AddCourseComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    console.log(value);
+    this.courseService.createCourse(value).subscribe(
+      ({ addCourse: { id } }) => {
+        this.router.navigate(['/admin/course', id]);
+      },
+      errors => {
+        this.errorState = true;
+        this.errorMessage = errors.message;
+      }
+    );
   }
 
   resetForm(e: MouseEvent): void {

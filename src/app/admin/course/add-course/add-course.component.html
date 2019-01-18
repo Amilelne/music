@@ -3,6 +3,13 @@
   [formGroup]="validateForm"
   (ngSubmit)="submitForm($event, validateForm.value)"
 >
+  <nz-alert
+    *ngIf="errorState"
+    nzType="error"
+    nzCloseable
+    [nzDescription]="errorMessage"
+  >
+  </nz-alert>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程名称</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback>
@@ -27,6 +34,22 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>课程难度</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-select
+        [nzMaxMultipleCount]="3"
+        nzPlaceHolder="请选择课程难度"
+        formControlName="level"
+      >
+        <nz-option
+          *ngFor="let option of listOfLevel"
+          [nzLabel]="option.label"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程类别</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback>
       <nz-select
@@ -37,22 +60,6 @@
       >
         <nz-option
           *ngFor="let option of listOfKind"
-          [nzLabel]="option.label"
-          [nzValue]="option.value"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>课程难度</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <nz-select
-        [nzMaxMultipleCount]="3"
-        nzPlaceHolder="请选择课程难度"
-        formControlName="level"
-      >
-        <nz-option
-          *ngFor="let option of listOfLevel"
           [nzLabel]="option.label"
           [nzValue]="option.value"
         ></nz-option>
