@@ -1,4 +1,14 @@
-<div nz-row>
+<nz-header style="background: #fff; text-align: center;">
+  <ul nz-menu [nzMode]="'horizontal'">
+    <li nz-menu-item routerLink="/admin/course/add"
+      ><i nz-icon type="video-camera"></i>添加课程</li
+    >
+    <li nz-menu-item><i nz-icon type="notification"></i>发布通知</li>
+    <li nz-menu-item><i nz-icon type="user-add"></i>添加用户</li>
+    <li nz-menu-item><i nz-icon type="project"></i>生成报告</li>
+  </ul>
+</nz-header>
+<div nz-row class="content">
   <div nz-col nzSpan="16"> <app-report></app-report> </div>
   <div nz-col nzSpan="8"> <app-notification></app-notification> </div>
 </div>

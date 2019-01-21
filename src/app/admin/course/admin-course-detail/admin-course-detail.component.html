@@ -1,0 +1,17 @@
+<div class="courseHeader">
+  <div class="courseTitle">
+    <div class="courseImage">
+      <img src="assets/images/music.png" alt="course image" />
+    </div>
+    <div class="courseDescription">
+      <h2>课程名称</h2> <p>这是一个新课程</p>
+    </div>
+  </div>
+  <ul nz-menu [nzMode]="'horizontal'">
+    <li nz-menu-item><i nz-icon type="home"></i> 课程内容</li>
+    <li nz-menu-item><i nz-icon type="team"></i> 上课人员</li>
+    <li nz-menu-item><i nz-icon type="edit"></i> 课程信息</li>
+    <li nz-menu-item><i nz-icon type="setting"></i> 课程设置</li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

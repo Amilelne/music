@@ -1,0 +1,148 @@
+<div class="content">
+  <div class="modal">
+    <button nz-button nzType="primary" (click)="showModal()" nzSize="large">
+      <span>添加内容</span>
+    </button>
+    <nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="添加课程内容"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading"
+    >
+      <form
+        nz-form
+        [formGroup]="validateForm"
+        (ngSubmit)="submitForm($event, validateForm.value)"
+      >
+        <nz-alert
+          *ngIf="errorState"
+          nzType="error"
+          nzCloseable
+          [nzDescription]="errorMessage"
+        >
+        </nz-alert>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>内容标题</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input
+              nz-input
+              formControlName="title"
+              placeholder="请输入内容标题"
+            />
+            <nz-form-explain
+              *ngIf="
+                validateForm.get('title').dirty &&
+                validateForm.get('title').errors
+              "
+            >
+              <ng-container
+                *ngIf="validateForm.get('title').hasError('required')"
+              >
+                请输入内容标题!
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>内容难度</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <nz-select nzPlaceHolder="请选择内容难度" formControlName="level">
+              <nz-option
+                *ngFor="let option of listOfLevel"
+                [nzLabel]="option.label"
+                [nzValue]="option.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>内容描述</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <textarea
+              formControlName="description"
+              nz-input
+              rows="2"
+              placeholder="课程内容描述..."
+            ></textarea>
+            <nz-form-explain
+              *ngIf="
+                validateForm.get('description').dirty &&
+                validateForm.get('description').hasError('required')
+              "
+              >请输入该课程的描述!</nz-form-explain
+            >
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>内容类型</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <nz-select nzPlaceHolder="请选择内容类型" formControlName="kind">
+              <nz-option
+                *ngFor="let option of listOfKind"
+                [nzLabel]="option.label"
+                [nzValue]="option.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>内容资源</nz-form-label>
+          <br /><br />
+          <nz-form-control>
+            <nz-upload
+              nzType="drag"
+              [nzMultiple]="true"
+              [nzLimit]="2"
+              nzAction="https://jsonplaceholder.typicode.com/posts/"
+              (nzChange)="handleChange($event)"
+            >
+              <p class="ant-upload-drag-icon"> <i nz-icon type="inbox"></i> </p>
+              <p class="ant-upload-text">点击或拖拽文件上传</p>
+              <p class="ant-upload-hint">支持单文件或多文件上传</p>
+            </nz-upload>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-modal>
+  </div>
+  <div class="contentList">
+    <nz-list
+      [nzDataSource]="data"
+      [nzRenderItem]="item"
+      [nzItemLayout]="'horizontal'"
+      [nzLoading]="loading"
+    >
+      <ng-template #item let-item>
+        <nz-list-item
+          [nzContent]="content"
+          [nzActions]="[editAction, moreAction]"
+        >
+          <nz-skeleton
+            [nzAvatar]="true"
+            [nzActive]="true"
+            [nzTitle]="false"
+            [nzLoading]="item.loading"
+          >
+            <ng-template #editAction
+              ><a (click)="edit(item)">edit</a></ng-template
+            >
+            <ng-template #moreAction
+              ><a (click)="edit(item)">more</a></ng-template
+            >
+            <nz-list-item-meta
+              [nzTitle]="nzTitle"
+              nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
+            >
+              <ng-template #nzTitle>
+                <a href="https://ng.ant.design">{{ item.title }}</a>
+              </ng-template>
+            </nz-list-item-meta>
+          </nz-skeleton>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

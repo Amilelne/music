@@ -7,7 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { CourseComponent } from './course/course.component';
 
 const routes: Routes = [
-  { path: '', component: CourseComponent },
+  { path: '', component: CourseComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'courses', component: CourseComponent },
