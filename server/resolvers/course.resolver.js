@@ -1,4 +1,24 @@
 const { Course, Tutorial } = require('../models');
+const fs = require('fs');
+const nanoid = require('nanoid');
+
+const UPLOAD_DIR = './server/uploads';
+const storeFS = ({ stream, suffix }) => {
+  const id = nanoid(10);
+  const path = `${UPLOAD_DIR}/${id}.${suffix}`;
+  return new Promise((resolve, reject) => {
+    stream
+      .on('error', (error) => {
+        if (stream.truncated) {
+          fs.unlinkSync(path);
+        }
+        reject(error);
+      })
+      .pipe(fs.createWriteStream(path))
+      .on('error', (error) => reject(error))
+      .on('finish', () => resolve({ id, path }));
+  });
+};
 
 const resolveMap = {
   Query: {
@@ -30,6 +50,14 @@ const resolveMap = {
       let course = await Course.findByIdAndValidate(id, info);
       await course.remove();
       return course;
+    },
+    singleUpload: async (obj, { file }, context, info) => {
+      const { createReadStream, filename, mimetype } = await file;
+      const suffix = filename.split('.').slice(-1)[0];
+      const stream = createReadStream();
+
+      const { id, path } = await storeFS({ stream, suffix });
+      return { filename: path, mimetype: mimetype, encoding: 'utf-8' };
     }
   }
 };

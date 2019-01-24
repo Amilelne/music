@@ -4,11 +4,30 @@ fragment CourseFields on Course {
   description
   price
   level
+  createDate
+  updateDate
+}
+fragment TutorialFields on Tutorial {
+  id
+  title
+  resourceType
+  resourceUrl
+  description
+  level
+  createDate
+  updateDate
 }
 
 query AdminCourses {
   courses {
     ...CourseFields
+  }
+}
+
+query AdminCourseDetail($id: ID) {
+  course(id: $id) {
+    ...CourseFields
+    tutorials
   }
 }
 mutation AdminCreateCourse($data: CreateCourseInput!) {
@@ -20,5 +39,25 @@ mutation AdminCreateCourse($data: CreateCourseInput!) {
 mutation AdminDeleteCourse($id: ID!) {
   deleteCourse(id: $id) {
     ...CourseFields
+  }
+}
+
+mutation AdminCreateTutorial($data: CreateTutorialInput!) {
+  addTutorial(data: $data) {
+    ...TutorialFields
+  }
+}
+
+mutation AdminDeleteTutorial($id: ID!) {
+  deleteTutorial(id: $id) {
+    ...TutorialFields
+  }
+}
+
+mutation AdminUploadFile($file: Upload!) {
+  singleUpload(file: $file) {
+    filename
+    mimetype
+    encoding
   }
 }

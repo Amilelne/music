@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService, UploadFile } from 'ng-zorro-antd';
+import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { Router } from '@angular/router';
+import { CourseService } from '../../course.service';
+import { log } from 'async';
 
 @Component({
   selector: 'app-admin-course-detail-content',
@@ -19,13 +21,15 @@ export class AdminCourseDetailContentComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private courseService: CourseService
   ) {
     this.validateForm = this.fb.group({
       title: ['', [Validators.required]],
-      kind: [[], [Validators.required]],
+      resourceType: [[], [Validators.required]],
       level: [[], [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      resourceUrl: ['']
     });
   }
   isVisible = false;
@@ -33,7 +37,7 @@ export class AdminCourseDetailContentComponent implements OnInit {
   validateForm: FormGroup;
   errorState: boolean;
   errorMessage: string;
-  listOfKind = [
+  listOfresourceType = [
     { value: 0, label: '图片' },
     { value: 1, label: '文档' },
     { value: 2, label: 'PPT' },
@@ -63,13 +67,35 @@ export class AdminCourseDetailContentComponent implements OnInit {
   ];
   ngOnInit() {}
 
+  uploadFile = (item: UploadXHRArgs) => {
+    const file = item.file;
+    return this.courseService.singleUploadFile(file).subscribe(
+      ({ singleUpload: { filename, mimetype, encoding } }) => {
+        item.onSuccess(filename, item.file, mimetype);
+        this.validateForm.controls['resourceUrl'].setValue(filename);
+      },
+      errors => {
+        if (errors !== undefined) {
+          console.log(errors);
+          item.onError(errors, item.file);
+          this.errorState = true;
+          this.errorMessage = errors.message || errors[0].message;
+        }
+      }
+    );
+  }
+  onChange(evt) {
+    this.uploadFile(evt.target.files);
+  }
+
   handleChange({ file, fileList }): void {
     const status = file.status;
+    console.log('status');
     if (status !== 'uploading') {
       console.log(file, fileList);
     }
     if (status === 'done') {
-      this.msg.success(`${file.name} file up''aded successfully.`);
+      this.msg.success(`${file.name} file uploaded successfully.`);
     } else if (status === 'error') {
       this.msg.error(`${file.name} file upload failed.`);
     }
@@ -80,31 +106,30 @@ export class AdminCourseDetailContentComponent implements OnInit {
   }
 
   handleOk(): void {
-    this.isOkLoading = true;
-    window.setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
-  }
-
-  handleCancel(): void {
-    this.isVisible = false;
-  }
-
-  submitForm = ($event, value) => {
-    $event.preventDefault();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+    this.courseService.createTutorial(this.validateForm.value).subscribe(
+      ({ addTutorial: { filename } }) => {},
+      errors => {
+        this.errorState = true;
+        this.errorMessage = errors.message;
+      }
+    );
+    this.isOkLoading = true;
+    window.setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 2000);
   }
 
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
+  handleCancel(): void {
     this.validateForm.reset();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsPristine();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+    this.isVisible = false;
   }
 }

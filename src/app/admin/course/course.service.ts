@@ -1,13 +1,26 @@
 import { Injectable } from '@angular/core';
 import { throwError, of } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
-import { AdminCreateCourseGQL, CreateCourseInput } from '@app/gql';
+import { mergeMap, tap, map } from 'rxjs/operators';
+import {
+  AdminCreateCourseGQL,
+  AdminCreateTutorialGQL,
+  CreateCourseInput,
+  CreateTutorialInput,
+  AdminUploadFileGQL,
+  Upload,
+  AdminCoursesGQL
+} from '../../../gql';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  constructor(private createCourseGQL: AdminCreateCourseGQL) {}
+  constructor(
+    private createCourseGQL: AdminCreateCourseGQL,
+    private courseList: AdminCoursesGQL,
+    private createTutorialGQL: AdminCreateTutorialGQL,
+    private uploadFile: AdminUploadFileGQL
+  ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
     return this.createCourseGQL
@@ -27,6 +40,49 @@ export class CourseService {
         }),
         tap(({ addCourse: { id } }) => {
           // console.log(id);
+        })
+      );
+  }
+
+  getCourseList() {
+    return this.courseList.fetch().pipe(map(result => result.data.courses));
+  }
+
+  getCourseDetail(id) {}
+
+  createTutorial(createTutorialInput: CreateTutorialInput) {
+    return this.createTutorialGQL
+      .mutate(
+        { data: createTutorialInput },
+        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+      )
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        }),
+        tap(({ addTutorial: { id } }) => {
+          console.log(id);
+        })
+      );
+  }
+
+  singleUploadFile(file: Upload) {
+    return this.uploadFile
+      .mutate({ file: file }, { errorPolicy: 'all', fetchPolicy: 'no-cache' })
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        }),
+        tap(({ singleUpload: { filename } }) => {
+          // console.log(filename);
         })
       );
   }

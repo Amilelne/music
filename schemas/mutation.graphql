@@ -11,4 +11,7 @@ type Mutation {
   # tutorial
   addTutorial(data: CreateTutorialInput!): Tutorial!
   deleteTutorial(id: ID!): Tutorial!
+
+  # upload file
+  singleUpload(file: Upload!): File!
 }

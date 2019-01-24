@@ -1,9 +1,16 @@
+# custom scalar type
+scalar DateTime
+# custom url link
+scalar URL
+
 type Course {
   id: ID!
   title: String!
   description: String
   level: Int
   price: Float
+  createDate: DateTime
+  updateDate: DateTime
   tutorials: [Tutorial]
 }
 
@@ -16,6 +23,14 @@ type Tutorial {
   level: Int!
   participants: Int
   likes: Int
+  createDate: DateTime
+  updateDate: DateTime
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
 }
 
 # input types

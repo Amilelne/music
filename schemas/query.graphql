@@ -9,4 +9,7 @@ type Query {
 
   # tutorial
   tutorials: [Tutorial]!
+
+  # get uploaded files
+  uploads: [File]
 }

@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { GraphQLModule } from './graphql.module';
+import { GraphQLModule } from './grapghql/graphql.module';
 import { RegisterComponent } from './register/register.component';
 import { CourseComponent } from './course/course.component';
 import { MenuComponent } from './course/menu/menu.component';

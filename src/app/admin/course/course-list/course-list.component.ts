@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-course-list',
@@ -6,16 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit {
-  constructor() {}
+  constructor(private courseService: CourseService) {}
 
   nameList = [{ text: 'Joe', value: 'Joe' }, { text: 'Jim', value: 'Jim' }];
   addressList = [
     { text: 'London', value: 'London' },
     { text: 'Sidney', value: 'Sidney' }
   ];
+  courseList = [];
   sortName = null;
   sortValue = null;
-  listOfSearchName = [];
+  listOfSearchName: any[];
   searchAddress: string;
   data = [
     {
@@ -39,9 +41,14 @@ export class CourseListComponent implements OnInit {
       address: 'London No. 2 Lake Park'
     }
   ];
-  displayData = [...this.data];
+  displayData: any[];
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.courseService.getCourseList().subscribe(data => {
+      this.courseList = data;
+      this.displayData = [...this.courseList];
+    });
+  }
 
   sort(sort: { key: string; value: string }): void {
     this.sortName = sort.key;

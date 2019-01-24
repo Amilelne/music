@@ -1,8 +1,3 @@
-# custom scalar type
-scalar DateTime
-# custom url link
-scalar URL
-
 type User {
   id: ID!
   name: String!

@@ -1,30 +1,23 @@
-<nz-table #filterTable [nzData]="displayData">
-  <thead (nzSortChange)="sort($event)" nzSingleSort>
-    <tr>
-      <th
-        nzShowSort
-        nzSortKey="name"
-        nzShowFilter
-        [nzFilters]="nameList"
-        (nzFilterChange)="filter($event, searchAddress)"
-        >Name</th
-      >
-      <th nzShowSort nzSortKey="age">Age</th>
-      <th
-        nzShowSort
-        nzSortKey="address"
-        nzShowFilter
-        [nzFilterMultiple]="false"
-        [nzFilters]="addressList"
-        (nzFilterChange)="filter(listOfSearchName, $event)"
-        >Address</th
-      >
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of filterTable.data">
-      <td>{{ data.name }}</td> <td>{{ data.age }}</td>
-      <td>{{ data.address }}</td>
-    </tr>
-  </tbody>
-</nz-table>
+<div class="courseListPage">
+  <nz-table #filterTable [nzData]="displayData">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+      <tr>
+        <th nzShowSort nzSortKey="ID">ID</th>
+        <th nzShowSort nzSortKey="title">课程名称</th>
+        <th nzShowSort nzSortKey="price">课程价格</th>
+        <th nzShowSort nzSortKey="level">课程难度</th>
+        <th nzShowSort nzSortKey="createDate">课程创建时间</th>
+        <th nzShowSort nzSortKey="updateDate">课程更新时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of filterTable.data">
+        <td [routerLink]="['/admin/course/', data.id]">{{ data.id }}</td>
+        <td>{{ data.title }}</td> <td>{{ data.price }}</td>
+        <td>{{ data.level }}</td>
+        <td>{{ data.createDate | date: 'shortDate' }}</td>
+        <td>{{ data.updateDate | date: 'shortDate' }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

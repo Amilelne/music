@@ -59,6 +59,8 @@ export type Url = any;
 /** custom scalar type */
 export type DateTime = any;
 
+export type Upload = any;
+
 // ====================================================
 // Documents
 // ====================================================
@@ -101,6 +103,56 @@ export namespace AdminDeleteCourse {
   };
 
   export type DeleteCourse = CourseFields.Fragment;
+}
+
+export namespace AdminCreateTutorial {
+  export type Variables = {
+    data: CreateTutorialInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addTutorial: AddTutorial;
+  };
+
+  export type AddTutorial = TutorialFields.Fragment;
+}
+
+export namespace AdminDeleteTutorial {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteTutorial: DeleteTutorial;
+  };
+
+  export type DeleteTutorial = TutorialFields.Fragment;
+}
+
+export namespace AdminUploadFile {
+  export type Variables = {
+    file: Upload;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    singleUpload: SingleUpload;
+  };
+
+  export type SingleUpload = {
+    __typename?: "File";
+
+    filename: string;
+
+    mimetype: string;
+
+    encoding: string;
+  };
 }
 
 export namespace AuthLogin {
@@ -172,6 +224,32 @@ export namespace CourseFields {
     price: Maybe<number>;
 
     level: Maybe<number>;
+
+    createDate: Maybe<DateTime>;
+
+    updateDate: Maybe<DateTime>;
+  };
+}
+
+export namespace TutorialFields {
+  export type Fragment = {
+    __typename?: "Tutorial";
+
+    id: string;
+
+    title: string;
+
+    resourceType: Maybe<number>;
+
+    resourceUrl: Maybe<string>;
+
+    description: string;
+
+    level: number;
+
+    createDate: Maybe<DateTime>;
+
+    updateDate: Maybe<DateTime>;
   };
 }
 
@@ -207,6 +285,8 @@ export interface Query {
   courses: (Maybe<Course>)[];
   /** tutorial */
   tutorials: (Maybe<Tutorial>)[];
+  /** get uploaded files */
+  uploads?: Maybe<(Maybe<File>)[]>;
 }
 
 export interface User {
@@ -238,6 +318,10 @@ export interface Course {
 
   price?: Maybe<number>;
 
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+
   tutorials?: Maybe<(Maybe<Tutorial>)[]>;
 }
 
@@ -257,6 +341,18 @@ export interface Tutorial {
   participants?: Maybe<number>;
 
   likes?: Maybe<number>;
+
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+}
+
+export interface File {
+  filename: string;
+
+  mimetype: string;
+
+  encoding: string;
 }
 
 export interface Mutation {
@@ -274,6 +370,8 @@ export interface Mutation {
   addTutorial: Tutorial;
 
   deleteTutorial: Tutorial;
+  /** upload file */
+  singleUpload: File;
 }
 
 /** payload */
@@ -308,6 +406,9 @@ export interface AddTutorialMutationArgs {
 export interface DeleteTutorialMutationArgs {
   id: string;
 }
+export interface SingleUploadMutationArgs {
+  file: Upload;
+}
 
 // ====================================================
 // START: Apollo Angular template
@@ -329,6 +430,21 @@ export const CourseFieldsFragment = gql`
     description
     price
     level
+    createDate
+    updateDate
+  }
+`;
+
+export const TutorialFieldsFragment = gql`
+  fragment TutorialFields on Tutorial {
+    id
+    title
+    resourceType
+    resourceUrl
+    description
+    level
+    createDate
+    updateDate
   }
 `;
 
@@ -394,6 +510,57 @@ export class AdminDeleteCourseGQL extends Apollo.Mutation<
     }
 
     ${CourseFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCreateTutorialGQL extends Apollo.Mutation<
+  AdminCreateTutorial.Mutation,
+  AdminCreateTutorial.Variables
+> {
+  document: any = gql`
+    mutation AdminCreateTutorial($data: CreateTutorialInput!) {
+      addTutorial(data: $data) {
+        ...TutorialFields
+      }
+    }
+
+    ${TutorialFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminDeleteTutorialGQL extends Apollo.Mutation<
+  AdminDeleteTutorial.Mutation,
+  AdminDeleteTutorial.Variables
+> {
+  document: any = gql`
+    mutation AdminDeleteTutorial($id: ID!) {
+      deleteTutorial(id: $id) {
+        ...TutorialFields
+      }
+    }
+
+    ${TutorialFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminUploadFileGQL extends Apollo.Mutation<
+  AdminUploadFile.Mutation,
+  AdminUploadFile.Variables
+> {
+  document: any = gql`
+    mutation AdminUploadFile($file: Upload!) {
+      singleUpload(file: $file) {
+        filename
+        mimetype
+        encoding
+      }
+    }
   `;
 }
 @Injectable({

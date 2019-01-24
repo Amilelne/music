@@ -77,9 +77,12 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="7" nzRequired>内容类型</nz-form-label>
           <nz-form-control [nzSpan]="12" nzHasFeedback>
-            <nz-select nzPlaceHolder="请选择内容类型" formControlName="kind">
+            <nz-select
+              nzPlaceHolder="请选择内容类型"
+              formControlName="resourceType"
+            >
               <nz-option
-                *ngFor="let option of listOfKind"
+                *ngFor="let option of listOfresourceType"
                 [nzLabel]="option.label"
                 [nzValue]="option.value"
               ></nz-option>
@@ -93,9 +96,10 @@
           <nz-form-control>
             <nz-upload
               nzType="drag"
-              [nzMultiple]="true"
-              [nzLimit]="2"
-              nzAction="https://jsonplaceholder.typicode.com/posts/"
+              [nzMultiple]="false"
+              nzAction="http://localhost:4455/graphql"
+              [nzCustomRequest]="uploadFile"
+              [nzLimit]="1"
               (nzChange)="handleChange($event)"
             >
               <p class="ant-upload-drag-icon"> <i nz-icon type="inbox"></i> </p>
