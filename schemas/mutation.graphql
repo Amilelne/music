@@ -1,6 +1,7 @@
 type Mutation {
   # user
   addUser(data: CreateUserInput!): User!
+  deleteUser(id: ID!): User!
   register(data: RegisterInput!): AuthPayload!
   login(data: LoginInput!): AuthPayload!
 

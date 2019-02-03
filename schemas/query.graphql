@@ -3,9 +3,11 @@ type Query {
   me: User!
   # get all users
   users: [User]!
+  user(id: ID!): User!
 
   # course
   courses: [Course]!
+  course(id: ID!): Course!
 
   # tutorial
   tutorials: [Tutorial]!

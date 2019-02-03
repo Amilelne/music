@@ -24,10 +24,12 @@ query AdminCourses {
   }
 }
 
-query AdminCourseDetail($id: ID) {
+query AdminCourseDetail($id: ID!) {
   course(id: $id) {
     ...CourseFields
-    tutorials
+    tutorials {
+      ...TutorialFields
+    }
   }
 }
 mutation AdminCreateCourse($data: CreateCourseInput!) {

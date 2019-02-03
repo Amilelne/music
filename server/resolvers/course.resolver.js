@@ -1,11 +1,10 @@
 const { Course, Tutorial } = require('../models');
 const fs = require('fs');
 const nanoid = require('nanoid');
-
-const UPLOAD_DIR = './server/uploads';
+const uploadDir = './server/uploads/';
 const storeFS = ({ stream, suffix }) => {
   const id = nanoid(10);
-  const path = `${UPLOAD_DIR}/${id}.${suffix}`;
+  const path = `${id}.${suffix}`;
   return new Promise((resolve, reject) => {
     stream
       .on('error', (error) => {
@@ -14,7 +13,7 @@ const storeFS = ({ stream, suffix }) => {
         }
         reject(error);
       })
-      .pipe(fs.createWriteStream(path))
+      .pipe(fs.createWriteStream(uploadDir + path))
       .on('error', (error) => reject(error))
       .on('finish', () => resolve({ id, path }));
   });
@@ -24,6 +23,9 @@ const resolveMap = {
   Query: {
     courses: async (obj, args, context, info) => {
       return Course.find().populateFields(info);
+    },
+    course: async (obj, { id }, context, info) => {
+      return Course.findById(id).populateFields(info);
     }
   },
   Mutation: {
@@ -53,7 +55,10 @@ const resolveMap = {
     },
     singleUpload: async (obj, { file }, context, info) => {
       const { createReadStream, filename, mimetype } = await file;
-      const suffix = filename.split('.').slice(-1)[0];
+      let suffix = filename.split('.').slice(-1)[0];
+      if (suffix === 'blob') {
+        suffix = 'wav';
+      }
       const stream = createReadStream();
 
       const { id, path } = await storeFS({ stream, suffix });

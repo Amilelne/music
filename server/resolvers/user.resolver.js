@@ -15,6 +15,9 @@ const resolverMap = {
     addUser: async (obj, { data }, context, info) => {
       return User.create(data);
     },
+    deleteUser: async (obj, { id }, context, info) => {
+      return User.remove({ _id: id });
+    },
     register: async (obj, { data }, context, info) => {
       // create new user by username
       let user = await User.create({ name: data.name });

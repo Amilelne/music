@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
-import { Observable, Observer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CourseService } from '../../course.service';
-import { log } from 'async';
 
 @Component({
   selector: 'app-admin-course-detail-content',
@@ -51,21 +43,13 @@ export class AdminCourseDetailContentComponent implements OnInit {
     { value: 4, label: '难' },
     { value: 5, label: '偏难' }
   ];
-  data = [
-    {
-      title: 'Ant Design Title 1'
-    },
-    {
-      title: 'Ant Design Title 2'
-    },
-    {
-      title: 'Ant Design Title 3'
-    },
-    {
-      title: 'Ant Design Title 4'
-    }
-  ];
-  ngOnInit() {}
+  data: any[];
+  ngOnInit() {
+    const ID = this.router.url.split('/').slice(-1)[0];
+    this.courseService.getCourseDetail(ID).subscribe(data => {
+      this.data = data.tutorials;
+    });
+  }
 
   uploadFile = (item: UploadXHRArgs) => {
     const file = item.file;
@@ -90,9 +74,7 @@ export class AdminCourseDetailContentComponent implements OnInit {
 
   handleChange({ file, fileList }): void {
     const status = file.status;
-    console.log('status');
     if (status !== 'uploading') {
-      console.log(file, fileList);
     }
     if (status === 'done') {
       this.msg.success(`${file.name} file uploaded successfully.`);

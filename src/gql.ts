@@ -77,6 +77,26 @@ export namespace AdminCourses {
   export type Courses = CourseFields.Fragment;
 }
 
+export namespace AdminCourseDetail {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    course: Course;
+  };
+
+  export type Course = {
+    __typename?: "Course";
+
+    tutorials: Maybe<(Maybe<Tutorials>)[]>;
+  } & CourseFields.Fragment;
+
+  export type Tutorials = TutorialFields.Fragment;
+}
+
 export namespace AdminCreateCourse {
   export type Variables = {
     data: CreateCourseInput;
@@ -281,8 +301,12 @@ export interface Query {
   me: User;
   /** get all users */
   users: (Maybe<User>)[];
+
+  user: User;
   /** course */
   courses: (Maybe<Course>)[];
+
+  course: Course;
   /** tutorial */
   tutorials: (Maybe<Tutorial>)[];
   /** get uploaded files */
@@ -359,6 +383,8 @@ export interface Mutation {
   /** user */
   addUser: User;
 
+  deleteUser: User;
+
   register: AuthPayload;
 
   login: AuthPayload;
@@ -385,8 +411,17 @@ export interface AuthPayload {
 // Arguments
 // ====================================================
 
+export interface UserQueryArgs {
+  id: string;
+}
+export interface CourseQueryArgs {
+  id: string;
+}
 export interface AddUserMutationArgs {
   data: CreateUserInput;
+}
+export interface DeleteUserMutationArgs {
+  id: string;
 }
 export interface RegisterMutationArgs {
   data: RegisterInput;
@@ -476,6 +511,27 @@ export class AdminCoursesGQL extends Apollo.Query<
     }
 
     ${CourseFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCourseDetailGQL extends Apollo.Query<
+  AdminCourseDetail.Query,
+  AdminCourseDetail.Variables
+> {
+  document: any = gql`
+    query AdminCourseDetail($id: ID!) {
+      course(id: $id) {
+        ...CourseFields
+        tutorials {
+          ...TutorialFields
+        }
+      }
+    }
+
+    ${CourseFieldsFragment}
+    ${TutorialFieldsFragment}
   `;
 }
 @Injectable({

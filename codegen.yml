@@ -2,6 +2,7 @@ overwrite: true
 schema:
   - ./schemas/*.graphql
   - scalar Upload
+  - scalar ID
 documents: [./src/app/admin/course/*.graphql, ./src/app/core/auth/*.graphql]
 generates:
   ./src/gql.ts:

@@ -1,0 +1,38 @@
+<div nz-row>
+  <div nz-col nzSpan="12">
+    <div class="music"> <img src="https://fakeimg.pl/300/" alt="music" /> </div>
+  </div>
+  <div nz-col nzSpan="12">
+    <div class="recordPage">
+      <button
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        (click)="initiateRecording()"
+        *ngIf="!recording"
+        [disabled]=""
+        >开始录音</button
+      >
+      <button
+        nz-button
+        nzType="danger"
+        nzSize="large"
+        (click)="stopRecording()"
+        *ngIf="recording"
+        >停止录音</button
+      >
+      <button
+        nz-button
+        nzType="primary"
+        nzSize="large"
+        (click)="uploadRecording()"
+        *ngIf="url"
+        >上传录音</button
+      >
+      <div class="clearfix"></div>
+      <audio controls="" *ngIf="url">
+        <source [src]="sanitize(url)" type="audio/wav" />
+      </audio>
+    </div>
+  </div>
+</div>

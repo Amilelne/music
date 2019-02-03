@@ -18,6 +18,8 @@ import { MenuComponent } from './course/menu/menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FooterComponent } from './footer/footer.component';
+import { PracticeComponent } from './practice/practice.component';
+import { RecordComponent } from './practice/record/record.component';
 
 registerLocaleData(zh);
 
@@ -29,7 +31,9 @@ registerLocaleData(zh);
     RegisterComponent,
     CourseComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    PracticeComponent,
+    RecordComponent
   ],
   imports: [
     BrowserModule,

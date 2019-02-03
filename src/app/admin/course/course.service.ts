@@ -8,7 +8,8 @@ import {
   CreateTutorialInput,
   AdminUploadFileGQL,
   Upload,
-  AdminCoursesGQL
+  AdminCoursesGQL,
+  AdminCourseDetailGQL
 } from '../../../gql';
 
 @Injectable({
@@ -19,7 +20,8 @@ export class CourseService {
     private createCourseGQL: AdminCreateCourseGQL,
     private courseList: AdminCoursesGQL,
     private createTutorialGQL: AdminCreateTutorialGQL,
-    private uploadFile: AdminUploadFileGQL
+    private uploadFile: AdminUploadFileGQL,
+    private courseDetail: AdminCourseDetailGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -48,7 +50,11 @@ export class CourseService {
     return this.courseList.fetch().pipe(map(result => result.data.courses));
   }
 
-  getCourseDetail(id) {}
+  getCourseDetail(id) {
+    return this.courseDetail
+      .watch({ id: id })
+      .valueChanges.pipe(map(result => result.data.course));
+  }
 
   createTutorial(createTutorialInput: CreateTutorialInput) {
     return this.createTutorialGQL

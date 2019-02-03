@@ -1,10 +1,14 @@
 <div class="courseHeader">
   <div class="courseTitle">
     <div class="courseImage">
+      <ng-template *ngIf=""> </ng-template>
       <img src="assets/images/music.png" alt="course image" />
     </div>
-    <div class="courseDescription">
-      <h2>课程名称</h2> <p>这是一个新课程</p>
+    <div
+      class="courseDescription"
+      *ngIf="courseDetail && courseDetail.title && courseDetail.description"
+    >
+      <h2>{{ courseDetail.title }}</h2> <p>{{ courseDetail.description }}</p>
     </div>
   </div>
   <ul nz-menu [nzMode]="'horizontal'">
