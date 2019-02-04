@@ -27,6 +27,20 @@ type Tutorial {
   updateDate: DateTime
 }
 
+type Practice {
+  id: ID!
+  title: String!
+  resourceUrl: String!
+  resourceType: Int!
+  description: String
+  averageScore: Float
+  level: Int!
+  participants: Int
+  likes: Int
+  createDate: DateTime
+  updateDate: DateTime
+}
+
 type File {
   filename: String!
   mimetype: String!
@@ -48,5 +62,13 @@ input CreateTutorialInput {
   resourceUrl: String
   resourceType: Int
   description: String!
+  level: Int!
+}
+
+input CreatePracticeInput {
+  title: String!
+  resourceUrl: String!
+  resourceType: Int!
+  description: String
   level: Int!
 }

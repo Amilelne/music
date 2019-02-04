@@ -13,6 +13,10 @@ type Mutation {
   addTutorial(data: CreateTutorialInput!): Tutorial!
   deleteTutorial(id: ID!): Tutorial!
 
+  # practice
+  addPractice(data: CreatePracticeInput!): Practice!
+  deletePractice(id: ID!): Practice!
+
   # upload file
   singleUpload(file: Upload!): File!
 }

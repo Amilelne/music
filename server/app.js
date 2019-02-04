@@ -1,9 +1,11 @@
 const { configure } = require('./config');
 const express = require('express');
+const cors = require('cors');
 
 const mongoose = require('./mongoose');
 
 const app = express();
+app.use(cors());
 // upload files
 app.use(express.static(process.cwd() + '/server/uploads'));
 // Get configures form config file

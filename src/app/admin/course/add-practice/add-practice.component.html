@@ -1,0 +1,100 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="添加课程练习"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <form
+    nz-form
+    [formGroup]="validateForm"
+    (ngSubmit)="submitForm($event, validateForm.value)"
+  >
+    <nz-alert
+      *ngIf="errorState"
+      nzType="error"
+      nzCloseable
+      [nzDescription]="errorMessage"
+    >
+    </nz-alert>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习标题</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="title" placeholder="请输入练习标题" />
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('title').dirty && validateForm.get('title').errors
+          "
+        >
+          <ng-container *ngIf="validateForm.get('title').hasError('required')">
+            请输入练习标题!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习难度</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-select nzPlaceHolder="请选择练习难度" formControlName="level">
+          <nz-option
+            *ngFor="let option of listOfLevel"
+            [nzLabel]="option.label"
+            [nzValue]="option.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习描述</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <textarea
+          formControlName="description"
+          nz-input
+          rows="2"
+          placeholder="练习描述..."
+        ></textarea>
+        <nz-form-explain
+          *ngIf="
+            validateForm.get('description').dirty &&
+            validateForm.get('description').hasError('required')
+          "
+          >请输入该练习的描述!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习类型</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-select
+          nzPlaceHolder="请选择练习类型"
+          formControlName="resourceType"
+        >
+          <nz-option
+            *ngFor="let option of listOfresourceType"
+            [nzLabel]="option.label"
+            [nzValue]="option.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习资源</nz-form-label>
+      <br /><br />
+      <nz-form-control>
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="false"
+          nzAction="http://localhost:4455/graphql"
+          [nzCustomRequest]="uploadFile"
+          [nzLimit]="1"
+          (nzChange)="handleChange($event)"
+        >
+          <p class="ant-upload-drag-icon"> <i nz-icon type="inbox"></i> </p>
+          <p class="ant-upload-text">点击或拖拽文件上传</p>
+          <p class="ant-upload-hint">支持单文件或多文件上传</p>
+        </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

@@ -1,21 +1,27 @@
 <div class="courseList">
   <div nz-row [nzGutter]="8">
-    <div nz-col nzSpan="6" *ngFor="let course of courses">
-      <nz-card
-        nzHoverable
-        style="width:240px"
-        [nzCover]="coverTemplate"
-        nzBordered="false"
-      >
-        <nz-card-meta
-          [nzTitle]="course.titel"
-          [nzDescription]="course.desc"
-          nzLoading="true"
-        ></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate>
-        <img class="courseImg" alt="example" [src]="course.img" />
-      </ng-template>
-    </div>
+    <ng-container *ngFor="let practice of practices">
+      <div nz-col nzSpan="6" [routerLink]="['/practices/', practice.id]">
+        <nz-card
+          nzHoverable
+          style="width:240px"
+          [nzCover]="coverTemplate"
+          nzBordered="false"
+        >
+          <nz-card-meta
+            [nzTitle]="practice.titel"
+            [nzDescription]="practice.description"
+            nzLoading="true"
+          ></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img
+            class="courseImg"
+            [alt]="practice.title"
+            src="http://localhost:4455/W9NuBotkpn.jpg"
+          />
+        </ng-template>
+      </div>
+    </ng-container>
   </div>
 </div>

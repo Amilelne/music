@@ -9,6 +9,15 @@
     </div>
     <div nz-col class="gutter-row" nzSpan="6">
       <nz-card [nzBordered]="false">
+        <h2>添加练习</h2>
+        <button nz-button nzType="primary" nzBlock (click)="createPractice()"
+          >创建练习</button
+        >
+        <button nz-button nzType="default" nzBlock>导入练习</button>
+      </nz-card>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <nz-card [nzBordered]="false">
         <h2>添加教程</h2>
         <button nz-button nzType="primary" nzBlock>创建教程</button>
         <button nz-button nzType="default" nzBlock>导入教程</button>
@@ -21,13 +30,7 @@
         <button nz-button nzType="default" nzBlock>导入试卷</button>
       </nz-card>
     </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <nz-card [nzBordered]="false">
-        <h2>添加练习</h2>
-        <button nz-button nzType="primary" nzBlock>创建练习</button>
-        <button nz-button nzType="default" nzBlock>导入练习</button>
-      </nz-card>
-    </div>
   </div>
+  <app-add-practice [(isVisible)]="isVisible"></app-add-practice>
 </div>
 <app-course-list></app-course-list>

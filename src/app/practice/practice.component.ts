@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseService } from 'app/admin/course/course.service';
 
 @Component({
   selector: 'app-practice',
@@ -6,37 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit {
-  courses = [
-    {
-      title: '乐谱一',
-      desc: '乐理部分',
-      img: 'assets/images/musicTheory.jpg'
-    },
-    {
-      title: '乐谱二',
-      desc: '乐理部分',
-      img: 'assets/images/composer.jpg'
-    },
-    {
-      title: '乐谱一',
-      desc: '乐理部分',
-      img: 'assets/images/musicTheory.jpg'
-    },
-    {
-      title: '乐谱二',
-      desc: '乐理部分',
-      img: 'assets/images/composer.jpg'
-    },
-    {
-      title: '乐谱一',
-      desc: '乐理部分',
-      img: 'assets/images/musicTheory.jpg'
-    },
-    {
-      title: '乐谱二',
-      desc: '乐理部分',
-      img: 'assets/images/composer.jpg'
-    }
-  ];
-  ngOnInit() {}
+  practices = [];
+  constructor(private courseService: CourseService) {}
+  ngOnInit() {
+    this.courseService.getPracticeList().subscribe(data => {
+      this.practices = data;
+    });
+  }
 }

@@ -3,6 +3,7 @@ const { Course } = require('./course.model.js');
 const { Exercise } = require('./exercise.model.js');
 const { Test } = require('./test.model.js');
 const { Tutorial } = require('./tutorial.model.js');
+const { Practice } = require('./practice.model.js');
 const { User } = require('./user.model.js');
 const { UserAuth } = require('./userAuth.model.js');
 const { UserCourse } = require('./userCourse.model.js');
@@ -15,6 +16,7 @@ module.exports = {
   Exercise,
   Test,
   Tutorial,
+  Practice,
   User,
   UserAuth,
   UserCourse,

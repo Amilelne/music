@@ -12,6 +12,10 @@ type Query {
   # tutorial
   tutorials: [Tutorial]!
 
+  # practice
+  practice(id: ID!): Practice!
+  practices: [Practice]!
+
   # get uploaded files
   uploads: [File]
 }

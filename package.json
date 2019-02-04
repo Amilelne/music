@@ -37,6 +37,7 @@
     "bcrypt": "^3.0.3",
     "bluebird": "^3.5.3",
     "core-js": "^2.5.4",
+    "cors": "^2.8.5",
     "fs": "0.0.1-security",
     "graphql": "^0.13.2",
     "graphql-fields": "^2.0.1",

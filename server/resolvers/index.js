@@ -3,6 +3,7 @@ const { merge } = require('lodash');
 const UserResolverMap = require('./user.resolver');
 const CourseResolverMap = require('./course.resolver');
 const TutorialResolverMap = require('./tutorial.resolver');
+const PracticeResolverMap = require('./practice.resolver');
 
 const resolverMap = {
   DateTime,
@@ -19,5 +20,6 @@ exports.resolvers = merge(
   resolverMap,
   UserResolverMap,
   CourseResolverMap,
-  TutorialResolverMap
+  TutorialResolverMap,
+  PracticeResolverMap
 );

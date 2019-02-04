@@ -17,10 +17,27 @@ fragment TutorialFields on Tutorial {
   createDate
   updateDate
 }
+fragment PracticeFields on Practice {
+  id
+  title
+  resourceType
+  resourceUrl
+  description
+  level
+  createDate
+  updateDate
+}
 
 query AdminCourses {
   courses {
     ...CourseFields
+  }
+}
+
+query AdminPractices {
+  practices {
+    ...PracticeFields
+    averageScore
   }
 }
 
@@ -30,6 +47,13 @@ query AdminCourseDetail($id: ID!) {
     tutorials {
       ...TutorialFields
     }
+  }
+}
+
+query AdminPracticeDetail($id: ID!) {
+  practice(id: $id) {
+    ...PracticeFields
+    averageScore
   }
 }
 mutation AdminCreateCourse($data: CreateCourseInput!) {
@@ -61,5 +85,11 @@ mutation AdminUploadFile($file: Upload!) {
     filename
     mimetype
     encoding
+  }
+}
+
+mutation AdminCreatePractice($data: CreatePracticeInput!) {
+  addPractice(data: $data) {
+    ...PracticeFields
   }
 }

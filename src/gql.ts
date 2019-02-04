@@ -53,6 +53,18 @@ export interface CreateTutorialInput {
   level: number;
 }
 
+export interface CreatePracticeInput {
+  title: string;
+
+  resourceUrl: string;
+
+  resourceType: number;
+
+  description?: Maybe<string>;
+
+  level: number;
+}
+
 /** custom url link */
 export type Url = any;
 
@@ -77,6 +89,22 @@ export namespace AdminCourses {
   export type Courses = CourseFields.Fragment;
 }
 
+export namespace AdminPractices {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    practices: (Maybe<Practices>)[];
+  };
+
+  export type Practices = {
+    __typename?: "Practice";
+
+    averageScore: Maybe<number>;
+  } & PracticeFields.Fragment;
+}
+
 export namespace AdminCourseDetail {
   export type Variables = {
     id: string;
@@ -95,6 +123,24 @@ export namespace AdminCourseDetail {
   } & CourseFields.Fragment;
 
   export type Tutorials = TutorialFields.Fragment;
+}
+
+export namespace AdminPracticeDetail {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    practice: Practice;
+  };
+
+  export type Practice = {
+    __typename?: "Practice";
+
+    averageScore: Maybe<number>;
+  } & PracticeFields.Fragment;
 }
 
 export namespace AdminCreateCourse {
@@ -173,6 +219,20 @@ export namespace AdminUploadFile {
 
     encoding: string;
   };
+}
+
+export namespace AdminCreatePractice {
+  export type Variables = {
+    data: CreatePracticeInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    addPractice: AddPractice;
+  };
+
+  export type AddPractice = PracticeFields.Fragment;
 }
 
 export namespace AuthLogin {
@@ -273,6 +333,28 @@ export namespace TutorialFields {
   };
 }
 
+export namespace PracticeFields {
+  export type Fragment = {
+    __typename?: "Practice";
+
+    id: string;
+
+    title: string;
+
+    resourceType: number;
+
+    resourceUrl: string;
+
+    description: Maybe<string>;
+
+    level: number;
+
+    createDate: Maybe<DateTime>;
+
+    updateDate: Maybe<DateTime>;
+  };
+}
+
 export namespace AuthFields {
   export type Fragment = {
     __typename?: "User";
@@ -309,6 +391,10 @@ export interface Query {
   course: Course;
   /** tutorial */
   tutorials: (Maybe<Tutorial>)[];
+  /** practice */
+  practice: Practice;
+
+  practices: (Maybe<Practice>)[];
   /** get uploaded files */
   uploads?: Maybe<(Maybe<File>)[]>;
 }
@@ -371,6 +457,30 @@ export interface Tutorial {
   updateDate?: Maybe<DateTime>;
 }
 
+export interface Practice {
+  id: string;
+
+  title: string;
+
+  resourceUrl: string;
+
+  resourceType: number;
+
+  description?: Maybe<string>;
+
+  averageScore?: Maybe<number>;
+
+  level: number;
+
+  participants?: Maybe<number>;
+
+  likes?: Maybe<number>;
+
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+}
+
 export interface File {
   filename: string;
 
@@ -396,6 +506,10 @@ export interface Mutation {
   addTutorial: Tutorial;
 
   deleteTutorial: Tutorial;
+  /** practice */
+  addPractice: Practice;
+
+  deletePractice: Practice;
   /** upload file */
   singleUpload: File;
 }
@@ -415,6 +529,9 @@ export interface UserQueryArgs {
   id: string;
 }
 export interface CourseQueryArgs {
+  id: string;
+}
+export interface PracticeQueryArgs {
   id: string;
 }
 export interface AddUserMutationArgs {
@@ -439,6 +556,12 @@ export interface AddTutorialMutationArgs {
   data: CreateTutorialInput;
 }
 export interface DeleteTutorialMutationArgs {
+  id: string;
+}
+export interface AddPracticeMutationArgs {
+  data: CreatePracticeInput;
+}
+export interface DeletePracticeMutationArgs {
   id: string;
 }
 export interface SingleUploadMutationArgs {
@@ -483,6 +606,19 @@ export const TutorialFieldsFragment = gql`
   }
 `;
 
+export const PracticeFieldsFragment = gql`
+  fragment PracticeFields on Practice {
+    id
+    title
+    resourceType
+    resourceUrl
+    description
+    level
+    createDate
+    updateDate
+  }
+`;
+
 export const AuthFieldsFragment = gql`
   fragment authFields on User {
     id
@@ -516,6 +652,24 @@ export class AdminCoursesGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class AdminPracticesGQL extends Apollo.Query<
+  AdminPractices.Query,
+  AdminPractices.Variables
+> {
+  document: any = gql`
+    query AdminPractices {
+      practices {
+        ...PracticeFields
+        averageScore
+      }
+    }
+
+    ${PracticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class AdminCourseDetailGQL extends Apollo.Query<
   AdminCourseDetail.Query,
   AdminCourseDetail.Variables
@@ -532,6 +686,24 @@ export class AdminCourseDetailGQL extends Apollo.Query<
 
     ${CourseFieldsFragment}
     ${TutorialFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminPracticeDetailGQL extends Apollo.Query<
+  AdminPracticeDetail.Query,
+  AdminPracticeDetail.Variables
+> {
+  document: any = gql`
+    query AdminPracticeDetail($id: ID!) {
+      practice(id: $id) {
+        ...PracticeFields
+        averageScore
+      }
+    }
+
+    ${PracticeFieldsFragment}
   `;
 }
 @Injectable({
@@ -617,6 +789,23 @@ export class AdminUploadFileGQL extends Apollo.Mutation<
         encoding
       }
     }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCreatePracticeGQL extends Apollo.Mutation<
+  AdminCreatePractice.Mutation,
+  AdminCreatePractice.Variables
+> {
+  document: any = gql`
+    mutation AdminCreatePractice($data: CreatePracticeInput!) {
+      addPractice(data: $data) {
+        ...PracticeFields
+      }
+    }
+
+    ${PracticeFieldsFragment}
   `;
 }
 @Injectable({

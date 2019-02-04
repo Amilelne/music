@@ -6,10 +6,14 @@ import {
   AdminCreateTutorialGQL,
   CreateCourseInput,
   CreateTutorialInput,
+  CreatePracticeInput,
   AdminUploadFileGQL,
   Upload,
   AdminCoursesGQL,
-  AdminCourseDetailGQL
+  AdminPracticesGQL,
+  AdminCourseDetailGQL,
+  AdminCreatePracticeGQL,
+  AdminPracticeDetailGQL
 } from '../../../gql';
 
 @Injectable({
@@ -18,10 +22,13 @@ import {
 export class CourseService {
   constructor(
     private createCourseGQL: AdminCreateCourseGQL,
-    private courseList: AdminCoursesGQL,
+    private courseListGQL: AdminCoursesGQL,
+    private practiceListGQL: AdminPracticesGQL,
     private createTutorialGQL: AdminCreateTutorialGQL,
-    private uploadFile: AdminUploadFileGQL,
-    private courseDetail: AdminCourseDetailGQL
+    private uploadFileGQL: AdminUploadFileGQL,
+    private courseDetailGQL: AdminCourseDetailGQL,
+    private practiceDetailGQL: AdminPracticeDetailGQL,
+    private createPracticeGQL: AdminCreatePracticeGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -47,13 +54,23 @@ export class CourseService {
   }
 
   getCourseList() {
-    return this.courseList.fetch().pipe(map(result => result.data.courses));
+    return this.courseListGQL.fetch().pipe(map(result => result.data.courses));
   }
 
+  getPracticeList() {
+    return this.practiceListGQL
+      .fetch()
+      .pipe(map(result => result.data.practices));
+  }
   getCourseDetail(id) {
-    return this.courseDetail
+    return this.courseDetailGQL
       .watch({ id: id })
       .valueChanges.pipe(map(result => result.data.course));
+  }
+  getPracticeDetail(id) {
+    return this.practiceDetailGQL
+      .watch({ id: id })
+      .valueChanges.pipe(map(result => result.data.practice));
   }
 
   createTutorial(createTutorialInput: CreateTutorialInput) {
@@ -76,8 +93,28 @@ export class CourseService {
       );
   }
 
+  createPractice(createPracticeInput: CreatePracticeInput) {
+    return this.createPracticeGQL
+      .mutate(
+        { data: createPracticeInput },
+        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+      )
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        }),
+        tap(({ addPractice: { id } }) => {
+          console.log(id);
+        })
+      );
+  }
+
   singleUploadFile(file: Upload) {
-    return this.uploadFile
+    return this.uploadFileGQL
       .mutate({ file: file }, { errorPolicy: 'all', fetchPolicy: 'no-cache' })
       .pipe(
         mergeMap(({ data, errors }) => {

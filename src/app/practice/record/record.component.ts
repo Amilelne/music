@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CourseService } from 'app/admin/course/course.service';
+import { ActivatedRoute } from '@angular/router';
+import { Practice } from '@app/gql';
 
 @Component({
   selector: 'app-record',
@@ -9,9 +11,11 @@ import { CourseService } from 'app/admin/course/course.service';
   styleUrls: ['./record.component.scss']
 })
 export class RecordComponent implements OnInit {
+  @Input() practiceDetail: Practice;
   constructor(
     private domSanitizer: DomSanitizer,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private route: ActivatedRoute
   ) {}
   // Lets initiate Record OBJ
   private record;
@@ -21,8 +25,17 @@ export class RecordComponent implements OnInit {
   private url;
   private blobFile;
   private error;
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPracticeDetail();
+  }
 
+  getPracticeDetail() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.courseService.getPracticeDetail(id).subscribe(data => {
+      this.practiceDetail = data;
+      console.log(this.practiceDetail);
+    });
+  }
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }

@@ -1,4 +1,4 @@
-const { Course, Tutorial } = require('../models');
+const { Tutorial } = require('../models');
 
 const resolveMap = {
   Query: {

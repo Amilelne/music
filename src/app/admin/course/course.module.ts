@@ -16,6 +16,7 @@ registerLocaleData(zh);
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminCourseDetailComponent } from './admin-course-detail/admin-course-detail.component';
 import { AdminCourseDetailContentComponent } from './admin-course-detail/admin-course-detail-content/admin-course-detail-content.component';
+import { AddPracticeComponent } from './add-practice/add-practice.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AdminCourseDetailContentComponent } from './admin-course-detail/admin-c
     AddCourseComponent,
     CourseListComponent,
     AdminCourseDetailComponent,
-    AdminCourseDetailContentComponent
+    AdminCourseDetailContentComponent,
+    AddPracticeComponent
   ],
   imports: [
     CommonModule,
