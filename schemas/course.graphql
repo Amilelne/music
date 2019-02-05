@@ -9,6 +9,7 @@ type Course {
   description: String
   level: Int
   price: Float
+  pictureUrl: String
   createDate: DateTime
   updateDate: DateTime
   tutorials: [Tutorial]

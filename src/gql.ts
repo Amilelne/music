@@ -333,6 +333,8 @@ export namespace CourseFields {
 
     level: Maybe<number>;
 
+    pictureUrl: Maybe<string>;
+
     createDate: Maybe<DateTime>;
 
     updateDate: Maybe<DateTime>;
@@ -477,6 +479,8 @@ export interface Course {
   level?: Maybe<number>;
 
   price?: Maybe<number>;
+
+  pictureUrl?: Maybe<string>;
 
   createDate?: Maybe<DateTime>;
 
@@ -641,6 +645,7 @@ export const CourseFieldsFragment = gql`
     description
     price
     level
+    pictureUrl
     createDate
     updateDate
   }

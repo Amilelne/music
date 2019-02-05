@@ -6,22 +6,34 @@
 <app-menu></app-menu>
 <div class="courseList">
   <div nz-row [nzGutter]="8">
-    <div nz-col nzSpan="6" *ngFor="let course of courses">
-      <nz-card
-        nzHoverable
-        style="width:240px"
-        [nzCover]="coverTemplate"
-        nzBordered="false"
-      >
-        <nz-card-meta
-          [nzTitle]="course.titel"
-          [nzDescription]="course.desc"
-          nzLoading="true"
-        ></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate>
-        <img class="courseImg" alt="example" [src]="course.img" />
-      </ng-template>
-    </div>
+    <ng-container *ngFor="let course of courses">
+      <div nz-col nzSpan="6" [routerLink]="['/courses/', course.id]">
+        <nz-card
+          nzHoverable
+          style="width:240px"
+          [nzCover]="coverTemplate"
+          nzBordered="false"
+          [routerLink]=""
+        >
+          <nz-card-meta
+            [nzTitle]="course.titel"
+            [nzDescription]="course.description"
+            nzLoading="true"
+          ></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <ng-container *ngIf="!course.pictureUrl">
+            <img
+              class="courseImg"
+              alt="example"
+              src="../../assets/images/composer.jpg"
+            />
+          </ng-container>
+          <ng-container *ngIf="course.pictureUrl">
+            <img class="courseImg" alt="example" [src]="course.pictureUrl" />
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-container>
   </div>
 </div>

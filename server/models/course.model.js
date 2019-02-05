@@ -20,6 +20,10 @@ const schema = new Schema(
       required: true,
       default: 1
     },
+    pictureUrl: {
+      type: String,
+      required: false
+    },
     tutorials: [
       {
         type: Schema.Types.ObjectId,

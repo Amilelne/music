@@ -4,6 +4,7 @@ fragment CourseFields on Course {
   description
   price
   level
+  pictureUrl
   createDate
   updateDate
 }
