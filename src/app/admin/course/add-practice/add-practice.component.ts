@@ -55,8 +55,8 @@ export class AddPracticeComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const isVisible: SimpleChange = changes.isVisible;
-    console.log('prev value: ', isVisible.previousValue);
-    console.log('got value: ', isVisible.currentValue);
+    // console.log('prev value: ', isVisible.previousValue);
+    // console.log('got value: ', isVisible.currentValue);
   }
 
   uploadFile = (item: UploadXHRArgs) => {

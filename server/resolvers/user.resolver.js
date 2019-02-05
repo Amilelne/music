@@ -5,6 +5,9 @@ const RoleGuard = require('../utils/role.guard');
 
 const resolverMap = {
   Query: {
+    me: async (obj, args, context, info) => {
+      return User.findByIdAndValidate(context.user.id, info);
+    },
     user: async (obj, { id }, context, info) => {
       if (RoleGuard.canActivate(context, 'admin')) {
         return User.findByIdAndValidate(id, info);

@@ -20,24 +20,27 @@ export class AuthService {
 
   private _user: User;
 
+  get user(): User {
+    return this._user;
+  }
+
   constructor(
     private loginGQL: AuthLoginGQL,
     private registerGQL: AuthRegisterGQL,
     private currentUserGQL: AuthCurrentUserGQL,
     private router: Router
   ) {
-    // if (AuthService.getToken()) {
-    //   this.currentUserGQL.fetch().subscribe(
-    //     ({ data: { me } }) => this.setUser(me),
-    //     () => {
-    //       AuthService.removeToken();
-    //       this.isLoggedIn$.next(false);
-    //     }
-    //   );
-    // } else {
-    //   this.isLoggedIn$.next(false);
-    // }
-    this.isLoggedIn$.next(false);
+    if (AuthService.getToken()) {
+      this.currentUserGQL.fetch().subscribe(
+        ({ data: { me } }) => this.setUser(me),
+        () => {
+          AuthService.removeToken();
+          this.isLoggedIn$.next(false);
+        }
+      );
+    } else {
+      this.isLoggedIn$.next(false);
+    }
   }
 
   static storeToken(token: string) {
@@ -50,10 +53,6 @@ export class AuthService {
 
   static removeToken() {
     return localStorage.removeItem(this.AUTH_TOKEN_LOCAL_STORAGE_KEY);
-  }
-
-  private getUser(): User {
-    return this._user;
   }
 
   private setUser(user: User) {

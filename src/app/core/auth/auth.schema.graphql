@@ -18,6 +18,7 @@ mutation AuthRegister($data: RegisterInput!) {
 query AuthCurrentUser {
   me {
     ...authFields
+    avatar
   }
 }
 

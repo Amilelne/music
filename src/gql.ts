@@ -288,7 +288,11 @@ export namespace AuthCurrentUser {
     me: Me;
   };
 
-  export type Me = AuthFields.Fragment;
+  export type Me = {
+    __typename?: "User";
+
+    avatar: Maybe<Url>;
+  } & AuthFields.Fragment;
 }
 
 export namespace AdminUsers {
@@ -919,6 +923,7 @@ export class AuthCurrentUserGQL extends Apollo.Query<
     query AuthCurrentUser {
       me {
         ...authFields
+        avatar
       }
     }
 

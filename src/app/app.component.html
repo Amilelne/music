@@ -7,21 +7,50 @@
         >练习</li
       >
       <li nz-menu-item routerLink="/experts" routerLinkActive="active">专家</li>
-      <li nz-menu-item routerLink="/admin" routerLinkActive="active">管理</li>
-      <li
-        nz-menu-item
-        routerLink="/login"
-        routerLinkActive="active"
-        class="nav-right"
-        >登录</li
+      <!--Admin-->
+      <ng-container
+        *ngIf="
+          (authService.isLoggedIn$ | async) && authService.user.role == 'admin'
+        "
       >
-      <li
-        nz-menu-item
-        routerLink="/register"
-        routerLinkActive="active"
-        class="nav-right"
-        >注册</li
-      >
+        <li nz-menu-item routerLink="/admin" routerLinkActive="active">管理</li>
+      </ng-container>
+
+      <!--Auth-->
+      <ng-container *ngIf="!(authService.isLoggedIn$ | async)">
+        <li
+          nz-menu-item
+          routerLink="/login"
+          routerLinkActive="active"
+          class="nav-right"
+          >登录</li
+        >
+        <li
+          nz-menu-item
+          routerLink="/register"
+          routerLinkActive="active"
+          class="nav-right"
+          >注册</li
+        >
+      </ng-container>
+      <ng-container *ngIf="(authService.isLoggedIn$ | async)">
+        <li
+          nz-menu-item
+          routerLink="/login"
+          routerLinkActive="active"
+          class="nav-right"
+          (click)="authService.logout()"
+          >登出
+        </li>
+        <li
+          nz-menu-item
+          routerLink="/user/"
+          routerLinkActive="active"
+          class="nav-right"
+        >
+          <nz-avatar [nzText]="authService.user.name"></nz-avatar>
+        </li>
+      </ng-container>
     </ul>
   </nz-header>
   <nz-content> <router-outlet></router-outlet> </nz-content>
