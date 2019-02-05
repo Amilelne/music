@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CourseService } from 'app/admin/course/course.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { CourseService } from 'app/admin/course/course.service';
   styleUrls: ['./practice.component.scss']
 })
 export class PracticeComponent implements OnInit {
-  practices = [];
+  @Input() practices;
   constructor(private courseService: CourseService) {}
   ngOnInit() {
     this.courseService.getPracticeList().subscribe(data => {

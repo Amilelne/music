@@ -20,6 +20,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FooterComponent } from './footer/footer.component';
 import { PracticeComponent } from './practice/practice.component';
 import { RecordComponent } from './practice/record/record.component';
+import { ExpertComponent } from './expert/expert.component';
 
 registerLocaleData(zh);
 
@@ -33,7 +34,8 @@ registerLocaleData(zh);
     MenuComponent,
     FooterComponent,
     PracticeComponent,
-    RecordComponent
+    RecordComponent,
+    ExpertComponent
   ],
   imports: [
     BrowserModule,

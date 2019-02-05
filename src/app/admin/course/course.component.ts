@@ -6,13 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
-  isVisible = false;
+  isCourseVisible = false;
+  isPracticeVisible = false;
   constructor() {}
 
   ngOnInit() {}
 
   createPractice() {
-    console.log(this.isVisible);
-    this.isVisible = true;
+    this.isPracticeVisible = true;
+  }
+
+  createCourse() {
+    this.isCourseVisible = true;
   }
 }

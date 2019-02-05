@@ -291,6 +291,30 @@ export namespace AuthCurrentUser {
   export type Me = AuthFields.Fragment;
 }
 
+export namespace AdminUsers {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    users: (Maybe<Users>)[];
+  };
+
+  export type Users = UserFields.Fragment;
+}
+
+export namespace Experts {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    experts: (Maybe<Experts>)[];
+  };
+
+  export type Experts = UserFields.Fragment;
+}
+
 export namespace CourseFields {
   export type Fragment = {
     __typename?: "Course";
@@ -369,6 +393,24 @@ export namespace AuthFields {
   };
 }
 
+export namespace UserFields {
+  export type Fragment = {
+    __typename?: "User";
+
+    id: string;
+
+    name: string;
+
+    role: string;
+
+    level: number;
+
+    introduction: Maybe<string>;
+
+    avatar: Maybe<Url>;
+  };
+}
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -385,6 +427,10 @@ export interface Query {
   users: (Maybe<User>)[];
 
   user: User;
+  /** get all experts */
+  experts: (Maybe<User>)[];
+
+  expert: User;
   /** course */
   courses: (Maybe<Course>)[];
 
@@ -528,6 +574,9 @@ export interface AuthPayload {
 export interface UserQueryArgs {
   id: string;
 }
+export interface ExpertQueryArgs {
+  id: string;
+}
 export interface CourseQueryArgs {
   id: string;
 }
@@ -625,6 +674,17 @@ export const AuthFieldsFragment = gql`
     name
     role
     level
+  }
+`;
+
+export const UserFieldsFragment = gql`
+  fragment UserFields on User {
+    id
+    name
+    role
+    level
+    introduction
+    avatar
   }
 `;
 
@@ -863,6 +923,37 @@ export class AuthCurrentUserGQL extends Apollo.Query<
     }
 
     ${AuthFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminUsersGQL extends Apollo.Query<
+  AdminUsers.Query,
+  AdminUsers.Variables
+> {
+  document: any = gql`
+    query AdminUsers {
+      users {
+        ...UserFields
+      }
+    }
+
+    ${UserFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ExpertsGQL extends Apollo.Query<Experts.Query, Experts.Variables> {
+  document: any = gql`
+    query Experts {
+      experts {
+        ...UserFields
+      }
+    }
+
+    ${UserFieldsFragment}
   `;
 }
 

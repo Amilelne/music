@@ -1,0 +1,20 @@
+fragment UserFields on User {
+  id
+  name
+  role
+  level
+  introduction
+  avatar
+}
+
+query AdminUsers {
+  users {
+    ...UserFields
+  }
+}
+
+query Experts {
+  experts {
+    ...UserFields
+  }
+}

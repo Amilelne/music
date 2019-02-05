@@ -4,6 +4,9 @@ type Query {
   # get all users
   users: [User]!
   user(id: ID!): User!
+  # get all experts
+  experts: [User]!
+  expert(id: ID!): User!
 
   # course
   courses: [Course]!

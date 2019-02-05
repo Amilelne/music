@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { CourseComponent } from './course/course.component';
 import { PracticeComponent } from './practice/practice.component';
 import { RecordComponent } from './practice/record/record.component';
+import { ExpertComponent } from './expert/expert.component';
 
 const routes: Routes = [
   { path: '', component: CourseComponent, pathMatch: 'full' },
@@ -15,6 +16,8 @@ const routes: Routes = [
   { path: 'courses', component: CourseComponent },
   { path: 'practices', component: PracticeComponent },
   { path: 'practices/:id', component: RecordComponent },
+  { path: 'experts', component: ExpertComponent },
+  { path: 'experts/:id', component: ExpertComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: '**', component: Get404Component }
 ];

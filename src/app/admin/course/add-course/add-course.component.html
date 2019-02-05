@@ -1,4 +1,10 @@
-<div class="addCourse">
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="创建课程"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
   <form
     nz-form
     [formGroup]="validateForm"
@@ -98,19 +104,5 @@
         >
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-control [nzOffset]="7" [nzSpan]="24">
-        <button
-          nz-button
-          nzType="primary"
-          [disabled]="!validateForm.valid"
-          [nzSize]="large"
-          >提交</button
-        >
-        <button nz-button (click)="resetForm($event)" [nzSize]="large"
-          >重置</button
-        >
-      </nz-form-control>
-    </nz-form-item>
   </form>
-</div>
+</nz-modal>

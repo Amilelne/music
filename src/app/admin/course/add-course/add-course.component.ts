@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-course.component.scss']
 })
 export class AddCourseComponent implements OnInit {
+  @Input() isVisible = false;
+  isOkLoading = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -82,4 +84,37 @@ export class AddCourseComponent implements OnInit {
         observer.complete();
       }, 1000);
     })
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsDirty();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+    this.courseService.createCourse(this.validateForm.value).subscribe(
+      ({ addCourse: { id } }) => {
+        this.router.navigate(['/admin/course', id]);
+      },
+      errors => {
+        this.errorState = true;
+        this.errorMessage = errors.message;
+      }
+    );
+    this.isOkLoading = true;
+    window.setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 2000);
+  }
+
+  handleCancel(): void {
+    this.validateForm.reset();
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsPristine();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+    this.isVisible = false;
+  }
 }

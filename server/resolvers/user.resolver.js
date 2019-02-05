@@ -5,10 +5,21 @@ const RoleGuard = require('../utils/role.guard');
 
 const resolverMap = {
   Query: {
+    user: async (obj, { id }, context, info) => {
+      if (RoleGuard.canActivate(context, 'admin')) {
+        return User.findByIdAndValidate(id, info);
+      }
+    },
     users: async (obj, args, context, info) => {
       if (RoleGuard.canActivate(context, 'admin')) {
         return User.find();
       }
+    },
+    experts: async (obj, args, context, info) => {
+      return User.find({ role: 'expert' });
+    },
+    expert: async (obj, { id }, context, info) => {
+      return User.find({ role: 'expert' }, { _id: id });
     }
   },
   Mutation: {

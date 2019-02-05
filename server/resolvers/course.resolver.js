@@ -1,10 +1,14 @@
 const { Course, Tutorial } = require('../models');
 const fs = require('fs');
+const { conf } = require('../config');
 const nanoid = require('nanoid');
 const uploadDir = './server/uploads/';
+const host = conf('server.host');
+const port = conf('server.port');
 const storeFS = ({ stream, suffix }) => {
   const id = nanoid(10);
   const path = `${id}.${suffix}`;
+  const httpPath = 'http://' + host + ':' + port + '/' + path;
   return new Promise((resolve, reject) => {
     stream
       .on('error', (error) => {
@@ -15,7 +19,7 @@ const storeFS = ({ stream, suffix }) => {
       })
       .pipe(fs.createWriteStream(uploadDir + path))
       .on('error', (error) => reject(error))
-      .on('finish', () => resolve({ id, path }));
+      .on('finish', () => resolve({ id, path: httpPath }));
   });
 };
 
