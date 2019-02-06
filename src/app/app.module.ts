@@ -13,8 +13,6 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { GraphQLModule } from './grapghql/graphql.module';
 import { RegisterComponent } from './register/register.component';
-import { CourseComponent } from './course/course.component';
-import { MenuComponent } from './course/menu/menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FooterComponent } from './footer/footer.component';
@@ -30,8 +28,6 @@ registerLocaleData(zh);
     LoginComponent,
     Get404Component,
     RegisterComponent,
-    CourseComponent,
-    MenuComponent,
     FooterComponent,
     PracticeComponent,
     RecordComponent,

@@ -1,0 +1,21 @@
+<div class="courseHeader">
+  <div class="courseTitle">
+    <div class="courseImage">
+      <ng-template *ngIf=""> </ng-template>
+      <img src="assets/images/music.png" alt="course image" />
+    </div>
+    <div
+      class="courseDescription"
+      *ngIf="courseDetail && courseDetail.title && courseDetail.description"
+    >
+      <h2>{{ courseDetail.title }}</h2> <p>{{ courseDetail.description }}</p>
+    </div>
+  </div>
+  <ul nz-menu [nzMode]="'horizontal'">
+    <li nz-menu-item><i nz-icon type="book"></i> 课程章节</li>
+    <li nz-menu-item><i nz-icon type="file"></i> 课程作业</li>
+    <li nz-menu-item><i nz-icon type="tags"></i> 课程介绍</li>
+    <li nz-menu-item><i nz-icon type="smile"></i> 用户评价</li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

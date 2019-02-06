@@ -33,7 +33,6 @@ export class RecordComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.courseService.getPracticeDetail(id).subscribe(data => {
       this.practiceDetail = data;
-      console.log(this.practiceDetail);
     });
   }
   sanitize(url: string) {
