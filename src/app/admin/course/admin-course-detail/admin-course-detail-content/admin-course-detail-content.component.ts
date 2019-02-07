@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../course.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CourseService } from '../../course.service';
 export class AdminCourseDetailContentComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private router: Router,
+    private route: ActivatedRoute,
     private msg: NzMessageService,
     private courseService: CourseService
   ) {
@@ -44,9 +44,10 @@ export class AdminCourseDetailContentComponent implements OnInit {
     { value: 5, label: '偏难' }
   ];
   data: any[];
+  id: String;
   ngOnInit() {
-    const ID = this.router.url.split('/').slice(-1)[0];
-    this.courseService.getCourseDetail(ID).subscribe(data => {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.courseService.getCourseDetail(this.id).subscribe((data) => {
       this.data = data.tutorials;
     });
   }
@@ -58,7 +59,7 @@ export class AdminCourseDetailContentComponent implements OnInit {
         item.onSuccess(filename, item.file, mimetype);
         this.validateForm.controls['resourceUrl'].setValue(filename);
       },
-      errors => {
+      (errors) => {
         if (errors !== undefined) {
           console.log(errors);
           item.onError(errors, item.file);
@@ -92,13 +93,15 @@ export class AdminCourseDetailContentComponent implements OnInit {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    this.courseService.createTutorial(this.validateForm.value).subscribe(
-      ({ addTutorial: { filename } }) => {},
-      errors => {
-        this.errorState = true;
-        this.errorMessage = errors.message;
-      }
-    );
+    this.courseService
+      .createTutorial(this.validateForm.value, this.id)
+      .subscribe(
+        ({ addTutorial: { filename } }) => {},
+        (errors) => {
+          this.errorState = true;
+          this.errorMessage = errors.message;
+        }
+      );
     this.isOkLoading = true;
     window.setTimeout(() => {
       this.isVisible = false;

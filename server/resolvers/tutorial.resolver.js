@@ -1,4 +1,4 @@
-const { Tutorial } = require('../models');
+const { Tutorial, Course } = require('../models');
 
 const resolveMap = {
   Query: {
@@ -7,8 +7,15 @@ const resolveMap = {
     }
   },
   Mutation: {
-    addTutorial: async (obj, { data }, context, info) => {
+    addTutorial: async (obj, { data, id }, context, info) => {
       let tutorial = await Tutorial.create(data);
+      Course.updateOne(
+        { _id: id },
+        { $push: { tutorials: tutorial._id } },
+        function(err, doc) {
+          if (err) console.log(err);
+        }
+      );
       return tutorial;
     },
     deleteTutorial: async (obj, { id }, context, info) => {

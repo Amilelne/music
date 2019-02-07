@@ -54,29 +54,31 @@ export class CourseService {
   }
 
   getCourseList() {
-    return this.courseListGQL.fetch().pipe(map(result => result.data.courses));
+    return this.courseListGQL
+      .fetch()
+      .pipe(map((result) => result.data.courses));
   }
 
   getPracticeList() {
     return this.practiceListGQL
       .fetch()
-      .pipe(map(result => result.data.practices));
+      .pipe(map((result) => result.data.practices));
   }
   getCourseDetail(id) {
     return this.courseDetailGQL
       .watch({ id: id })
-      .valueChanges.pipe(map(result => result.data.course));
+      .valueChanges.pipe(map((result) => result.data.course));
   }
   getPracticeDetail(id) {
     return this.practiceDetailGQL
       .watch({ id: id })
-      .valueChanges.pipe(map(result => result.data.practice));
+      .valueChanges.pipe(map((result) => result.data.practice));
   }
 
-  createTutorial(createTutorialInput: CreateTutorialInput) {
+  createTutorial(createTutorialInput: CreateTutorialInput, id) {
     return this.createTutorialGQL
       .mutate(
-        { data: createTutorialInput },
+        { data: createTutorialInput, id: id },
         { errorPolicy: 'all', fetchPolicy: 'no-cache' }
       )
       .pipe(
@@ -88,7 +90,7 @@ export class CourseService {
           }
         }),
         tap(({ addTutorial: { id } }) => {
-          console.log(id);
+          // console.log(id);
         })
       );
   }
@@ -108,7 +110,7 @@ export class CourseService {
           }
         }),
         tap(({ addPractice: { id } }) => {
-          console.log(id);
+          // console.log(id);
         })
       );
   }

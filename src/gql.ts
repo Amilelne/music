@@ -174,6 +174,7 @@ export namespace AdminDeleteCourse {
 export namespace AdminCreateTutorial {
   export type Variables = {
     data: CreateTutorialInput;
+    id?: Maybe<string>;
   };
 
   export type Mutation = {
@@ -611,6 +612,8 @@ export interface DeleteCourseMutationArgs {
 }
 export interface AddTutorialMutationArgs {
   data: CreateTutorialInput;
+
+  id?: Maybe<string>;
 }
 export interface DeleteTutorialMutationArgs {
   id: string;
@@ -817,8 +820,8 @@ export class AdminCreateTutorialGQL extends Apollo.Mutation<
   AdminCreateTutorial.Variables
 > {
   document: any = gql`
-    mutation AdminCreateTutorial($data: CreateTutorialInput!) {
-      addTutorial(data: $data) {
+    mutation AdminCreateTutorial($data: CreateTutorialInput!, $id: ID) {
+      addTutorial(data: $data, id: $id) {
         ...TutorialFields
       }
     }

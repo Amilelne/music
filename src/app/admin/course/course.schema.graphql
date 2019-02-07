@@ -69,8 +69,8 @@ mutation AdminDeleteCourse($id: ID!) {
   }
 }
 
-mutation AdminCreateTutorial($data: CreateTutorialInput!) {
-  addTutorial(data: $data) {
+mutation AdminCreateTutorial($data: CreateTutorialInput!, $id: ID) {
+  addTutorial(data: $data, id: $id) {
     ...TutorialFields
   }
 }

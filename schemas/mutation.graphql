@@ -10,7 +10,7 @@ type Mutation {
   deleteCourse(id: ID!): Course!
 
   # tutorial
-  addTutorial(data: CreateTutorialInput!): Tutorial!
+  addTutorial(data: CreateTutorialInput!, id: ID): Tutorial!
   deleteTutorial(id: ID!): Tutorial!
 
   # practice
