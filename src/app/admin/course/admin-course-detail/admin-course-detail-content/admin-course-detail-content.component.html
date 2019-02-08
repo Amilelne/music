@@ -141,7 +141,7 @@
             >
               <ng-template #nzTitle>
                 <nz-avatar nzIcon="file"></nz-avatar>
-                <a href="https://ng.ant.design">{{ item.title }}</a>
+                <a [href]="item.resourceUrl">{{ item.title }}</a>
               </ng-template>
             </nz-list-item-meta>
           </nz-skeleton>
