@@ -1,0 +1,29 @@
+.menu{
+  color: rgba(0, 0, 0, 0.65);
+  background: #fff;
+  width: 240px;
+  padding-top: 20px;
+  .avator-wrapper{
+    .avator-mode{
+      position: relative;
+      width: 100px;
+      height: 100px;
+      box-sizing: border-box;
+      border: 4px solid #d9dde1;
+      border-radius: 50px;
+      margin: 0 auto;
+      text-align: center;
+      overflow: hidden;
+      img{
+        width: 92px;
+        height: 92px;
+      }
+      .update-avator{
+        bottom: -30px;
+      }
+    }
+    .des-mod{
+      text-align: center;
+    }
+  }
+}

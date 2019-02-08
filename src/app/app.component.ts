@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/auth/auth.service';
-import { User } from '@app/gql';
 
 @Component({
   selector: 'app-root',

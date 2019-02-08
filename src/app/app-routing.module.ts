@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'courses',
     loadChildren: './course/user-course.module#UserCourseModule'
   },
+  {
+    path: 'user',
+    loadChildren: './user/user.module#UserModule'
+  },
   { path: 'practices', component: PracticeComponent },
   { path: 'practices/:id', component: RecordComponent },
   { path: 'experts', component: ExpertComponent },

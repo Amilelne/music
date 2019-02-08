@@ -1,0 +1,24 @@
+<div class="menu">
+  <div class="avator-wrapper">
+    <div class="avator-mode">
+      <img src="http://localhost:4455/avatars/default.png" alt="avatar" />
+      <div class="update-avator">
+        <span>更新头像</span>
+      </div>
+    </div>
+    <div class="des-mod">
+      <span>{{ authService.user.name }}</span>
+    </div>
+  </div>
+</div>
+<ul nz-menu [nzMode]="'vertical'" style="width: 240px;">
+  <li nz-submenu>
+    <span title><i nz-icon type="profile"></i> 个人信息</span>
+  </li>
+  <li nz-submenu>
+    <span title><i nz-icon type="lock"></i> 账号绑定</span>
+  </li>
+  <li nz-submenu>
+    <span title><i nz-icon type="safety"></i> 密码安全</span>
+  </li>
+</ul>
