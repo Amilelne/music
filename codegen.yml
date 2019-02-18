@@ -8,11 +8,12 @@ documents:
     ./src/app/admin/course/*.graphql,
     ./src/app/core/auth/*.graphql,
     ./src/app/admin/user/*.graphql,
+    ./src/app/user/*.graphql,
   ]
 generates:
   ./src/gql.ts:
     plugins:
-      - 'typescript-common'
-      - 'typescript-client'
-      - 'typescript-server'
-      - 'typescript-apollo-angular'
+      - "typescript-common"
+      - "typescript-client"
+      - "typescript-server"
+      - "typescript-apollo-angular"

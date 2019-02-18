@@ -8,7 +8,11 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback>
-        <input nz-input formControlName="userName" />
+        <input
+          nz-input
+          formControlName="userName"
+          [value]="authService.user.name"
+        />
         <nz-form-explain
           *ngIf="
             (validateForm.get('userName').dirty &&
@@ -27,7 +31,12 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>邮箱</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback>
-        <input nz-input formControlName="email" type="email" />
+        <input
+          nz-input
+          formControlName="email"
+          type="email"
+          [value]="authService.user.email"
+        />
         <nz-form-explain
           *ngIf="
             validateForm.get('email').dirty && validateForm.get('email').errors
@@ -103,9 +112,9 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control [nzOffset]="7" [nzSpan]="12">
-        <button nz-button nzType="primary" [disabled]="!validateForm.valid"
-          >保存</button
-        >
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid">
+          保存
+        </button>
         <button nz-button (click)="resetForm($event)">重置</button>
       </nz-form-control>
     </nz-form-item>

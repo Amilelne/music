@@ -19,4 +19,10 @@ type Mutation {
 
   # upload file
   singleUpload(file: Upload!): File!
+
+  # update avatar
+  updateAvatar(userId: ID!, file: Upload!): File!
+
+  # update profile
+  updateProfile(userId: ID!, data: UpdateProfileInput!): User!
 }

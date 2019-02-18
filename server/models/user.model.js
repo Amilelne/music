@@ -2,6 +2,7 @@ const { conf } = require('../config');
 const mongoose = require('../mongoose');
 const Schema = mongoose.Schema;
 
+const default_avatar  = "http://"+conf('server.host')+":"+conf('server.port')+'/avatars/default.png';
 const schema = new Schema(
   {
     name: {
@@ -26,7 +27,8 @@ const schema = new Schema(
     },
     avatar: {
       type: String,
-      required: false
+      required: false,
+      default: default_avatar
     }
   },
   {

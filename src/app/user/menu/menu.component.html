@@ -2,9 +2,17 @@
   <div class="menu">
     <div class="avator-wrapper">
       <div class="avator-mode">
-        <img src="http://localhost:4455/avatars/default.png" alt="avatar" />
+        <img [src]="authService.user.avatar" alt="avatar" />
         <div class="update-mode">
-          <p><a href="#">更换头像</a></p>
+          <p>
+            <input
+              type="file"
+              style="display:none;"
+              #fileInput
+              (change)="onFileChanged($event)"
+            />
+            <a (click)="fileInput.click()">更换头像</a>
+          </p>
         </div>
       </div>
       <div class="des-mod">
@@ -12,7 +20,7 @@
       </div>
     </div>
   </div>
-  <ul nz-menu [nzMode]="'vertical'">
+  <ul nz-menu [nzMode]="'vertical'" style="height:100%">
     <li nz-submenu>
       <span title><i nz-icon type="profile"></i> 个人信息</span>
     </li>

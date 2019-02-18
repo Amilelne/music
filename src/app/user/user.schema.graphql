@@ -1,0 +1,12 @@
+mutation UpdateAvatar($userId: ID!, $file: Upload!) {
+  updateAvatar(userId: $userId, file: $file) {
+    filename
+    mimetype
+    encoding
+  }
+}
+mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
+  updateProfile(userId: $userId, data: $data) {
+    name
+  }
+}

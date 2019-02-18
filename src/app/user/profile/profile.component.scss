@@ -1,4 +1,5 @@
-.profile{
+.profile {
+  min-height: 900px;
   background-color: #fff;
 
   [nz-form] {
@@ -9,8 +10,8 @@
     margin-left: 8px;
   }
 
-  form{
-    h3{
+  form {
+    h3 {
       text-align: center;
       padding-top: 1rem;
     }

@@ -1,27 +1,5 @@
-const { Course, Tutorial } = require('../models');
-const fs = require('fs');
-const { conf } = require('../config');
-const nanoid = require('nanoid');
-const uploadDir = './server/uploads/';
-const host = conf('server.host');
-const port = conf('server.port');
-const storeFS = ({ stream, suffix }) => {
-  const id = nanoid(10);
-  const path = `${id}.${suffix}`;
-  const httpPath = 'http://' + host + ':' + port + '/' + path;
-  return new Promise((resolve, reject) => {
-    stream
-      .on('error', (error) => {
-        if (stream.truncated) {
-          fs.unlinkSync(path);
-        }
-        reject(error);
-      })
-      .pipe(fs.createWriteStream(uploadDir + path))
-      .on('error', (error) => reject(error))
-      .on('finish', () => resolve({ id, path: httpPath }));
-  });
-};
+const { Course, Tutorial } = require("../models");
+const storeFS = require("../utils/storeFile");
 
 const resolveMap = {
   Query: {
@@ -37,7 +15,7 @@ const resolveMap = {
       let tutorials = [];
       if (data.tutorials !== undefined) {
         tutorials = await Promise.all(
-          data.tutorials.map(async (tutorial) => {
+          data.tutorials.map(async tutorial => {
             let newTutorial = await Tutorial.create(tutorial);
             return newTutorial._id;
           })
@@ -59,14 +37,14 @@ const resolveMap = {
     },
     singleUpload: async (obj, { file }, context, info) => {
       const { createReadStream, filename, mimetype } = await file;
-      let suffix = filename.split('.').slice(-1)[0];
-      if (suffix === 'blob') {
-        suffix = 'wav';
+      let suffix = filename.split(".").slice(-1)[0];
+      if (suffix === "blob") {
+        suffix = "wav";
       }
       const stream = createReadStream();
-
-      const { id, path } = await storeFS({ stream, suffix });
-      return { filename: path, mimetype: mimetype, encoding: 'utf-8' };
+      const folder = "tutorials";
+      const { id, path } = await storeFS({ stream, suffix, folder });
+      return { filename: path, mimetype: mimetype, encoding: "utf-8" };
     }
   }
 };

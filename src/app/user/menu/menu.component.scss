@@ -1,12 +1,12 @@
-.sider-menu{
+.sider-menu {
   height: 100%;
   padding-top: 0;
   margin-top: 0;
-  .menu{
+  .menu {
     color: rgba(0, 0, 0, 0.65);
     background: #fff;
     padding-top: 20px;
-    .avator-wrapper{
+    .avator-wrapper {
       .avator-mode {
         position: relative;
         width: 100px;
@@ -17,7 +17,7 @@
         margin: 0 auto;
         text-align: center;
         overflow: hidden;
-        img{
+        img {
           width: 92px;
           height: 92px;
         }
@@ -28,21 +28,18 @@
           bottom: 0px;
           background: rgba(0, 0, 0, 0.6);
           color: #fff;
-          p{
+          p {
             margin-top: 0.5em;
             margin-bottom: 0.5em;
           }
-          a{
+          a {
             color: #fff;
           }
         }
       }
-      .des-mod{
+      .des-mod {
         text-align: center;
       }
     }
-  }
-  .menu ul{
-    width: 216px;
   }
 }

@@ -64,6 +64,20 @@ export interface CreatePracticeInput {
 
   level: number;
 }
+/** update profile */
+export interface UpdateProfileInput {
+  name?: Maybe<string>;
+
+  email?: Maybe<string>;
+
+  work?: Maybe<string>;
+
+  city?: Maybe<string>;
+
+  sex?: Maybe<number>;
+
+  introduction?: Maybe<string>;
+}
 
 /** custom url link */
 export type Url = any;
@@ -320,6 +334,48 @@ export namespace Experts {
   export type Experts = UserFields.Fragment;
 }
 
+export namespace UpdateAvatar {
+  export type Variables = {
+    userId: string;
+    file: Upload;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateAvatar: UpdateAvatar;
+  };
+
+  export type UpdateAvatar = {
+    __typename?: "File";
+
+    filename: string;
+
+    mimetype: string;
+
+    encoding: string;
+  };
+}
+
+export namespace UpdateProfile {
+  export type Variables = {
+    userId: string;
+    data: UpdateProfileInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateProfile: UpdateProfile;
+  };
+
+  export type UpdateProfile = {
+    __typename?: "User";
+
+    name: string;
+  };
+}
+
 export namespace CourseFields {
   export type Fragment = {
     __typename?: "Course";
@@ -567,6 +623,10 @@ export interface Mutation {
   deletePractice: Practice;
   /** upload file */
   singleUpload: File;
+  /** update avatar */
+  updateAvatar: File;
+  /** update profile */
+  updateProfile: User;
 }
 
 /** payload */
@@ -626,6 +686,16 @@ export interface DeletePracticeMutationArgs {
 }
 export interface SingleUploadMutationArgs {
   file: Upload;
+}
+export interface UpdateAvatarMutationArgs {
+  userId: string;
+
+  file: Upload;
+}
+export interface UpdateProfileMutationArgs {
+  userId: string;
+
+  data: UpdateProfileInput;
 }
 
 // ====================================================
@@ -967,6 +1037,38 @@ export class ExpertsGQL extends Apollo.Query<Experts.Query, Experts.Variables> {
     }
 
     ${UserFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdateAvatarGQL extends Apollo.Mutation<
+  UpdateAvatar.Mutation,
+  UpdateAvatar.Variables
+> {
+  document: any = gql`
+    mutation UpdateAvatar($userId: ID!, $file: Upload!) {
+      updateAvatar(userId: $userId, file: $file) {
+        filename
+        mimetype
+        encoding
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdateProfileGQL extends Apollo.Mutation<
+  UpdateProfile.Mutation,
+  UpdateProfile.Variables
+> {
+  document: any = gql`
+    mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
+      updateProfile(userId: $userId, data: $data) {
+        name
+      }
+    }
   `;
 }
 

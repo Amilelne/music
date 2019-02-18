@@ -38,3 +38,13 @@ input LoginInput {
   identifier: String!
   credential: String!
 }
+
+# update profile
+input UpdateProfileInput {
+  name: String
+  email: String
+  work: String
+  city: String
+  sex: Int
+  introduction: String
+}
