@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import * as RecordRTC from 'recordrtc';
-import { DomSanitizer } from '@angular/platform-browser';
-import { CourseService } from 'app/admin/course/course.service';
-import { ActivatedRoute } from '@angular/router';
-import { Practice } from '@app/gql';
+import { Component, OnInit, Input } from "@angular/core";
+import * as RecordRTC from "recordrtc";
+import { DomSanitizer } from "@angular/platform-browser";
+import { CourseService } from "app/admin/course/course.service";
+import { ActivatedRoute } from "@angular/router";
+import { Practice } from "@app/gql";
 
 @Component({
-  selector: 'app-record',
-  templateUrl: './record.component.html',
-  styleUrls: ['./record.component.scss']
+  selector: "app-record",
+  templateUrl: "./record.component.html",
+  styleUrls: ["./record.component.scss"]
 })
 export class RecordComponent implements OnInit {
   @Input() practiceDetail: Practice;
@@ -30,7 +30,7 @@ export class RecordComponent implements OnInit {
   }
 
   getPracticeDetail() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get("id");
     this.courseService.getPracticeDetail(id).subscribe(data => {
       this.practiceDetail = data;
     });
@@ -53,7 +53,7 @@ export class RecordComponent implements OnInit {
 
   successCallback(stream) {
     const options = {
-      mimeType: 'audio/wav',
+      mimeType: "audio/wav",
       numberOfAudioChannels: 1
     };
     // Start Actuall Recording
@@ -85,6 +85,6 @@ export class RecordComponent implements OnInit {
     );
   }
   errorCallback(error) {
-    this.error = 'Can not play audio in your browser';
+    this.error = "Can not play audio in your browser";
   }
 }

@@ -1,12 +1,17 @@
+fragment userProfile on User {
+  id
+  name
+  avatar
+  role
+  level
+}
 mutation UpdateAvatar($userId: ID!, $file: Upload!) {
   updateAvatar(userId: $userId, file: $file) {
-    filename
-    mimetype
-    encoding
+    ...userProfile
   }
 }
 mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
   updateProfile(userId: $userId, data: $data) {
-    name
+    ...userProfile
   }
 }

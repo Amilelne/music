@@ -346,15 +346,7 @@ export namespace UpdateAvatar {
     updateAvatar: UpdateAvatar;
   };
 
-  export type UpdateAvatar = {
-    __typename?: "File";
-
-    filename: string;
-
-    mimetype: string;
-
-    encoding: string;
-  };
+  export type UpdateAvatar = UserProfile.Fragment;
 }
 
 export namespace UpdateProfile {
@@ -369,11 +361,7 @@ export namespace UpdateProfile {
     updateProfile: UpdateProfile;
   };
 
-  export type UpdateProfile = {
-    __typename?: "User";
-
-    name: string;
-  };
+  export type UpdateProfile = UserProfile.Fragment;
 }
 
 export namespace CourseFields {
@@ -471,6 +459,22 @@ export namespace UserFields {
     introduction: Maybe<string>;
 
     avatar: Maybe<Url>;
+  };
+}
+
+export namespace UserProfile {
+  export type Fragment = {
+    __typename?: "User";
+
+    id: string;
+
+    name: string;
+
+    avatar: Maybe<Url>;
+
+    role: string;
+
+    level: number;
   };
 }
 
@@ -624,7 +628,7 @@ export interface Mutation {
   /** upload file */
   singleUpload: File;
   /** update avatar */
-  updateAvatar: File;
+  updateAvatar: User;
   /** update profile */
   updateProfile: User;
 }
@@ -767,6 +771,16 @@ export const UserFieldsFragment = gql`
     level
     introduction
     avatar
+  }
+`;
+
+export const UserProfileFragment = gql`
+  fragment userProfile on User {
+    id
+    name
+    avatar
+    role
+    level
   }
 `;
 
@@ -1049,11 +1063,11 @@ export class UpdateAvatarGQL extends Apollo.Mutation<
   document: any = gql`
     mutation UpdateAvatar($userId: ID!, $file: Upload!) {
       updateAvatar(userId: $userId, file: $file) {
-        filename
-        mimetype
-        encoding
+        ...userProfile
       }
     }
+
+    ${UserProfileFragment}
   `;
 }
 @Injectable({
@@ -1066,9 +1080,11 @@ export class UpdateProfileGQL extends Apollo.Mutation<
   document: any = gql`
     mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
       updateProfile(userId: $userId, data: $data) {
-        name
+        ...userProfile
       }
     }
+
+    ${UserProfileFragment}
   `;
 }
 

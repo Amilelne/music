@@ -72,7 +72,8 @@ const resolverMap = {
       const folder = "avatars";
       const { id, path } = await storeFS({ stream, suffix, folder });
       await User.updateOne({ _id: userId }, { avatar: path });
-      return { filename: path, mimetype: mimetype, encoding: "utf-8" };
+      const user = await User.findById({ _id: userId });
+      return user;
     }
   }
 };

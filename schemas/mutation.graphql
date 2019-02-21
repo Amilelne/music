@@ -21,7 +21,7 @@ type Mutation {
   singleUpload(file: Upload!): File!
 
   # update avatar
-  updateAvatar(userId: ID!, file: Upload!): File!
+  updateAvatar(userId: ID!, file: Upload!): User!
 
   # update profile
   updateProfile(userId: ID!, data: UpdateProfileInput!): User!

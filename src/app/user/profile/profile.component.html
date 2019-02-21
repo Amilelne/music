@@ -1,122 +1,123 @@
 <div class="profile">
-  <form
-    nz-form
-    [formGroup]="validateForm"
-    (ngSubmit)="submitForm($event, validateForm.value)"
-  >
-    <h3>个人信息</h3>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzHasFeedback>
-        <input
-          nz-input
-          formControlName="userName"
-          [value]="authService.user.name"
-        />
-        <nz-form-explain
-          *ngIf="
-            (validateForm.get('userName').dirty &&
-              validateForm.get('userName').errors) ||
-            validateForm.get('userName').pending
-          "
-        >
-          <ng-container
-            *ngIf="validateForm.get('userName').hasError('required')"
+  <ng-container *ngIf="(authService._user | async) as user">
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm($event, validateForm.value)"
+    >
+      <h3>个人信息</h3>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <input nz-input formControlName="userName" [value]="user.name" />
+          <nz-form-explain
+            *ngIf="
+              (validateForm.get('userName').dirty &&
+                validateForm.get('userName').errors) ||
+              validateForm.get('userName').pending
+            "
           >
-            请输入您的昵称
-          </ng-container>
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>邮箱</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzHasFeedback>
-        <input
-          nz-input
-          formControlName="email"
-          type="email"
-          [value]="authService.user.email"
-        />
-        <nz-form-explain
-          *ngIf="
-            validateForm.get('email').dirty && validateForm.get('email').errors
-          "
-        >
-          <ng-container *ngIf="validateForm.get('email').hasError('email')">
-            不是有效的邮箱
-          </ng-container>
-          <ng-container *ngIf="validateForm.get('email').hasError('required')">
-            请输入您的邮箱
-          </ng-container>
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>工作</nz-form-label>
-      <div>
+            <ng-container
+              *ngIf="validateForm.get('userName').hasError('required')"
+            >
+              请输入您的昵称
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>邮箱</nz-form-label>
         <nz-form-control [nzSpan]="12" nzHasFeedback>
           <input
             nz-input
-            type="text"
-            formControlName="work"
-            (ngModelChange)="validateConfirmWork()"
+            formControlName="email"
+            type="email"
+            [value]="user.email | async"
           />
           <nz-form-explain
             *ngIf="
-              validateForm.get('work').dirty &&
-              validateForm.get('work').hasError('required')
+              validateForm.get('email').dirty &&
+              validateForm.get('email').errors
             "
-            >请输入您的工作</nz-form-explain
+          >
+            <ng-container *ngIf="validateForm.get('email').hasError('email')">
+              不是有效的邮箱
+            </ng-container>
+            <ng-container
+              *ngIf="validateForm.get('email').hasError('required')"
+            >
+              请输入您的邮箱
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>工作</nz-form-label>
+        <div>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input
+              nz-input
+              type="text"
+              formControlName="work"
+              (ngModelChange)="validateConfirmWork()"
+            />
+            <nz-form-explain
+              *ngIf="
+                validateForm.get('work').dirty &&
+                validateForm.get('work').hasError('required')
+              "
+              >请输入您的工作</nz-form-explain
+            >
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>城市</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <input nz-input type="text" formControlName="city" />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('city').dirty &&
+              validateForm.get('city').hasError('required')
+            "
+          >
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>性别</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <input formControlName="sex" nz-input type="text" />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('sex').dirty &&
+              validateForm.get('sex').hasError('required')
+            "
+            >请输入您的性别</nz-form-explain
           >
         </nz-form-control>
-      </div>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>城市</nz-form-label>
-      <nz-form-control [nzSpan]="12" nzHasFeedback>
-        <input nz-input type="text" formControlName="city" />
-        <nz-form-explain
-          *ngIf="
-            validateForm.get('city').dirty &&
-            validateForm.get('city').hasError('required')
-          "
-        >
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>性别</nz-form-label>
-      <nz-form-control [nzSpan]="12">
-        <input formControlName="sex" nz-input type="text" />
-        <nz-form-explain
-          *ngIf="
-            validateForm.get('sex').dirty &&
-            validateForm.get('sex').hasError('required')
-          "
-          >请输入您的性别</nz-form-explain
-        >
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>自我介绍</nz-form-label>
-      <nz-form-control [nzSpan]="12">
-        <textarea formControlName="introduction" nz-input rows="2"></textarea>
-        <nz-form-explain
-          *ngIf="
-            validateForm.get('introduction').dirty &&
-            validateForm.get('introduction').hasError('required')
-          "
-          >说说关于您的东西吧</nz-form-explain
-        >
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-control [nzOffset]="7" [nzSpan]="12">
-        <button nz-button nzType="primary" [disabled]="!validateForm.valid">
-          保存
-        </button>
-        <button nz-button (click)="resetForm($event)">重置</button>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>自我介绍</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <textarea formControlName="introduction" nz-input rows="2"></textarea>
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('introduction').dirty &&
+              validateForm.get('introduction').hasError('required')
+            "
+            >说说关于您的东西吧</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid">
+            保存
+          </button>
+          <button nz-button (click)="resetForm($event)">重置</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
 </div>

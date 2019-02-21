@@ -1,24 +1,26 @@
 <div class="sider-menu">
   <div class="menu">
-    <div class="avator-wrapper">
-      <div class="avator-mode">
-        <img [src]="authService.user.avatar" alt="avatar" />
-        <div class="update-mode">
-          <p>
-            <input
-              type="file"
-              style="display:none;"
-              #fileInput
-              (change)="onFileChanged($event)"
-            />
-            <a (click)="fileInput.click()">更换头像</a>
-          </p>
+    <ng-container *ngIf="(authService._user | async) as user">
+      <div class="avator-wrapper">
+        <div class="avator-mode">
+          <img [src]="user.avatar" alt="avatar" />
+          <div class="update-mode">
+            <p>
+              <input
+                type="file"
+                style="display:none;"
+                #fileInput
+                (change)="onFileChanged($event)"
+              />
+              <a (click)="fileInput.click()">更换头像</a>
+            </p>
+          </div>
+        </div>
+        <div class="des-mod">
+          <span>{{ user.name }}</span>
         </div>
       </div>
-      <div class="des-mod">
-        <span>{{ authService.user.name }}</span>
-      </div>
-    </div>
+    </ng-container>
   </div>
   <ul nz-menu [nzMode]="'vertical'" style="height:100%">
     <li nz-submenu>

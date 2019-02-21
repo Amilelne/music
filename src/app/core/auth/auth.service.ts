@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   AuthLoginGQL,
   LoginInput,
@@ -6,22 +6,22 @@ import {
   AuthRegisterGQL,
   User,
   AuthCurrentUserGQL
-} from '@app/gql';
-import { BehaviorSubject, throwError, of } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+} from "@app/gql";
+import { BehaviorSubject, throwError, of, Observable } from "rxjs";
+import { mergeMap, tap } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
-  public static AUTH_TOKEN_LOCAL_STORAGE_KEY = 'authToken';
+  public static AUTH_TOKEN_LOCAL_STORAGE_KEY = "authToken";
   isLoggedIn$ = new BehaviorSubject<boolean>(null);
 
-  private _user: User;
+  public _user: BehaviorSubject<User>;
 
-  get user(): User {
-    return this._user;
+  get user(): Observable<User> {
+    return this._user.asObservable();
   }
 
   constructor(
@@ -30,9 +30,12 @@ export class AuthService {
     private currentUserGQL: AuthCurrentUserGQL,
     private router: Router
   ) {
+    this._user = new BehaviorSubject<User>(null);
     if (AuthService.getToken()) {
       this.currentUserGQL.fetch().subscribe(
-        ({ data: { me } }) => this.setUser(me),
+        ({ data: { me } }) => {
+          this.setUser(me);
+        },
         () => {
           AuthService.removeToken();
           this.isLoggedIn$.next(false);
@@ -56,7 +59,7 @@ export class AuthService {
   }
 
   private setUser(user: User) {
-    this._user = user;
+    this._user.next(user);
     this.isLoggedIn$.next(!!user);
   }
 
@@ -67,7 +70,7 @@ export class AuthService {
     return this.loginGQL
       .mutate(
         { data: loginInput },
-        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+        { errorPolicy: "all", fetchPolicy: "no-cache" }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -91,7 +94,7 @@ export class AuthService {
     return this.registerGQL
       .mutate(
         { data: registerInput },
-        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+        { errorPolicy: "all", fetchPolicy: "no-cache" }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -112,6 +115,15 @@ export class AuthService {
   logout() {
     this.setUser(null);
     AuthService.removeToken();
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
+  }
+
+  // get user info
+  getCurrentUser(): Observable<any> {
+    let user: User;
+    this.currentUserGQL.fetch().subscribe(({ data: { me } }) => {
+      user = me;
+    });
+    return of(user);
   }
 }
