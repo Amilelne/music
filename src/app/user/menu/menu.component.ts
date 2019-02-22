@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   onFileChanged(event) {
     const file = event.target.files[0];
     let id;
-    this.authService.user.subscribe(user => {
+    this.authService._user.subscribe(user => {
       id = user.id;
     });
     this.profileUpdateService.updateAvatar(id, file).subscribe(

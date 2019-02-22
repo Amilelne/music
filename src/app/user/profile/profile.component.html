@@ -9,46 +9,26 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
         <nz-form-control [nzSpan]="12" nzHasFeedback>
-          <input nz-input formControlName="userName" [value]="user.name" />
+          <input nz-input formControlName="name" [value]="user.name" />
           <nz-form-explain
             *ngIf="
-              (validateForm.get('userName').dirty &&
-                validateForm.get('userName').errors) ||
-              validateForm.get('userName').pending
+              validateForm.get('name').dirty && validateForm.get('name').errors
             "
           >
-            <ng-container
-              *ngIf="validateForm.get('userName').hasError('required')"
-            >
+            <ng-container *ngIf="validateForm.get('name').hasError('required')">
               请输入您的昵称
             </ng-container>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>邮箱</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback>
-          <input
-            nz-input
-            formControlName="email"
-            type="email"
-            [value]="user.email | async"
-          />
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('email').dirty &&
-              validateForm.get('email').errors
-            "
-          >
-            <ng-container *ngIf="validateForm.get('email').hasError('email')">
-              不是有效的邮箱
-            </ng-container>
-            <ng-container
-              *ngIf="validateForm.get('email').hasError('required')"
-            >
-              请输入您的邮箱
-            </ng-container>
-          </nz-form-explain>
+        <nz-form-label [nzSpan]="7" nzRequired>性别</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <nz-radio-group formControlName="sex">
+            <label nz-radio nzValue="0">保密</label>
+            <label nz-radio nzValue="1">男</label>
+            <label nz-radio nzValue="2">女</label>
+          </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -59,7 +39,7 @@
               nz-input
               type="text"
               formControlName="work"
-              (ngModelChange)="validateConfirmWork()"
+              [value]="user.work ? user.work : ''"
             />
             <nz-form-explain
               *ngIf="
@@ -74,7 +54,12 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>城市</nz-form-label>
         <nz-form-control [nzSpan]="12" nzHasFeedback>
-          <input nz-input type="text" formControlName="city" />
+          <input
+            nz-input
+            type="text"
+            formControlName="city"
+            [value]="user.city ? user.city : ''"
+          />
           <nz-form-explain
             *ngIf="
               validateForm.get('city').dirty &&
@@ -85,22 +70,15 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>性别</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <input formControlName="sex" nz-input type="text" />
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('sex').dirty &&
-              validateForm.get('sex').hasError('required')
-            "
-            >请输入您的性别</nz-form-explain
-          >
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>自我介绍</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <textarea formControlName="introduction" nz-input rows="2"></textarea>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <textarea
+            formControlName="introduction"
+            nz-input
+            rows="2"
+            type="text"
+            [value]="user.introduction ? user.introduction : ''"
+          ></textarea>
           <nz-form-explain
             *ngIf="
               validateForm.get('introduction').dirty &&

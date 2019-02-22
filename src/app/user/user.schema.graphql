@@ -13,5 +13,8 @@ mutation UpdateAvatar($userId: ID!, $file: Upload!) {
 mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
   updateProfile(userId: $userId, data: $data) {
     ...userProfile
+    work
+    city
+    sex
   }
 }

@@ -74,6 +74,9 @@ const resolverMap = {
       await User.updateOne({ _id: userId }, { avatar: path });
       const user = await User.findById({ _id: userId });
       return user;
+    },
+    updateProfile: async (obj, { userId, data }, context, info) => {
+      return await User.findOneAndUpdate({ _id: userId }, data);
     }
   }
 };

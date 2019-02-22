@@ -361,7 +361,15 @@ export namespace UpdateProfile {
     updateProfile: UpdateProfile;
   };
 
-  export type UpdateProfile = UserProfile.Fragment;
+  export type UpdateProfile = {
+    __typename?: "User";
+
+    work: Maybe<string>;
+
+    city: Maybe<string>;
+
+    sex: Maybe<number>;
+  } & UserProfile.Fragment;
 }
 
 export namespace CourseFields {
@@ -524,6 +532,12 @@ export interface User {
   introduction?: Maybe<string>;
 
   avatar?: Maybe<Url>;
+
+  work?: Maybe<string>;
+
+  city?: Maybe<string>;
+
+  sex?: Maybe<number>;
   /** timestamp */
   createDate?: Maybe<DateTime>;
 
@@ -1081,6 +1095,9 @@ export class UpdateProfileGQL extends Apollo.Mutation<
     mutation UpdateProfile($userId: ID!, $data: UpdateProfileInput!) {
       updateProfile(userId: $userId, data: $data) {
         ...userProfile
+        work
+        city
+        sex
       }
     }
 

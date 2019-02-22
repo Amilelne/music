@@ -5,6 +5,9 @@ type User {
   level: Int!
   introduction: String
   avatar: URL
+  work: String
+  city: String
+  sex: Int
 
   # timestamp
   createDate: DateTime
