@@ -1,7 +1,12 @@
 <div class="expertList">
   <div nz-row [nzGutter]="8">
     <ng-container *ngFor="let expert of expertsList">
-      <div nz-col nzSpan="6" [routerLink]="['/experts/', expert.id]">
+      <div
+        class="expert-item"
+        nz-col
+        nzSpan="6"
+        [routerLink]="['/experts/', expert.id]"
+      >
         <nz-card
           nzHoverable
           style="width:240px"
