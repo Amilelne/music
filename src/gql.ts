@@ -319,7 +319,13 @@ export namespace AdminUsers {
     users: (Maybe<Users>)[];
   };
 
-  export type Users = UserFields.Fragment;
+  export type Users = {
+    __typename?: "User";
+
+    createDate: Maybe<DateTime>;
+
+    updateDate: Maybe<DateTime>;
+  } & UserFields.Fragment;
 }
 
 export namespace Experts {
@@ -1047,6 +1053,8 @@ export class AdminUsersGQL extends Apollo.Query<
     query AdminUsers {
       users {
         ...UserFields
+        createDate
+        updateDate
       }
     }
 

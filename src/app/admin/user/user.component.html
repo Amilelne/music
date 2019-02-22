@@ -1,1 +1,24 @@
-<div class="userPage"> <p> user works! </p> </div>
+<div class="userPage">
+  <nz-table #filterTable [nzData]="displayData">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+      <tr>
+        <th nzShowSort nzSortKey="ID">ID</th>
+        <th nzShowSort nzSortKey="name">用户昵称</th>
+        <th nzShowSort nzSortKey="role">用户身份</th>
+        <th nzShowSort nzSortKey="level">用户级别</th>
+        <th nzShowSort nzSortKey="createDate">账号创建时间</th>
+        <th nzShowSort nzSortKey="updateDate">资料更新时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of filterTable.data">
+        <td [routerLink]="['/admin/user/', data.id]">{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.role }}</td>
+        <td>{{ data.level }}</td>
+        <td>{{ data.createDate | date: "shortDate" }}</td>
+        <td>{{ data.updateDate | date: "shortDate" }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
