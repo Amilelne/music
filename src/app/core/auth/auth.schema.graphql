@@ -27,4 +27,8 @@ fragment authFields on User {
   name
   role
   level
+  avatar
+  work
+  city
+  introduction
 }

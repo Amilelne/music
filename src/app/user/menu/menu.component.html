@@ -23,7 +23,13 @@
     </ng-container>
   </div>
   <ul nz-menu [nzMode]="'vertical'" style="height:100%">
-    <li nz-submenu>
+    <li nz-submenu routerLink="courses" routerLinkActive="active">
+      <span title><i nz-icon type="book"></i> 我的课程</span>
+    </li>
+    <li nz-submenu routerLink="audios" routerLinkActive="active">
+      <span title><i nz-icon type="customer-service"></i> 我的音频</span>
+    </li>
+    <li nz-submenu routerLink="profile" routerLinkActive="active">
       <span title><i nz-icon type="profile"></i> 个人信息</span>
     </li>
     <li nz-submenu>

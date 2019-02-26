@@ -455,6 +455,14 @@ export namespace AuthFields {
     role: string;
 
     level: number;
+
+    avatar: Maybe<Url>;
+
+    work: Maybe<string>;
+
+    city: Maybe<string>;
+
+    introduction: Maybe<string>;
   };
 }
 
@@ -780,6 +788,10 @@ export const AuthFieldsFragment = gql`
     name
     role
     level
+    avatar
+    work
+    city
+    introduction
   }
 `;
 

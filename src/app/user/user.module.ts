@@ -14,9 +14,11 @@ import { UserRoutingModule } from './user-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { UserComponent } from './user.component';
 import { MenuComponent } from './menu/menu.component';
+import { HistoryComponent } from './history/history.component';
+import { AudioComponent } from './audio/audio.component';
 
 @NgModule({
-  declarations: [UserComponent, ProfileComponent, MenuComponent],
+  declarations: [UserComponent, ProfileComponent, MenuComponent, HistoryComponent, AudioComponent],
   imports: [
     CommonModule,
     NgZorroAntdModule,
