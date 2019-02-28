@@ -45,6 +45,17 @@ const resolveMap = {
       const folder = "tutorials";
       const { id, path } = await storeFS({ stream, suffix, folder });
       return { filename: path, mimetype: mimetype, encoding: "utf-8" };
+    },
+    uploadRecord: async (obj, { file, userId, practiceId }, context, info) => {
+      const { createReadStream, filename, mimetype } = await file;
+      let suffix = filename.split(".").slice(-1)[0];
+      if (suffix === "blob") {
+        suffix = "wav";
+      }
+      const stream = createReadStream();
+      const folder = "recorders";
+      const { id, path } = await storeFS({ stream, suffix, folder });
+      return { filename: path, mimetype: mimetype, encoding: "utf-8" };
     }
   }
 };

@@ -1,30 +1,35 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CourseDetailChapterComponent } from './course-detail/course-detail-chapter/course-detail-chapter.component';
-import { CourseComponent } from './course.component';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { CourseDetailChapterComponent } from "./course-detail/course-detail-chapter/course-detail-chapter.component";
+import { CourseComponent } from "./course.component";
+import { CourseDetailComponent } from "./course-detail/course-detail.component";
+import { TutorialComponent } from "./tutorial/tutorial.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: CourseComponent,
-    pathMatch: 'full'
+    pathMatch: "full"
   },
   {
-    path: ':id',
+    path: ":id",
     component: CourseDetailComponent,
     children: [
       {
-        path: '',
+        path: "",
         component: CourseDetailChapterComponent,
         children: [
           {
-            path: 'chapter',
+            path: "chapter",
             component: CourseDetailChapterComponent
           }
         ]
       }
     ]
+  },
+  {
+    path: "tutorial/:id",
+    component: TutorialComponent
   }
 ];
 

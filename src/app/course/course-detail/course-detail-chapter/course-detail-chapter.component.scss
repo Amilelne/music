@@ -1,0 +1,13 @@
+.contentList {
+  min-height: 900px;
+  background-color: #f8fafc;
+  padding-top: 36px;
+  .content-item {
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+    box-shadow: 0 8px 16px 0 rgba(7, 17, 27, 0.1);
+    border-radius: 12px;
+  }
+}

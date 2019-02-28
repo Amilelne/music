@@ -1,0 +1,7 @@
+mutation UploadRecord($file: Upload!, $userId: ID!, $practiceId: ID!) {
+  uploadRecord(file: $file, userId: $userId, practiceId: $practiceId) {
+    filename
+    mimetype
+    encoding
+  }
+}

@@ -1,42 +1,47 @@
+:host ::ng-deep nz-upload {
+  display: block;
+}
+:host ::ng-deep .ant-upload.ant-upload-drag {
+  height: 180px;
+}
 
-  :host ::ng-deep nz-upload { display: block; }
-  :host ::ng-deep .ant-upload.ant-upload-drag { height: 180px; }
+:host ::ng-deep .demo-loadmore-list {
+  min-height: 350px;
+}
+:host ::ng-deep .loadmore {
+  text-align: center;
+  margin-top: 12px;
+  height: 32px;
+  line-height: 32px;
+}
+.ant-upload.ant-upload-drag {
+  width: 70%;
+  margin: 0 auto;
+}
+.content {
+  background-color: #fff;
+  min-height: 800px;
+  button {
+    margin-top: 1rem;
+  }
+}
 
-  :host ::ng-deep .demo-loadmore-list {
-    min-height: 350px;
-  }
-  :host ::ng-deep .loadmore {
-    text-align: center;
-    margin-top: 12px;
-    height: 32px;
-    line-height: 32px;
-  }
-  .ant-upload.ant-upload-drag {
-    width: 70%;
-    margin: 0 auto;
-  }
-  .content{
-    background-color: #fff;
-    min-height: 800px;
-    button{
-      margin-top: 1rem;
-    }
-  }
-
-  .courseHeader {
-    background-color: #fff;
-  }
-  .courseTitle {
-    display: inline-flex;
-  }
-  .courseDescription{
-    margin-top: 2rem;
-    margin-left: 2rem;
-  }
-  .courseImage {
-    img{
+.courseHeader {
+  background-color: #fff;
+}
+.courseTitle {
+  display: inline-flex;
+}
+.courseDescription {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+.courseImage {
+  img {
     width: 200px;
     height: 200px;
-    }
   }
- 
+}
+ul {
+  box-shadow: 0 4px 8px 0 rgba(28, 31, 33, 0.1);
+}

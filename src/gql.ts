@@ -139,6 +139,20 @@ export namespace AdminCourseDetail {
   export type Tutorials = TutorialFields.Fragment;
 }
 
+export namespace TutorialDetail {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    tutorial: Tutorial;
+  };
+
+  export type Tutorial = TutorialFields.Fragment;
+}
+
 export namespace AdminPracticeDetail {
   export type Variables = {
     id: string;
@@ -525,6 +539,8 @@ export interface Query {
 
   course: Course;
   /** tutorial */
+  tutorial: Tutorial;
+
   tutorials: (Maybe<Tutorial>)[];
   /** practice */
   practice: Practice;
@@ -679,6 +695,9 @@ export interface ExpertQueryArgs {
   id: string;
 }
 export interface CourseQueryArgs {
+  id: string;
+}
+export interface TutorialQueryArgs {
   id: string;
 }
 export interface PracticeQueryArgs {
@@ -873,6 +892,23 @@ export class AdminCourseDetailGQL extends Apollo.Query<
     }
 
     ${CourseFieldsFragment}
+    ${TutorialFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class TutorialDetailGQL extends Apollo.Query<
+  TutorialDetail.Query,
+  TutorialDetail.Variables
+> {
+  document: any = gql`
+    query TutorialDetail($id: ID!) {
+      tutorial(id: $id) {
+        ...TutorialFields
+      }
+    }
+
     ${TutorialFieldsFragment}
   `;
 }

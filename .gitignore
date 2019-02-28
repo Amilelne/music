@@ -2,7 +2,11 @@
 
 # uploads
 /server/uploads/tutorials/*
+!.gitkeep
 /server/uploads/avatars/*
+!.gitkeep
+/server/uploads/recorders/*
+!.gitkeep
 
 
 # compiled output

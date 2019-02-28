@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { throwError, of } from 'rxjs';
-import { mergeMap, tap, map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { throwError, of } from "rxjs";
+import { mergeMap, tap, map } from "rxjs/operators";
 import {
   AdminCreateCourseGQL,
   AdminCreateTutorialGQL,
@@ -13,11 +13,12 @@ import {
   AdminPracticesGQL,
   AdminCourseDetailGQL,
   AdminCreatePracticeGQL,
-  AdminPracticeDetailGQL
-} from '../../../gql';
+  AdminPracticeDetailGQL,
+  TutorialDetailGQL
+} from "../../../gql";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class CourseService {
   constructor(
@@ -28,7 +29,8 @@ export class CourseService {
     private uploadFileGQL: AdminUploadFileGQL,
     private courseDetailGQL: AdminCourseDetailGQL,
     private practiceDetailGQL: AdminPracticeDetailGQL,
-    private createPracticeGQL: AdminCreatePracticeGQL
+    private createPracticeGQL: AdminCreatePracticeGQL,
+    private tutorialDetailGQL: TutorialDetailGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -37,7 +39,7 @@ export class CourseService {
         {
           data: createCourseInput
         },
-        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+        { errorPolicy: "all", fetchPolicy: "no-cache" }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -54,32 +56,35 @@ export class CourseService {
   }
 
   getCourseList() {
-    return this.courseListGQL
-      .fetch()
-      .pipe(map((result) => result.data.courses));
+    return this.courseListGQL.fetch().pipe(map(result => result.data.courses));
   }
 
   getPracticeList() {
     return this.practiceListGQL
       .fetch()
-      .pipe(map((result) => result.data.practices));
+      .pipe(map(result => result.data.practices));
   }
   getCourseDetail(id) {
     return this.courseDetailGQL
       .watch({ id: id })
-      .valueChanges.pipe(map((result) => result.data.course));
+      .valueChanges.pipe(map(result => result.data.course));
   }
   getPracticeDetail(id) {
     return this.practiceDetailGQL
       .watch({ id: id })
-      .valueChanges.pipe(map((result) => result.data.practice));
+      .valueChanges.pipe(map(result => result.data.practice));
+  }
+  getTutorialDetail(id) {
+    return this.tutorialDetailGQL
+      .watch({ id: id })
+      .valueChanges.pipe(map(result => result.data.tutorial));
   }
 
   createTutorial(createTutorialInput: CreateTutorialInput, id) {
     return this.createTutorialGQL
       .mutate(
         { data: createTutorialInput, id: id },
-        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+        { errorPolicy: "all", fetchPolicy: "no-cache" }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -99,7 +104,7 @@ export class CourseService {
     return this.createPracticeGQL
       .mutate(
         { data: createPracticeInput },
-        { errorPolicy: 'all', fetchPolicy: 'no-cache' }
+        { errorPolicy: "all", fetchPolicy: "no-cache" }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -117,7 +122,7 @@ export class CourseService {
 
   singleUploadFile(file: Upload) {
     return this.uploadFileGQL
-      .mutate({ file: file }, { errorPolicy: 'all', fetchPolicy: 'no-cache' })
+      .mutate({ file: file }, { errorPolicy: "all", fetchPolicy: "no-cache" })
       .pipe(
         mergeMap(({ data, errors }) => {
           if (errors) {

@@ -5,7 +5,8 @@
     "types": [],
     "baseUrl": ".",
     "paths": {
-      "@app/gql": ["gql"]
+      "@app/gql": ["gql"],
+      "@app/envs": ["environments"]
     }
   },
   "exclude": ["test.ts", "**/*.spec.ts"],

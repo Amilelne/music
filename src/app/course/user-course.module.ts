@@ -15,13 +15,15 @@ import { CourseDetailChapterComponent } from './course-detail/course-detail-chap
 import { CourseComponent } from './course.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserCourseRoutingModule } from './user-course-routing.module';
+import { TutorialComponent } from './tutorial/tutorial.component';
 
 @NgModule({
   declarations: [
     CourseDetailComponent,
     CourseDetailChapterComponent,
     CourseComponent,
-    MenuComponent
+    MenuComponent,
+    TutorialComponent
   ],
   imports: [
     CommonModule,

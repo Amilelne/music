@@ -13,6 +13,7 @@ type Query {
   course(id: ID!): Course!
 
   # tutorial
+  tutorial(id: ID!): Tutorial!
   tutorials: [Tutorial]!
 
   # practice

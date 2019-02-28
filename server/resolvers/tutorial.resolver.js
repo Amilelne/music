@@ -1,7 +1,10 @@
-const { Tutorial, Course } = require('../models');
+const { Tutorial, Course } = require("../models");
 
 const resolveMap = {
   Query: {
+    tutorial: async (obj, { id }, context, info) => {
+      return Tutorial.findById(id);
+    },
     tutorials: async (obj, args, context, info) => {
       return Tutorial.find();
     }

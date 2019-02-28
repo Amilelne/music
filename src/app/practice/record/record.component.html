@@ -1,7 +1,7 @@
 <div nz-row>
   <div nz-col nzSpan="12">
     <div class="music">
-      <img [src]="practiceDetail.resourceUrl" alt="music" />
+      <img [src]="practiceDetail?.resourceUrl" alt="music" />
     </div>
   </div>
   <div nz-col nzSpan="12">
@@ -13,24 +13,27 @@
         (click)="initiateRecording()"
         *ngIf="!recording"
         [disabled]=""
-        >开始录音</button
       >
+        开始录音
+      </button>
       <button
         nz-button
         nzType="danger"
         nzSize="large"
         (click)="stopRecording()"
         *ngIf="recording"
-        >停止录音</button
       >
+        停止录音
+      </button>
       <button
         nz-button
         nzType="primary"
         nzSize="large"
         (click)="uploadRecording()"
         *ngIf="url"
-        >上传录音</button
       >
+        上传录音
+      </button>
       <div class="clearfix"></div>
       <audio controls="" *ngIf="url">
         <source [src]="sanitize(url)" type="audio/wav" />

@@ -51,6 +51,12 @@ query AdminCourseDetail($id: ID!) {
   }
 }
 
+query TutorialDetail($id: ID!) {
+  tutorial(id: $id) {
+    ...TutorialFields
+  }
+}
+
 query AdminPracticeDetail($id: ID!) {
   practice(id: $id) {
     ...PracticeFields
