@@ -1,6 +1,22 @@
 # MusicAi
 
-该项目框架使用 [Angular CLI](https://github.com/angular/angular-cli) 7.1.2 版本.
+该项目框架使用 [Angular CLI](https://github.com/angular/angular-cli) 7.1.4 版本.
+
+## 运行项目前的准备
+
+- 安装[nodejs](https://nodejs.org/en/) v11.10.0
+- 安装 npm。由于 v11 版本的 nodejs 自带 npm,所以无需单独安装 npm
+- 安装 Angular CLI, `npm install -g @angular/cli`
+- 安装[docker](https://www.docker.com/products/docker-desktop), 由于需要使用 mongoDB 数据库，利用 docker 增加程序的可移植性，所以直接安装 docker。
+
+## 运行项目
+
+以下这些命令都是在项目根目录下运行
+
+- 先安装需要的包。`npm install`
+- 再把 docker 容器跑起来，主要是 mongodb 的服务。`docker-compose -d up`
+- 运行后台。`npx nodemon server`
+- 运行 Angular。`ng serve`
 
 ## 开发阶段
 
@@ -71,11 +87,14 @@
 ## TODO:
 
 - 用户的课程详情页（ 课程包含的教程列表）根据文件类型，提供浏览或播放选项
-- 用户的个人中心（头像上传， 个人资料修改，课程记录）
+- 用户的个人中心（头像上传， 个人资料修改，课程记录）教师，学生不同的个人中心页面
 - 管理员的用户管理
 - 网站情况报告部分
 - 优化 CSS,JS
 - 添加完课时，页面需要立即刷新
+- 接口（智能评分，自动错误标注）
+- 用户上传音频时，添加降噪选项
+- 用户管理
 
 ## User:
 
