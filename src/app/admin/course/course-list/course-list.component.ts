@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { CourseService } from '../course.service';
+import { Component, OnInit } from "@angular/core";
+import { CourseService } from "../course.service";
 
 @Component({
-  selector: 'app-course-list',
-  templateUrl: './course-list.component.html',
-  styleUrls: ['./course-list.component.scss']
+  selector: "app-course-list",
+  templateUrl: "./course-list.component.html",
+  styleUrls: ["./course-list.component.scss"]
 })
 export class CourseListComponent implements OnInit {
   constructor(private courseService: CourseService) {}
 
-  nameList = [{ text: 'Joe', value: 'Joe' }, { text: 'Jim', value: 'Jim' }];
+  nameList = [{ text: "Joe", value: "Joe" }, { text: "Jim", value: "Jim" }];
   addressList = [
-    { text: 'London', value: 'London' },
-    { text: 'Sidney', value: 'Sidney' }
+    { text: "London", value: "London" },
+    { text: "Sidney", value: "Sidney" }
   ];
   courseList = [];
   sortName = null;
@@ -21,30 +21,30 @@ export class CourseListComponent implements OnInit {
   searchAddress: string;
   data = [
     {
-      name: 'John Brown',
+      name: "John Brown",
       age: 32,
-      address: 'New York No. 1 Lake Park'
+      address: "New York No. 1 Lake Park"
     },
     {
-      name: 'Jim Green',
+      name: "Jim Green",
       age: 42,
-      address: 'London No. 1 Lake Park'
+      address: "London No. 1 Lake Park"
     },
     {
-      name: 'Joe Black',
+      name: "Joe Black",
       age: 32,
-      address: 'Sidney No. 1 Lake Park'
+      address: "Sidney No. 1 Lake Park"
     },
     {
-      name: 'Jim Red',
+      name: "Jim Red",
       age: 32,
-      address: 'London No. 2 Lake Park'
+      address: "London No. 2 Lake Park"
     }
   ];
   displayData: any[];
 
   async ngOnInit() {
-    await this.courseService.getCourseList().subscribe(data => {
+    await this.courseService.courseList$.subscribe(data => {
       this.courseList = data;
       this.displayData = [...this.courseList];
     });
@@ -75,7 +75,7 @@ export class CourseListComponent implements OnInit {
     /** sort data **/
     if (this.sortName && this.sortValue) {
       this.displayData = data.sort((a, b) =>
-        this.sortValue === 'ascend'
+        this.sortValue === "ascend"
           ? a[this.sortName] > b[this.sortName]
             ? 1
             : -1

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { throwError, of } from "rxjs";
+import { throwError, of, BehaviorSubject } from "rxjs";
 import { mergeMap, tap, map } from "rxjs/operators";
 import {
   AdminCreateCourseGQL,
@@ -14,7 +14,8 @@ import {
   AdminCourseDetailGQL,
   AdminCreatePracticeGQL,
   AdminPracticeDetailGQL,
-  TutorialDetailGQL
+  TutorialDetailGQL,
+  Course
 } from "../../../gql";
 
 @Injectable({
@@ -31,7 +32,12 @@ export class CourseService {
     private practiceDetailGQL: AdminPracticeDetailGQL,
     private createPracticeGQL: AdminCreatePracticeGQL,
     private tutorialDetailGQL: TutorialDetailGQL
-  ) {}
+  ) {
+    this.updateCourseList().subscribe(courseList =>
+      this.courseList$.next(courseList)
+    );
+  }
+  public courseList$ = new BehaviorSubject<Course[]>([]);
 
   createCourse(createCourseInput: CreateCourseInput) {
     return this.createCourseGQL
@@ -39,7 +45,14 @@ export class CourseService {
         {
           data: createCourseInput
         },
-        { errorPolicy: "all", fetchPolicy: "no-cache" }
+        {
+          refetchQueries: [
+            {
+              query: this.courseListGQL.document
+            }
+          ],
+          errorPolicy: "all"
+        }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -49,20 +62,28 @@ export class CourseService {
             return of(data);
           }
         }),
-        tap(({ addCourse: { id } }) => {
-          // console.log(id);
+        tap(() => {
+          this.updateCourseList().subscribe(courseList => {
+            this.courseList$.next(courseList);
+          });
         })
       );
   }
 
+  updateCourseList() {
+    return this.courseListGQL
+      .watch({})
+      .valueChanges.pipe(map(result => result.data.courses));
+  }
+
   getCourseList() {
-    return this.courseListGQL.fetch().pipe(map(result => result.data.courses));
+    return this.courseList$;
   }
 
   getPracticeList() {
     return this.practiceListGQL
-      .fetch()
-      .pipe(map(result => result.data.practices));
+      .watch()
+      .valueChanges.pipe(map(result => result.data.practices));
   }
   getCourseDetail(id) {
     return this.courseDetailGQL
@@ -84,7 +105,16 @@ export class CourseService {
     return this.createTutorialGQL
       .mutate(
         { data: createTutorialInput, id: id },
-        { errorPolicy: "all", fetchPolicy: "no-cache" }
+        {
+          refetchQueries: [
+            {
+              query: this.courseDetailGQL.document,
+              variables: { id: id }
+            }
+          ],
+          errorPolicy: "all",
+          fetchPolicy: "no-cache"
+        }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
@@ -104,7 +134,15 @@ export class CourseService {
     return this.createPracticeGQL
       .mutate(
         { data: createPracticeInput },
-        { errorPolicy: "all", fetchPolicy: "no-cache" }
+        {
+          refetchQueries: [
+            {
+              query: this.practiceListGQL.document
+            }
+          ],
+          errorPolicy: "all",
+          fetchPolicy: "no-cache"
+        }
       )
       .pipe(
         mergeMap(({ data, errors }) => {
