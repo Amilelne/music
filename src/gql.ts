@@ -392,6 +392,22 @@ export namespace UpdateProfile {
   } & UserProfile.Fragment;
 }
 
+export namespace UploadRecord {
+  export type Variables = {
+    file: Upload;
+    userId: string;
+    practiceId: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    uploadRecord: UploadRecord;
+  };
+
+  export type UploadRecord = RecordFields.Fragment;
+}
+
 export namespace CourseFields {
   export type Fragment = {
     __typename?: "Course";
@@ -514,6 +530,22 @@ export namespace UserProfile {
   };
 }
 
+export namespace RecordFields {
+  export type Fragment = {
+    __typename?: "Record";
+
+    id: string;
+
+    userId: string;
+
+    practiceId: string;
+
+    audioUrl: Maybe<string>;
+
+    updateDate: Maybe<DateTime>;
+  };
+}
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -546,6 +578,12 @@ export interface Query {
   practice: Practice;
 
   practices: (Maybe<Practice>)[];
+  /** record */
+  record: Record;
+
+  userRecords: (Maybe<Record>)[];
+
+  records: (Maybe<Record>)[];
   /** get uploaded files */
   uploads?: Maybe<(Maybe<File>)[]>;
 }
@@ -640,6 +678,34 @@ export interface Practice {
   updateDate?: Maybe<DateTime>;
 }
 
+export interface Record {
+  id: string;
+
+  userId: string;
+
+  practiceId: string;
+
+  audioUrl?: Maybe<string>;
+
+  AIBeatScore?: Maybe<number>;
+
+  AIIntonationScore?: Maybe<number>;
+
+  AITotalScore?: Maybe<number>;
+
+  expertId: string;
+
+  expertBeatScore?: Maybe<number>;
+
+  expertIntonationScore?: Maybe<number>;
+
+  expertTotalScore?: Maybe<number>;
+
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+}
+
 export interface File {
   filename: string;
 
@@ -671,6 +737,8 @@ export interface Mutation {
   deletePractice: Practice;
   /** upload file */
   singleUpload: File;
+  /** upload record */
+  uploadRecord: Record;
   /** update avatar */
   updateAvatar: User;
   /** update profile */
@@ -702,6 +770,12 @@ export interface TutorialQueryArgs {
 }
 export interface PracticeQueryArgs {
   id: string;
+}
+export interface RecordQueryArgs {
+  id: string;
+}
+export interface UserRecordsQueryArgs {
+  userId: string;
 }
 export interface AddUserMutationArgs {
   data: CreateUserInput;
@@ -737,6 +811,13 @@ export interface DeletePracticeMutationArgs {
 }
 export interface SingleUploadMutationArgs {
   file: Upload;
+}
+export interface UploadRecordMutationArgs {
+  file: Upload;
+
+  userId: string;
+
+  practiceId: string;
 }
 export interface UpdateAvatarMutationArgs {
   userId: string;
@@ -832,6 +913,16 @@ export const UserProfileFragment = gql`
     avatar
     role
     level
+  }
+`;
+
+export const RecordFieldsFragment = gql`
+  fragment recordFields on Record {
+    id
+    userId
+    practiceId
+    audioUrl
+    updateDate
   }
 `;
 
@@ -1158,6 +1249,23 @@ export class UpdateProfileGQL extends Apollo.Mutation<
     }
 
     ${UserProfileFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UploadRecordGQL extends Apollo.Mutation<
+  UploadRecord.Mutation,
+  UploadRecord.Variables
+> {
+  document: any = gql`
+    mutation UploadRecord($file: Upload!, $userId: ID!, $practiceId: ID!) {
+      uploadRecord(file: $file, userId: $userId, practiceId: $practiceId) {
+        ...recordFields
+      }
+    }
+
+    ${RecordFieldsFragment}
   `;
 }
 

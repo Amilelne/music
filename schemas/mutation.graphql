@@ -19,7 +19,9 @@ type Mutation {
 
   # upload file
   singleUpload(file: Upload!): File!
-  uploadRecord(file: Upload!, userId: ID!, practiceId: ID!): File!
+
+  # upload record
+  uploadRecord(file: Upload!, userId: ID!, practiceId: ID!): Record!
 
   # update avatar
   updateAvatar(userId: ID!, file: Upload!): User!

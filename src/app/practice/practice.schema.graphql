@@ -1,7 +1,42 @@
+fragment recordFields on Record {
+  id
+  userId
+  practiceId
+  audioUrl
+  updateDate
+}
+fragment scoreFields on Record {
+  id
+  userId
+  practiceId
+  audioUrl
+  AIBeatScore
+  AIIntonationScore
+  AITotalScore
+  expertId
+  expertBeatScore
+  expertIntonationScore
+  expertTotalScore
+  createDate
+  updateDate
+}
+query UserRecords($userId: ID!) {
+  userRecord(userId: $userId) {
+    ...scoreFields
+  }
+}
+query Record($id: ID!) {
+  record(id: $id) {
+    ...scoreFields
+  }
+}
+query Records {
+  records {
+    ...scoreFields
+  }
+}
 mutation UploadRecord($file: Upload!, $userId: ID!, $practiceId: ID!) {
   uploadRecord(file: $file, userId: $userId, practiceId: $practiceId) {
-    filename
-    mimetype
-    encoding
+    ...recordFields
   }
 }

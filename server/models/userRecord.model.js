@@ -1,5 +1,5 @@
-const { conf } = require('../config');
-const mongoose = require('../mongoose');
+const { conf } = require("../config");
+const mongoose = require("../mongoose");
 const Schema = mongoose.Schema;
 
 const schema = new Schema(
@@ -8,7 +8,7 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       required: true
     },
-    exerciseId: {
+    practiceId: {
       type: Schema.Types.ObjectId,
       required: true
     },
@@ -46,10 +46,10 @@ const schema = new Schema(
     }
   },
   {
-    timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' },
+    timestamps: { createdAt: "createDate", updatedAt: "updateDate" },
     versionKey: false
   }
 );
 
-const name = conf('collections.userRecord');
+const name = conf("collections.userRecord");
 exports.UserRecord = mongoose.model(name, schema, name);

@@ -44,7 +44,7 @@ export class CourseListComponent implements OnInit {
   displayData: any[];
 
   async ngOnInit() {
-    await this.courseService.courseList$.subscribe(data => {
+    await this.courseService.getCourseList().subscribe(data => {
       this.courseList = data;
       this.displayData = [...this.courseList];
     });

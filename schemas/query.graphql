@@ -20,6 +20,11 @@ type Query {
   practice(id: ID!): Practice!
   practices: [Practice]!
 
+  # record
+  record(id: ID!): Record!
+  userRecords(userId: ID!): [Record]!
+  records: [Record]!
+
   # get uploaded files
   uploads: [File]
 }

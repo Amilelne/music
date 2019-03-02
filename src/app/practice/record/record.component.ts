@@ -4,6 +4,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { CourseService } from "app/admin/course/course.service";
 import { ActivatedRoute } from "@angular/router";
 import { Practice } from "@app/gql";
+import { RecordService } from "../record.service";
+import { AuthService } from "app/core/auth/auth.service";
 
 @Component({
   selector: "app-record",
@@ -15,6 +17,8 @@ export class RecordComponent implements OnInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private courseService: CourseService,
+    private recordService: RecordService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) {}
   // Lets initiate Record OBJ
@@ -25,13 +29,16 @@ export class RecordComponent implements OnInit {
   private url;
   private blobFile;
   private error;
+  private practiceId;
+  private userId;
   ngOnInit() {
     this.getPracticeDetail();
+    this.authService._user.subscribe(user => (this.userId = user.id));
   }
 
   getPracticeDetail() {
-    const id = this.route.snapshot.paramMap.get("id");
-    this.courseService.getPracticeDetail(id).subscribe(data => {
+    this.practiceId = this.route.snapshot.paramMap.get("id");
+    this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
       this.practiceDetail = data;
     });
   }
@@ -73,16 +80,18 @@ export class RecordComponent implements OnInit {
   }
 
   uploadRecording() {
-    this.courseService.singleUploadFile(this.record.blob).subscribe(
-      ({ singleUpload: { filename, mimetype, encoding } }) => {
-        console.log(filename);
-      },
-      errors => {
-        if (errors !== undefined) {
-          console.log(errors);
+    this.recordService
+      .uploadRecord(this.record.blob, this.userId, this.practiceId)
+      .subscribe(
+        ({ uploadRecord: { audioUrl } }) => {
+          console.log(audioUrl);
+        },
+        errors => {
+          if (errors !== undefined) {
+            console.log(errors);
+          }
         }
-      }
-    );
+      );
   }
   errorCallback(error) {
     this.error = "Can not play audio in your browser";

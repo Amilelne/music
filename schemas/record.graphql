@@ -1,0 +1,15 @@
+type Record {
+  id: ID!
+  userId: ID!
+  practiceId: ID!
+  audioUrl: String
+  AIBeatScore: Int
+  AIIntonationScore: Int
+  AITotalScore: Int
+  expertId: ID!
+  expertBeatScore: Int
+  expertIntonationScore: Int
+  expertTotalScore: Int
+  createDate: DateTime
+  updateDate: DateTime
+}

@@ -9,6 +9,7 @@ documents:
     ./src/app/core/auth/*.graphql,
     ./src/app/admin/user/*.graphql,
     ./src/app/user/*.graphql,
+    ./src/app/practice/*.graphql,
   ]
 generates:
   ./src/gql.ts:

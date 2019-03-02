@@ -32,12 +32,7 @@ export class CourseService {
     private practiceDetailGQL: AdminPracticeDetailGQL,
     private createPracticeGQL: AdminCreatePracticeGQL,
     private tutorialDetailGQL: TutorialDetailGQL
-  ) {
-    this.updateCourseList().subscribe(courseList =>
-      this.courseList$.next(courseList)
-    );
-  }
-  public courseList$ = new BehaviorSubject<Course[]>([]);
+  ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
     return this.createCourseGQL
@@ -63,21 +58,15 @@ export class CourseService {
           }
         }),
         tap(() => {
-          this.updateCourseList().subscribe(courseList => {
-            this.courseList$.next(courseList);
-          });
+          //
         })
       );
   }
 
-  updateCourseList() {
+  getCourseList() {
     return this.courseListGQL
       .watch({})
       .valueChanges.pipe(map(result => result.data.courses));
-  }
-
-  getCourseList() {
-    return this.courseList$;
   }
 
   getPracticeList() {
