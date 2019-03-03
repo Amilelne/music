@@ -2,6 +2,7 @@ fragment recordFields on Record {
   id
   userId
   practiceId
+  practiceTitle
   audioUrl
   updateDate
 }
@@ -9,6 +10,7 @@ fragment scoreFields on Record {
   id
   userId
   practiceId
+  practiceTitle
   audioUrl
   AIBeatScore
   AIIntonationScore
@@ -21,22 +23,22 @@ fragment scoreFields on Record {
   updateDate
 }
 query UserRecords($userId: ID!) {
-  userRecord(userId: $userId) {
-    ...scoreFields
+  userRecords(userId: $userId) {
+    ...recordFields
   }
 }
 query Record($id: ID!) {
   record(id: $id) {
-    ...scoreFields
+    ...recordFields
   }
 }
 query Records {
   records {
-    ...scoreFields
+    ...recordFields
   }
 }
-mutation UploadRecord($file: Upload!, $userId: ID!, $practiceId: ID!) {
-  uploadRecord(file: $file, userId: $userId, practiceId: $practiceId) {
+mutation UploadRecord($data: UploadAudioInput!) {
+  uploadRecord(data: $data) {
     ...recordFields
   }
 }

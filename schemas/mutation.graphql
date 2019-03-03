@@ -21,7 +21,7 @@ type Mutation {
   singleUpload(file: Upload!): File!
 
   # upload record
-  uploadRecord(file: Upload!, userId: ID!, practiceId: ID!): Record!
+  uploadRecord(data: UploadAudioInput!): Record!
 
   # update avatar
   updateAvatar(userId: ID!, file: Upload!): User!

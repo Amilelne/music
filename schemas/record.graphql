@@ -2,6 +2,7 @@ type Record {
   id: ID!
   userId: ID!
   practiceId: ID!
+  practiceTitle: String!
   audioUrl: String
   AIBeatScore: Int
   AIIntonationScore: Int
@@ -12,4 +13,12 @@ type Record {
   expertTotalScore: Int
   createDate: DateTime
   updateDate: DateTime
+}
+
+# input type
+input UploadAudioInput {
+  file: Upload!
+  userId: ID!
+  practiceId: ID!
+  practiceTitle: String!
 }

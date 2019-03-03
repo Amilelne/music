@@ -1,1 +1,40 @@
-<div class="audios"></div>
+<div class="audios">
+  <ng-container *ngIf="audioList">
+    <nz-table #basicTable [nzData]="audioList">
+      <thead>
+        <tr>
+          <th>练习名称</th>
+          <th>我的录音</th>
+          <th>AI评分</th>
+          <th>专家评分</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.practiceTitle }}</td>
+          <td><audio [src]="data.audioUrl" controls="controls"></audio></td>
+          <td>
+            <ng-container *ngIf="data.AITotalScore; else aiBlock">
+              {{ data.AITotalScore }}
+            </ng-container>
+            <ng-template #aiBlock>
+              <button nz-button nzType="primary">申请AI评分</button>
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="data.expertTotalScore; else expertBlock">
+              {{ data.expertTotalScore }}
+            </ng-container>
+            <ng-template #expertBlock>
+              <button nz-button nzType="primary">申请专家评分</button>
+            </ng-template>
+          </td>
+          <td>
+            <button nz-button nzType="danger">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+</div>

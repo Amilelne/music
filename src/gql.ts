@@ -64,6 +64,16 @@ export interface CreatePracticeInput {
 
   level: number;
 }
+/** input type */
+export interface UploadAudioInput {
+  file: Upload;
+
+  userId: string;
+
+  practiceId: string;
+
+  practiceTitle: string;
+}
 /** update profile */
 export interface UpdateProfileInput {
   name?: Maybe<string>;
@@ -392,11 +402,49 @@ export namespace UpdateProfile {
   } & UserProfile.Fragment;
 }
 
+export namespace UserRecords {
+  export type Variables = {
+    userId: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    userRecords: (Maybe<UserRecords>)[];
+  };
+
+  export type UserRecords = RecordFields.Fragment;
+}
+
+export namespace Record {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    record: Record;
+  };
+
+  export type Record = RecordFields.Fragment;
+}
+
+export namespace Records {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    records: (Maybe<Records>)[];
+  };
+
+  export type Records = RecordFields.Fragment;
+}
+
 export namespace UploadRecord {
   export type Variables = {
-    file: Upload;
-    userId: string;
-    practiceId: string;
+    data: UploadAudioInput;
   };
 
   export type Mutation = {
@@ -540,7 +588,43 @@ export namespace RecordFields {
 
     practiceId: string;
 
+    practiceTitle: string;
+
     audioUrl: Maybe<string>;
+
+    updateDate: Maybe<DateTime>;
+  };
+}
+
+export namespace ScoreFields {
+  export type Fragment = {
+    __typename?: "Record";
+
+    id: string;
+
+    userId: string;
+
+    practiceId: string;
+
+    practiceTitle: string;
+
+    audioUrl: Maybe<string>;
+
+    AIBeatScore: Maybe<number>;
+
+    AIIntonationScore: Maybe<number>;
+
+    AITotalScore: Maybe<number>;
+
+    expertId: string;
+
+    expertBeatScore: Maybe<number>;
+
+    expertIntonationScore: Maybe<number>;
+
+    expertTotalScore: Maybe<number>;
+
+    createDate: Maybe<DateTime>;
 
     updateDate: Maybe<DateTime>;
   };
@@ -685,6 +769,8 @@ export interface Record {
 
   practiceId: string;
 
+  practiceTitle: string;
+
   audioUrl?: Maybe<string>;
 
   AIBeatScore?: Maybe<number>;
@@ -813,11 +899,7 @@ export interface SingleUploadMutationArgs {
   file: Upload;
 }
 export interface UploadRecordMutationArgs {
-  file: Upload;
-
-  userId: string;
-
-  practiceId: string;
+  data: UploadAudioInput;
 }
 export interface UpdateAvatarMutationArgs {
   userId: string;
@@ -921,7 +1003,27 @@ export const RecordFieldsFragment = gql`
     id
     userId
     practiceId
+    practiceTitle
     audioUrl
+    updateDate
+  }
+`;
+
+export const ScoreFieldsFragment = gql`
+  fragment scoreFields on Record {
+    id
+    userId
+    practiceId
+    practiceTitle
+    audioUrl
+    AIBeatScore
+    AIIntonationScore
+    AITotalScore
+    expertId
+    expertBeatScore
+    expertIntonationScore
+    expertTotalScore
+    createDate
     updateDate
   }
 `;
@@ -1254,13 +1356,58 @@ export class UpdateProfileGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class UserRecordsGQL extends Apollo.Query<
+  UserRecords.Query,
+  UserRecords.Variables
+> {
+  document: any = gql`
+    query UserRecords($userId: ID!) {
+      userRecords(userId: $userId) {
+        ...recordFields
+      }
+    }
+
+    ${RecordFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RecordGQL extends Apollo.Query<Record.Query, Record.Variables> {
+  document: any = gql`
+    query Record($id: ID!) {
+      record(id: $id) {
+        ...recordFields
+      }
+    }
+
+    ${RecordFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class RecordsGQL extends Apollo.Query<Records.Query, Records.Variables> {
+  document: any = gql`
+    query Records {
+      records {
+        ...recordFields
+      }
+    }
+
+    ${RecordFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class UploadRecordGQL extends Apollo.Mutation<
   UploadRecord.Mutation,
   UploadRecord.Variables
 > {
   document: any = gql`
-    mutation UploadRecord($file: Upload!, $userId: ID!, $practiceId: ID!) {
-      uploadRecord(file: $file, userId: $userId, practiceId: $practiceId) {
+    mutation UploadRecord($data: UploadAudioInput!) {
+      uploadRecord(data: $data) {
         ...recordFields
       }
     }

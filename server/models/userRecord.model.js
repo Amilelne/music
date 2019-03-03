@@ -12,6 +12,10 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       required: true
     },
+    practiceTitle: {
+      type: String,
+      required: true
+    },
     audioUrl: {
       type: String,
       required: false

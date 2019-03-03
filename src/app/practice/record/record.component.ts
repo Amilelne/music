@@ -4,7 +4,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { CourseService } from "app/admin/course/course.service";
 import { ActivatedRoute } from "@angular/router";
 import { Practice } from "@app/gql";
-import { RecordService } from "../record.service";
+import { RecordService } from "../../core/record/record.service";
 import { AuthService } from "app/core/auth/auth.service";
 
 @Component({
@@ -30,10 +30,14 @@ export class RecordComponent implements OnInit {
   private blobFile;
   private error;
   private practiceId;
+  private practiceTitle: String;
   private userId;
   ngOnInit() {
     this.getPracticeDetail();
-    this.authService._user.subscribe(user => (this.userId = user.id));
+    this.userId = this.authService.getUserId();
+    this.route.queryParams.subscribe(params => {
+      this.practiceTitle = params.title;
+    });
   }
 
   getPracticeDetail() {
@@ -80,8 +84,22 @@ export class RecordComponent implements OnInit {
   }
 
   uploadRecording() {
+    console.log(
+      "userId:",
+      this.userId,
+      ",practiceId:",
+      this.practiceId,
+      ",title:",
+      this.practiceTitle
+    );
+
     this.recordService
-      .uploadRecord(this.record.blob, this.userId, this.practiceId)
+      .uploadRecord(
+        this.record.blob,
+        this.userId,
+        this.practiceId,
+        this.practiceTitle
+      )
       .subscribe(
         ({ uploadRecord: { audioUrl } }) => {
           console.log(audioUrl);

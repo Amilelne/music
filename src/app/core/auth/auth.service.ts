@@ -63,6 +63,13 @@ export class AuthService {
     this.isLoggedIn$.next(!!user);
   }
 
+  // get user id
+  getUserId() {
+    let userId;
+    this._user.subscribe(user => (userId = user.id));
+    return userId;
+  }
+
   // login
   login(loginInput: LoginInput) {
     // if there is a token, remove it

@@ -14,7 +14,12 @@ const resolveMap = {
     }
   },
   Mutation: {
-    uploadRecord: async (obj, { file, userId, practiceId }, context, info) => {
+    uploadRecord: async (
+      obj,
+      { data: { file, userId, practiceId, practiceTitle } },
+      context,
+      info
+    ) => {
       // Read file
       const { createReadStream, filename, mimetype } = await file;
       // Get file suffix
@@ -30,7 +35,8 @@ const resolveMap = {
       let record = await UserRecord.create({
         userId: userId,
         practiceId: practiceId,
-        audioUrl: path
+        audioUrl: path,
+        practiceTitle: practiceTitle
       });
       return record;
     }
