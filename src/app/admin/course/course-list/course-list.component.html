@@ -2,7 +2,7 @@
   <nz-table #filterTable [nzData]="displayData">
     <thead (nzSortChange)="sort($event)" nzSingleSort>
       <tr>
-        <th nzShowSort nzSortKey="ID">ID</th>
+        <th nzShowSort nzSortKey="id">ID</th>
         <th nzShowSort nzSortKey="title">课程名称</th>
         <th nzShowSort nzSortKey="price">课程价格</th>
         <th nzShowSort nzSortKey="level">课程难度</th>
@@ -13,10 +13,11 @@
     <tbody>
       <tr *ngFor="let data of filterTable.data">
         <td [routerLink]="['/admin/course/', data.id]">{{ data.id }}</td>
-        <td>{{ data.title }}</td> <td>{{ data.price }}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.price }}</td>
         <td>{{ data.level }}</td>
-        <td>{{ data.createDate | date: 'shortDate' }}</td>
-        <td>{{ data.updateDate | date: 'shortDate' }}</td>
+        <td>{{ data.createDate | date: "shortDate" }}</td>
+        <td>{{ data.updateDate | date: "shortDate" }}</td>
       </tr>
     </tbody>
   </nz-table>

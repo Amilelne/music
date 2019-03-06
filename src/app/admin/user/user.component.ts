@@ -18,8 +18,8 @@ export class UserComponent implements OnInit {
   data = [];
   displayData: any[];
 
-  async ngOnInit() {
-    await this.userService.getUserList().subscribe(data => {
+  ngOnInit() {
+    this.userService.getUserList().subscribe(data => {
       this.userList = data;
       this.displayData = [...this.userList];
     });
@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
       (this.listOfSearchName.length
         ? this.listOfSearchName.some(name => item.name.indexOf(name) !== -1)
         : true);
-    const data = this.data.filter(item => filterFunc(item));
+    const data = [...this.displayData];
     /** sort data **/
     if (this.sortName && this.sortValue) {
       this.displayData = data.sort((a, b) =>
