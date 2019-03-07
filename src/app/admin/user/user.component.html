@@ -3,7 +3,29 @@
     <thead (nzSortChange)="sort($event)" nzSingleSort>
       <tr>
         <th nzShowSort nzSortKey="id">ID</th>
-        <th nzShowSort nzSortKey="name">用户昵称</th>
+        <th nzShowSort nzCustomFilter nzSortKey="name">
+          用户昵称
+          <nz-dropdown nzTrigger="click" [nzClickHide]="false" #dropdown>
+            <i
+              nz-icon
+              type="search-o"
+              class="ant-table-filter-icon"
+              [class.ant-table-filter-open]="dropdown.nzVisible"
+              nz-dropdown
+            ></i>
+            <div class="custom-filter-dropdown">
+              <input
+                type="text"
+                nz-input
+                placeholder="搜索用户"
+                [(ngModel)]="searchValue"
+              />
+              <button nz-button [nzType]="'primary'" (click)="search()">
+                搜索
+              </button>
+            </div>
+          </nz-dropdown>
+        </th>
         <th nzShowSort nzSortKey="role">用户身份</th>
         <th nzShowSort nzSortKey="level">用户级别</th>
         <th nzShowSort nzSortKey="createDate">账号创建时间</th>

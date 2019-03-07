@@ -11,6 +11,7 @@ export class CourseListComponent implements OnInit {
 
   sortName = null;
   sortValue = null;
+  searchValue = "";
   listOfSearchName: any[];
   searchAddress: string;
   data = [];
@@ -30,8 +31,12 @@ export class CourseListComponent implements OnInit {
   }
 
   search(): void {
+    const filterFunc = item => {
+      return item.title.indexOf(this.searchValue) !== -1;
+    };
     /** sort data **/
-    const data = [...this.data];
+    let data = [...this.data];
+    data = data.filter(item => filterFunc(item));
     if (this.sortName && this.sortValue) {
       this.displayData = data.sort((a, b) =>
         this.sortValue === "ascend"

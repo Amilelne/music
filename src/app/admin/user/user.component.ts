@@ -13,6 +13,7 @@ export class UserComponent implements OnInit {
   userList = [];
   sortName = null;
   sortValue = null;
+  searchValue = "";
   listOfSearchName: any[];
   searchAddress: string;
   data = [];
@@ -38,14 +39,11 @@ export class UserComponent implements OnInit {
 
   search(): void {
     /** filter data **/
-    const filterFunc = item =>
-      (this.searchAddress
-        ? item.address.indexOf(this.searchAddress) !== -1
-        : true) &&
-      (this.listOfSearchName.length
-        ? this.listOfSearchName.some(name => item.name.indexOf(name) !== -1)
-        : true);
-    const data = [...this.displayData];
+    const filterFunc = item => {
+      return item.name.indexOf(this.searchValue) !== -1;
+    };
+    let data = [...this.displayData];
+    data = data.filter(item => filterFunc(item));
     /** sort data **/
     if (this.sortName && this.sortValue) {
       this.displayData = data.sort((a, b) =>

@@ -3,7 +3,29 @@
     <thead (nzSortChange)="sort($event)" nzSingleSort>
       <tr>
         <th nzShowSort nzSortKey="id">ID</th>
-        <th nzShowSort nzSortKey="title">课程名称</th>
+        <th nzShowSort nzCustomFilter nzSortKey="title">
+          课程名称
+          <nz-dropdown nzTrigger="click" [nzClickHide]="false" #dropdown>
+            <i
+              nz-icon
+              type="search-o"
+              class="ant-table-filter-icon"
+              [class.ant-table-filter-open]="dropdown.nzVisible"
+              nz-dropdown
+            ></i>
+            <div class="custom-filter-dropdown">
+              <input
+                type="text"
+                nz-input
+                placeholder="搜索课程"
+                [(ngModel)]="searchValue"
+              />
+              <button nz-button [nzType]="'primary'" (click)="search()">
+                搜索
+              </button>
+            </div>
+          </nz-dropdown>
+        </th>
         <th nzShowSort nzSortKey="price">课程价格</th>
         <th nzShowSort nzSortKey="level">课程难度</th>
         <th nzShowSort nzSortKey="createDate">课程创建时间</th>
