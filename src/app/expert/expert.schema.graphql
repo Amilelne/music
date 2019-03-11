@@ -1,0 +1,20 @@
+fragment ExpertFields on User {
+  id
+  name
+  role
+  level
+  introduction
+  avatar
+}
+
+query Experts {
+  experts {
+    ...ExpertFields
+  }
+}
+
+query Expert($id: ID!) {
+  expert(id: $id) {
+    ...ExpertFields
+  }
+}

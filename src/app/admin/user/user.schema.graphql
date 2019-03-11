@@ -14,9 +14,3 @@ query AdminUsers {
     updateDate
   }
 }
-
-query Experts {
-  experts {
-    ...UserFields
-  }
-}

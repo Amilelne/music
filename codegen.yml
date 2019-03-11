@@ -10,6 +10,7 @@ documents:
     ./src/app/admin/user/*.graphql,
     ./src/app/user/*.graphql,
     ./src/app/core/record/*.graphql,
+    ./src/app/expert/*.graphql,
   ]
 generates:
   ./src/gql.ts:

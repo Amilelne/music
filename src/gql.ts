@@ -352,18 +352,6 @@ export namespace AdminUsers {
   } & UserFields.Fragment;
 }
 
-export namespace Experts {
-  export type Variables = {};
-
-  export type Query = {
-    __typename?: "Query";
-
-    experts: (Maybe<Experts>)[];
-  };
-
-  export type Experts = UserFields.Fragment;
-}
-
 export namespace UpdateAvatar {
   export type Variables = {
     userId: string;
@@ -454,6 +442,32 @@ export namespace UploadRecord {
   };
 
   export type UploadRecord = RecordFields.Fragment;
+}
+
+export namespace Experts {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    experts: (Maybe<Experts>)[];
+  };
+
+  export type Experts = ExpertFields.Fragment;
+}
+
+export namespace Expert {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    expert: Expert;
+  };
+
+  export type Expert = ExpertFields.Fragment;
 }
 
 export namespace CourseFields {
@@ -627,6 +641,24 @@ export namespace ScoreFields {
     createDate: Maybe<DateTime>;
 
     updateDate: Maybe<DateTime>;
+  };
+}
+
+export namespace ExpertFields {
+  export type Fragment = {
+    __typename?: "User";
+
+    id: string;
+
+    name: string;
+
+    role: string;
+
+    level: number;
+
+    introduction: Maybe<string>;
+
+    avatar: Maybe<Url>;
   };
 }
 
@@ -1028,6 +1060,17 @@ export const ScoreFieldsFragment = gql`
   }
 `;
 
+export const ExpertFieldsFragment = gql`
+  fragment ExpertFields on User {
+    id
+    name
+    role
+    level
+    introduction
+    avatar
+  }
+`;
+
 // ====================================================
 // Apollo Services
 // ====================================================
@@ -1305,20 +1348,6 @@ export class AdminUsersGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
-export class ExpertsGQL extends Apollo.Query<Experts.Query, Experts.Variables> {
-  document: any = gql`
-    query Experts {
-      experts {
-        ...UserFields
-      }
-    }
-
-    ${UserFieldsFragment}
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
 export class UpdateAvatarGQL extends Apollo.Mutation<
   UpdateAvatar.Mutation,
   UpdateAvatar.Variables
@@ -1413,6 +1442,34 @@ export class UploadRecordGQL extends Apollo.Mutation<
     }
 
     ${RecordFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ExpertsGQL extends Apollo.Query<Experts.Query, Experts.Variables> {
+  document: any = gql`
+    query Experts {
+      experts {
+        ...ExpertFields
+      }
+    }
+
+    ${ExpertFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ExpertGQL extends Apollo.Query<Expert.Query, Expert.Variables> {
+  document: any = gql`
+    query Expert($id: ID!) {
+      expert(id: $id) {
+        ...ExpertFields
+      }
+    }
+
+    ${ExpertFieldsFragment}
   `;
 }
 

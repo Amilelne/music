@@ -23,7 +23,7 @@ const resolverMap = {
       return User.find({ role: "expert" });
     },
     expert: async (obj, { id }, context, info) => {
-      return User.find({ role: "expert" }, { _id: id });
+      return User.findOne({ role: "expert", _id: id });
     }
   },
   Mutation: {
