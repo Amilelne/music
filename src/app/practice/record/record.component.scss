@@ -1,7 +1,21 @@
 .recordPage {
-  text-align:center;
+  text-align: center;
   min-height: 900px;
-  [nz-button]{
+  [nz-button] {
     margin-top: 4rem;
+    margin-left: 10px;
+    box-shadow: 0 8px 16px 0 rgba(7, 17, 27, 0.1);
+  }
+}
+
+.practice-detail {
+  width: 80%;
+  padding-top: 20px;
+  text-align: center;
+  .music {
+    img {
+      border-radius: 8px;
+      box-shadow: 0 8px 16px 0 rgba(7, 17, 27, 0.1);
+    }
   }
 }
