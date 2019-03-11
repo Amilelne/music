@@ -7,32 +7,47 @@
 <div class="courseList">
   <div nz-row [nzGutter]="8">
     <ng-container *ngFor="let course of courses">
-      <div nz-col nzSpan="6" [routerLink]="['/courses/', course.id]">
-        <nz-card
-          nzHoverable
-          style="width:240px"
-          [nzCover]="coverTemplate"
-          nzBordered="false"
-          [routerLink]=""
-        >
-          <nz-card-meta
-            [nzTitle]="course.titel"
-            [nzDescription]="course.description"
-            nzLoading="true"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #coverTemplate>
+      <div
+        nz-col
+        nzSpan="6"
+        [routerLink]="['/courses/', course.id]"
+        class="card-container"
+      >
+        <div class="card-top">
           <ng-container *ngIf="!course.pictureUrl">
             <img
-              class="courseImg"
+              class="card-banner"
               alt="example"
               src="../../assets/images/composer.jpg"
             />
           </ng-container>
           <ng-container *ngIf="course.pictureUrl">
-            <img class="courseImg" alt="example" [src]="course.pictureUrl" />
+            <img class="card-banner" alt="example" [src]="course.pictureUrl" />
           </ng-container>
-        </ng-template>
+        </div>
+        <div class="card-content">
+          <h3 class="card-name">
+            {{ course.title }}
+          </h3>
+          <div class="card-bottom">
+            <div class="card-info">
+              <ng-container [ngSwitch]="course.level">
+                <span *ngSwitchCase="1">易</span>
+                <span *ngSwitchCase="2">偏易</span>
+                <span *ngSwitchCase="3">适中</span>
+                <span *ngSwitchCase="4">偏难</span>
+                <span *ngSwitchCase="5">难</span>
+              </ng-container>
+              <i nz-icon type="user" theme="outline" class="participants"></i>
+              <span>99</span>
+              <span class="course-likes">
+                <ng-container *ngFor="let item of [1, 2, 3, 4, 5]">
+                  <i nz-icon type="star" theme="twotone"></i>
+                </ng-container>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </ng-container>
   </div>

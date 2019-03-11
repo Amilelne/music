@@ -1,31 +1,43 @@
 <div class="practiceList">
-  <div nz-row [nzGutter]="8">
+  <div nz-row [nzGutter]="6">
     <ng-container *ngFor="let practice of practices">
       <div
         nz-col
-        nzSpan="6"
+        nzSpan="4"
         [routerLink]="['/practices/', practice.id]"
         [queryParams]="{ title: practice.title }"
+        class="card-container"
       >
-        <nz-card
-          nzHoverable
-          style="width:240px"
-          [nzCover]="coverTemplate"
-          nzBordered="false"
-        >
-          <nz-card-meta
-            [nzTitle]="practice.titel"
-            [nzDescription]="practice.description"
-            nzLoading="true"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #coverTemplate>
+        <div class="card-top">
           <img
-            class="practiceImg"
-            [alt]="practice.title"
             [src]="practice.resourceUrl"
+            [alt]="practice.title"
+            class="card-banner"
           />
-        </ng-template>
+        </div>
+        <div class="card-content">
+          <h3 class="card-name">
+            {{ practice.title }}
+          </h3>
+          <div class="card-bottom">
+            <div class="card-info">
+              <ng-container [ngSwitch]="practice.level">
+                <span *ngSwitchCase="1">易</span>
+                <span *ngSwitchCase="2">偏易</span>
+                <span *ngSwitchCase="3">适中</span>
+                <span *ngSwitchCase="4">偏难</span>
+                <span *ngSwitchCase="5">难</span>
+              </ng-container>
+              <i nz-icon type="user" theme="outline" class="participants"></i>
+              <span>99</span>
+              <span class="course-likes">
+                <ng-container *ngFor="let item of [1, 2, 3, 4, 5]">
+                  <i nz-icon type="star" theme="twotone"></i>
+                </ng-container>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </ng-container>
   </div>

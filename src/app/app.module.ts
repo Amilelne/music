@@ -19,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PracticeComponent } from './practice/practice.component';
 import { RecordComponent } from './practice/record/record.component';
 import { ExpertComponent } from './expert/expert.component';
+import { ExpertDetailComponent } from './expert/expert-detail/expert-detail.component';
 
 registerLocaleData(zh);
 
@@ -31,7 +32,8 @@ registerLocaleData(zh);
     FooterComponent,
     PracticeComponent,
     RecordComponent,
-    ExpertComponent
+    ExpertComponent,
+    ExpertDetailComponent
   ],
   imports: [
     BrowserModule,
