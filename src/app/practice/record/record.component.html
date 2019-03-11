@@ -11,8 +11,7 @@
       nzType="primary"
       nzSize="large"
       (click)="initiateRecording()"
-      *ngIf="!recording"
-      [disabled]=""
+      *ngIf="!isRecord && !isStop"
     >
       开始录音
     </button>
@@ -21,7 +20,7 @@
       nzType="danger"
       nzSize="large"
       (click)="stopRecording()"
-      *ngIf="recording"
+      *ngIf="isRecord"
     >
       停止录音
     </button>
@@ -30,13 +29,51 @@
       nzType="primary"
       nzSize="large"
       (click)="uploadRecording()"
-      *ngIf="url"
+      *ngIf="url && !isUpload"
     >
       上传录音
     </button>
-    <div class="clearfix"></div>
-    <audio controls="" *ngIf="url">
-      <source [src]="sanitize(url)" type="audio/wav" />
-    </audio>
+    <label nz-checkbox [(ngModel)]="denoise" *ngIf="isStop && !isUpload"
+      >自动降噪</label
+    >
+    <nz-alert
+      nzType="success"
+      nzMessage="录音已成功上传"
+      nzCloseable
+      nzShowIcon
+      *ngIf="isUpload"
+      class="alertInfo"
+    ></nz-alert>
+    <nz-alert
+      nzType="danger"
+      nzMessage="录音上传失败,请重新上传"
+      nzCloseable
+      nzShowIcon
+      *ngIf="isError"
+      class="alertInfo"
+    ></nz-alert>
+    <div class="audioFile">
+      <audio controls="" *ngIf="url">
+        <source [src]="sanitize(url)" type="audio/wav" />
+      </audio>
+    </div>
+    <button
+      nz-button
+      nzType="primary"
+      nzSize="large"
+      *ngIf="isUpload"
+      class="scoreButton"
+    >
+      申请AI评分
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      nzSize="large"
+      *ngIf="isUpload"
+      class="scoreButton"
+    >
+      申请专家评分
+    </button>
   </div>
 </div>

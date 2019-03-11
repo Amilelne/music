@@ -23,8 +23,16 @@ export class RecordComponent implements OnInit {
   ) {}
   // Lets initiate Record OBJ
   private record;
-  // Will use this flag for detect recording
-  private recording = false;
+  // Detect recording
+  private isRecord = false;
+  // Detect stopping
+  private isStop = false;
+  // Detect uploading
+  private isUpload = false;
+  // Option for denoise
+  private denoise = false;
+  // Detect errors
+  private isError = false;
   // Url of Blob
   private url;
   private blobFile;
@@ -52,7 +60,7 @@ export class RecordComponent implements OnInit {
 
   // Start recording.
   initiateRecording() {
-    this.recording = true;
+    this.isRecord = true;
     const mediaConstraints = {
       video: false,
       audio: true
@@ -74,7 +82,8 @@ export class RecordComponent implements OnInit {
   }
 
   stopRecording() {
-    this.recording = false;
+    this.isRecord = false;
+    this.isStop = true;
     this.record.stop(this.processRecording.bind(this));
   }
 
@@ -84,15 +93,6 @@ export class RecordComponent implements OnInit {
   }
 
   uploadRecording() {
-    console.log(
-      "userId:",
-      this.userId,
-      ",practiceId:",
-      this.practiceId,
-      ",title:",
-      this.practiceTitle
-    );
-
     this.recordService
       .uploadRecord(
         this.record.blob,
@@ -102,9 +102,12 @@ export class RecordComponent implements OnInit {
       )
       .subscribe(
         ({ uploadRecord: { audioUrl } }) => {
+          this.isUpload = true;
           console.log(audioUrl);
         },
         errors => {
+          this.isUpload = false;
+          this.isError = true;
           if (errors !== undefined) {
             console.log(errors);
           }
