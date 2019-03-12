@@ -5,9 +5,14 @@
   .content-item {
     background-color: #fff;
     width: 80%;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
     padding: 1rem;
     box-shadow: 0 8px 16px 0 rgba(7, 17, 27, 0.1);
     border-radius: 12px;
   }
+}
+
+.item-avatar {
+  background-color: #3f91f7;
+  margin-right: 0.5rem;
 }

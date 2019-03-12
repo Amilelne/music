@@ -18,7 +18,7 @@
             [nzDescription]="item.description"
           >
             <ng-template #nzTitle>
-              <nz-avatar nzIcon="file"></nz-avatar>
+              <nz-avatar nzIcon="file" class="item-avatar"></nz-avatar>
               <a [routerLink]="['/courses/tutorial', item.id]">{{
                 item.title
               }}</a>
