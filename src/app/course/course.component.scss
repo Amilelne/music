@@ -12,6 +12,7 @@ h3 {
 }
 .courseList {
   padding-left: 5%;
+  padding-top: 40px;
 }
 .carouselImg {
   width: 100%;
@@ -91,4 +92,9 @@ h3 {
       color: #f01414 !important;
     }
   }
+}
+
+.pagination-style {
+  text-align: center;
+  padding-top: 50px;
 }

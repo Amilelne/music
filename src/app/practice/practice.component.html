@@ -1,44 +1,98 @@
-<div class="practiceList">
-  <div nz-row [nzGutter]="6">
-    <ng-container *ngFor="let practice of practices">
-      <div
-        nz-col
-        nzSpan="4"
-        [routerLink]="['/practices/', practice.id]"
-        [queryParams]="{ title: practice.title }"
-        class="card-container"
-      >
-        <div class="card-top">
-          <img
-            [src]="practice.resourceUrl"
-            [alt]="practice.title"
-            class="card-banner"
-          />
-        </div>
-        <div class="card-content">
-          <h3 class="card-name">
-            {{ practice.title }}
-          </h3>
-          <div class="card-bottom">
-            <div class="card-info">
-              <ng-container [ngSwitch]="practice.level">
-                <span *ngSwitchCase="1">易</span>
-                <span *ngSwitchCase="2">偏易</span>
-                <span *ngSwitchCase="3">适中</span>
-                <span *ngSwitchCase="4">偏难</span>
-                <span *ngSwitchCase="5">难</span>
-              </ng-container>
-              <i nz-icon type="user" theme="outline" class="participants"></i>
-              <span>99</span>
-              <span class="course-likes">
-                <ng-container *ngFor="let item of [1, 2, 3, 4, 5]">
-                  <i nz-icon type="star" theme="twotone"></i>
+<div class="practice-page">
+  <div class="top">
+    <div class="title"></div>
+    <div class="practice-nav">
+      <div class="practice-class-nav clearfix">
+        <span class="hd">方向:</span>
+        <ul>
+          <li class="nav-item on">
+            <a href="">全部</a>
+          </li>
+          <li class="nav-item">
+            <a href="">乐理</a>
+          </li>
+          <li class="nav-item">
+            <a href="">视唱</a>
+          </li>
+          <li class="nav-item">
+            <a href="">练耳</a>
+          </li>
+        </ul>
+      </div>
+      <div class="practice-level-nav">
+        <span class="hd">难度:</span>
+        <ul>
+          <li class="nav-item on">
+            <a href="">全部</a>
+          </li>
+          <li class="nav-item">
+            <a href="">易</a>
+          </li>
+          <li class="nav-item">
+            <a href="">偏易</a>
+          </li>
+          <li class="nav-item">
+            <a href="">适中</a>
+          </li>
+          <li class="nav-item">
+            <a href="">偏难</a>
+          </li>
+          <li class="nav-item">
+            <a href="">难</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="practiceList">
+    <div nz-row [nzGutter]="6">
+      <ng-container *ngFor="let practice of practices">
+        <div
+          nz-col
+          nzSpan="4"
+          [routerLink]="['/practices/', practice.id]"
+          [queryParams]="{ title: practice.title }"
+          class="card-container"
+        >
+          <div class="card-top">
+            <img
+              [src]="practice.resourceUrl"
+              [alt]="practice.title"
+              class="card-banner"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">
+              {{ practice.title }}
+            </h3>
+            <div class="card-bottom">
+              <div class="card-info">
+                <ng-container [ngSwitch]="practice.level">
+                  <span *ngSwitchCase="1">易</span>
+                  <span *ngSwitchCase="2">偏易</span>
+                  <span *ngSwitchCase="3">适中</span>
+                  <span *ngSwitchCase="4">偏难</span>
+                  <span *ngSwitchCase="5">难</span>
                 </ng-container>
-              </span>
+                <i nz-icon type="user" theme="outline" class="participants"></i>
+                <span>99</span>
+                <span class="course-likes">
+                  <ng-container *ngFor="let item of [1, 2, 3, 4, 5]">
+                    <i nz-icon type="star" theme="twotone"></i>
+                  </ng-container>
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
+    <div class="pagination-style">
+      <nz-pagination
+        [nzPageIndex]="1"
+        [nzTotal]="totalPractice"
+        [nzPageSize]="50"
+      ></nz-pagination>
+    </div>
   </div>
 </div>

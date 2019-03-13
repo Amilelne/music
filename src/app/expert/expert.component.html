@@ -1,28 +1,57 @@
-<div class="expertList">
-  <div nz-row [nzGutter]="8">
-    <ng-container *ngFor="let expert of expertsList">
-      <div
-        nz-col
-        nzSpan="6"
-        [routerLink]="['/experts/', expert.id]"
-        class="expert-item"
-      >
-        <nz-card
-          nzHoverable
-          [nzCover]="coverTemplate"
-          nzBordered="false"
-          class="expert-item-detail"
+<div class="expert-page">
+  <div class="top">
+    <div class="title"></div>
+    <div class="teacher-nav">
+      <span class="hd">方向:</span>
+      <ul>
+        <li class="nav-item on">
+          <a href="">全部</a>
+        </li>
+        <li class="nav-item">
+          <a href="">乐理</a>
+        </li>
+        <li class="nav-item">
+          <a href="">视唱</a>
+        </li>
+        <li class="nav-item">
+          <a href="">练耳</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="expertList">
+    <div nz-row [nzGutter]="8">
+      <ng-container *ngFor="let expert of expertsList">
+        <div
+          nz-col
+          nzSpan="6"
+          [routerLink]="['/experts/', expert.id]"
+          class="expert-item"
         >
-          <nz-card-meta
-            [nzTitle]="expert.name"
-            [nzDescription]="expert.introduction"
-            nzLoading="true"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #coverTemplate>
-          <img class="expertImg" [alt]="expert.name" [src]="expert.avatar" />
-        </ng-template>
-      </div>
-    </ng-container>
+          <nz-card
+            nzHoverable
+            [nzCover]="coverTemplate"
+            nzBordered="false"
+            class="expert-item-detail"
+          >
+            <nz-card-meta
+              [nzTitle]="expert.name"
+              [nzDescription]="expert.introduction"
+              nzLoading="true"
+            ></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <img class="expertImg" [alt]="expert.name" [src]="expert.avatar" />
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="pagination-style">
+    <nz-pagination
+      [nzPageIndex]="1"
+      [nzTotal]="totalExpert"
+      [nzPageSize]="50"
+    ></nz-pagination>
   </div>
 </div>

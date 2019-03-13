@@ -12,6 +12,7 @@ h3 {
 }
 .expertList {
   padding-left: 5%;
+  padding-top: 40px;
 }
 .expertImg {
   width: 80px;
@@ -37,4 +38,75 @@ h3 {
   border-radius: 12px;
   overflow: scroll;
   transition: all 0.3s;
+}
+
+.expert-page {
+  .top {
+    .title {
+      text-align: center;
+      padding-top: 1rem;
+      border-bottom: 1px solid rgba(28, 31, 33, 0.2);
+      background: url(../../assets/images/top_bg.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 152px;
+      h1 {
+        color: #fff;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+      }
+    }
+    .teacher-nav {
+      background-color: #fff;
+      padding: 16px 0 5px;
+      border-bottom: 1px solid #edf1f2;
+      .hd {
+        padding-left: 80px;
+        width: 52px;
+        height: 20px;
+        line-height: 30px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #07111b;
+        text-align: left;
+      }
+    }
+  }
+}
+
+.pagination-style {
+  text-align: center;
+  padding-top: 50px;
+}
+ul {
+  display: inline;
+  list-style: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  .nav-item {
+    display: inline-block;
+    margin: 0 30px;
+    a {
+      display: block;
+      line-height: 4px;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 14px;
+      color: #1c1f21;
+    }
+  }
+  .nav-item.on a {
+    background: rgba(242, 13, 13, 0.06);
+    border-radius: 6px;
+    font-weight: 700;
+    color: #f20d0d;
+  }
 }
