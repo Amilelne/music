@@ -16,6 +16,8 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
   public static AUTH_TOKEN_LOCAL_STORAGE_KEY = "authToken";
+  public static AUTH_USER_ID = "userId";
+  public static AUTH_USER_ROLE = "userRole";
   isLoggedIn$ = new BehaviorSubject<boolean>(null);
 
   public _user: BehaviorSubject<User>;
@@ -46,6 +48,21 @@ export class AuthService {
     }
   }
 
+  static storeUser(userId, userRole: string) {
+    localStorage.setItem(this.AUTH_USER_ID, userId);
+    localStorage.setItem(this.AUTH_USER_ROLE, userRole);
+  }
+
+  static getStoredUserId() {
+    return localStorage.getItem(this.AUTH_USER_ID);
+  }
+  static getStoredUserRole() {
+    return localStorage.getItem(this.AUTH_USER_ROLE);
+  }
+  static removeUser() {
+    localStorage.removeItem(this.AUTH_USER_ID);
+    return localStorage.removeItem(this.AUTH_USER_ROLE);
+  }
   static storeToken(token: string) {
     localStorage.setItem(this.AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
   }
@@ -59,6 +76,7 @@ export class AuthService {
   }
 
   private setUser(user: User) {
+    AuthService.storeUser(user.id, user.role);
     this._user.next(user);
     this.isLoggedIn$.next(!!user);
   }
@@ -122,6 +140,7 @@ export class AuthService {
   logout() {
     this.setUser(null);
     AuthService.removeToken();
+    AuthService.removeUser();
     this.router.navigate(["/login"]);
   }
 

@@ -28,4 +28,7 @@ type Mutation {
 
   # update profile
   updateProfile(userId: ID!, data: UpdateProfileInput!): User!
+
+  # send notice
+  sendNotice(data: CreateNoticeInput!): Notice!
 }

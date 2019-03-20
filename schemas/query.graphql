@@ -25,6 +25,12 @@ type Query {
   userRecords(userId: ID!): [Record]!
   records: [Record]!
 
+  # notice
+  notice(id: ID!): Notice!
+  noticesToUser(userId: ID!): [Notice]!
+  noticesToGroup(userRole: String!): [Notice]!
+  noticesSend(sendId: ID!): [Notice]!
+
   # get uploaded files
   uploads: [File]
 }

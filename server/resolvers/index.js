@@ -5,6 +5,7 @@ const CourseResolverMap = require("./course.resolver");
 const TutorialResolverMap = require("./tutorial.resolver");
 const PracticeResolverMap = require("./practice.resolver");
 const UserRecordResolverMap = require("./userRecord.resolver");
+const NoticeResolverMap = require("./notice.resolver");
 
 const resolverMap = {
   DateTime,
@@ -23,5 +24,6 @@ exports.resolvers = merge(
   CourseResolverMap,
   TutorialResolverMap,
   PracticeResolverMap,
-  UserRecordResolverMap
+  UserRecordResolverMap,
+  NoticeResolverMap
 );

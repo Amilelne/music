@@ -11,6 +11,7 @@ documents:
     ./src/app/user/*.graphql,
     ./src/app/core/record/*.graphql,
     ./src/app/expert/*.graphql,
+    ./src/app/core/notice/*.graphql,
   ]
 generates:
   ./src/gql.ts:

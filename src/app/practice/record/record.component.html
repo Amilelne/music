@@ -57,23 +57,25 @@
         <source [src]="sanitize(url)" type="audio/wav" />
       </audio>
     </div>
+    <h2 *ngIf="isUpload">AI 评分为:</h2>
     <button
       nz-button
       nzType="primary"
       nzSize="large"
       *ngIf="isUpload"
       class="scoreButton"
-    >
-      申请AI评分
-    </button>
-    <button
-      nz-button
-      nzType="primary"
-      nzSize="large"
-      *ngIf="isUpload"
-      class="scoreButton"
+      (click)="applyExpertScore()"
+      [disabled]="applied"
     >
       申请专家评分
     </button>
+    <nz-alert
+      nzType="success"
+      nzMessage="已申请专家评分"
+      nzCloseable
+      nzShowIcon
+      *ngIf="applied"
+      class="alertInfo"
+    ></nz-alert>
   </div>
 </div>

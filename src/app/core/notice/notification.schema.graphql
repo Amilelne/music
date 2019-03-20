@@ -1,0 +1,39 @@
+fragment NoticeFields on Notice {
+  id
+  sendId
+  userId
+  practiceId
+  read
+  content
+  createDate
+}
+
+query Notice($id: ID!) {
+  notice(id: $id) {
+    ...NoticeFields
+  }
+}
+
+query NoticesToUser($userId: ID!) {
+  noticesToUser(userId: $userId) {
+    ...NoticeFields
+  }
+}
+
+query NoticesToGroup($userRole: String!) {
+  noticesToGroup(userRole: $userRole) {
+    ...NoticeFields
+  }
+}
+
+query NoticesSend($sendId: ID!) {
+  noticesSend(sendId: $sendId) {
+    ...NoticeFields
+  }
+}
+
+mutation SendNotice($data: CreateNoticeInput!) {
+  sendNotice(data: $data) {
+    ...NoticeFields
+  }
+}

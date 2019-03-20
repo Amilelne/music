@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Practice } from "@app/gql";
 import { RecordService } from "../../core/record/record.service";
 import { AuthService } from "app/core/auth/auth.service";
+import { NoticeService } from "app/core/notice/notice.service";
 
 @Component({
   selector: "app-record",
@@ -19,7 +20,8 @@ export class RecordComponent implements OnInit {
     private courseService: CourseService,
     private recordService: RecordService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private noticeService: NoticeService
   ) {}
   // Lets initiate Record OBJ
   private record;
@@ -33,6 +35,8 @@ export class RecordComponent implements OnInit {
   private denoise = false;
   // Detect errors
   private isError = false;
+  // Detect applied
+  private applied = false;
   // Url of Blob
   private url;
   private blobFile;
@@ -116,5 +120,25 @@ export class RecordComponent implements OnInit {
   }
   errorCallback(error) {
     this.error = "Can not play audio in your browser";
+  }
+  applyExpertScore() {
+    let content = "用户请求对练习" + this.practiceTitle + "进行评分";
+    let data = {
+      sendId: this.userId,
+      userRole: "expert",
+      practiceId: this.practiceId,
+      content: content
+    };
+    this.noticeService.sendNotice(data).subscribe(
+      data => {
+        // console.log(data.sendNotice);
+        this.applied = true;
+      },
+      errors => {
+        if (errors !== undefined) {
+          console.log(errors);
+        }
+      }
+    );
   }
 }

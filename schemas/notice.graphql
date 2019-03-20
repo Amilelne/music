@@ -1,0 +1,20 @@
+type Notice {
+  id: ID!
+  sendId: ID!
+  userId: ID
+  userRole: String
+  practiceId: ID!
+  read: Boolean!
+  content: String!
+  createDate: DateTime
+  updateDate: DateTime
+}
+
+# input types
+input CreateNoticeInput {
+  sendId: ID!
+  userId: ID
+  userRole: String
+  practiceId: ID!
+  content: String!
+}

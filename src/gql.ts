@@ -88,6 +88,18 @@ export interface UpdateProfileInput {
 
   introduction?: Maybe<string>;
 }
+/** input types */
+export interface CreateNoticeInput {
+  sendId: string;
+
+  userId?: Maybe<string>;
+
+  userRole?: Maybe<string>;
+
+  practiceId: string;
+
+  content: string;
+}
 
 /** custom url link */
 export type Url = any;
@@ -470,6 +482,76 @@ export namespace Expert {
   export type Expert = ExpertFields.Fragment;
 }
 
+export namespace Notice {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    notice: Notice;
+  };
+
+  export type Notice = NoticeFields.Fragment;
+}
+
+export namespace NoticesToUser {
+  export type Variables = {
+    userId: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    noticesToUser: (Maybe<NoticesToUser>)[];
+  };
+
+  export type NoticesToUser = NoticeFields.Fragment;
+}
+
+export namespace NoticesToGroup {
+  export type Variables = {
+    userRole: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    noticesToGroup: (Maybe<NoticesToGroup>)[];
+  };
+
+  export type NoticesToGroup = NoticeFields.Fragment;
+}
+
+export namespace NoticesSend {
+  export type Variables = {
+    sendId: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    noticesSend: (Maybe<NoticesSend>)[];
+  };
+
+  export type NoticesSend = NoticeFields.Fragment;
+}
+
+export namespace SendNotice {
+  export type Variables = {
+    data: CreateNoticeInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    sendNotice: SendNotice;
+  };
+
+  export type SendNotice = NoticeFields.Fragment;
+}
+
 export namespace CourseFields {
   export type Fragment = {
     __typename?: "Course";
@@ -662,6 +744,26 @@ export namespace ExpertFields {
   };
 }
 
+export namespace NoticeFields {
+  export type Fragment = {
+    __typename?: "Notice";
+
+    id: string;
+
+    sendId: string;
+
+    userId: Maybe<string>;
+
+    practiceId: string;
+
+    read: boolean;
+
+    content: string;
+
+    createDate: Maybe<DateTime>;
+  };
+}
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -700,6 +802,14 @@ export interface Query {
   userRecords: (Maybe<Record>)[];
 
   records: (Maybe<Record>)[];
+  /** notice */
+  notice: Notice;
+
+  noticesToUser: (Maybe<Notice>)[];
+
+  noticesToGroup: (Maybe<Notice>)[];
+
+  noticesSend: (Maybe<Notice>)[];
   /** get uploaded files */
   uploads?: Maybe<(Maybe<File>)[]>;
 }
@@ -824,6 +934,26 @@ export interface Record {
   updateDate?: Maybe<DateTime>;
 }
 
+export interface Notice {
+  id: string;
+
+  sendId: string;
+
+  userId?: Maybe<string>;
+
+  userRole?: Maybe<string>;
+
+  practiceId: string;
+
+  read: boolean;
+
+  content: string;
+
+  createDate?: Maybe<DateTime>;
+
+  updateDate?: Maybe<DateTime>;
+}
+
 export interface File {
   filename: string;
 
@@ -861,6 +991,8 @@ export interface Mutation {
   updateAvatar: User;
   /** update profile */
   updateProfile: User;
+  /** send notice */
+  sendNotice: Notice;
 }
 
 /** payload */
@@ -894,6 +1026,18 @@ export interface RecordQueryArgs {
 }
 export interface UserRecordsQueryArgs {
   userId: string;
+}
+export interface NoticeQueryArgs {
+  id: string;
+}
+export interface NoticesToUserQueryArgs {
+  userId: string;
+}
+export interface NoticesToGroupQueryArgs {
+  userRole: string;
+}
+export interface NoticesSendQueryArgs {
+  sendId: string;
 }
 export interface AddUserMutationArgs {
   data: CreateUserInput;
@@ -942,6 +1086,9 @@ export interface UpdateProfileMutationArgs {
   userId: string;
 
   data: UpdateProfileInput;
+}
+export interface SendNoticeMutationArgs {
+  data: CreateNoticeInput;
 }
 
 // ====================================================
@@ -1068,6 +1215,18 @@ export const ExpertFieldsFragment = gql`
     level
     introduction
     avatar
+  }
+`;
+
+export const NoticeFieldsFragment = gql`
+  fragment NoticeFields on Notice {
+    id
+    sendId
+    userId
+    practiceId
+    read
+    content
+    createDate
   }
 `;
 
@@ -1470,6 +1629,88 @@ export class ExpertGQL extends Apollo.Query<Expert.Query, Expert.Variables> {
     }
 
     ${ExpertFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class NoticeGQL extends Apollo.Query<Notice.Query, Notice.Variables> {
+  document: any = gql`
+    query Notice($id: ID!) {
+      notice(id: $id) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class NoticesToUserGQL extends Apollo.Query<
+  NoticesToUser.Query,
+  NoticesToUser.Variables
+> {
+  document: any = gql`
+    query NoticesToUser($userId: ID!) {
+      noticesToUser(userId: $userId) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class NoticesToGroupGQL extends Apollo.Query<
+  NoticesToGroup.Query,
+  NoticesToGroup.Variables
+> {
+  document: any = gql`
+    query NoticesToGroup($userRole: String!) {
+      noticesToGroup(userRole: $userRole) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class NoticesSendGQL extends Apollo.Query<
+  NoticesSend.Query,
+  NoticesSend.Variables
+> {
+  document: any = gql`
+    query NoticesSend($sendId: ID!) {
+      noticesSend(sendId: $sendId) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class SendNoticeGQL extends Apollo.Mutation<
+  SendNotice.Mutation,
+  SendNotice.Variables
+> {
+  document: any = gql`
+    mutation SendNotice($data: CreateNoticeInput!) {
+      sendNotice(data: $data) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
   `;
 }
 

@@ -1,35 +1,37 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { LoginComponent } from './login/login.component';
-import { Get404Component } from './core/get404/get404.component';
-import { RegisterComponent } from './register/register.component';
-import { PracticeComponent } from './practice/practice.component';
-import { RecordComponent } from './practice/record/record.component';
-import { ExpertComponent } from './expert/expert.component';
+import { LoginComponent } from "./login/login.component";
+import { Get404Component } from "./core/get404/get404.component";
+import { RegisterComponent } from "./register/register.component";
+import { PracticeComponent } from "./practice/practice.component";
+import { RecordComponent } from "./practice/record/record.component";
+import { ExpertComponent } from "./expert/expert.component";
+import { NotificationComponent } from "./notification/notification.component";
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: './course/user-course.module#UserCourseModule',
-    pathMatch: 'full'
+    path: "",
+    loadChildren: "./course/user-course.module#UserCourseModule",
+    pathMatch: "full"
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
   {
-    path: 'courses',
-    loadChildren: './course/user-course.module#UserCourseModule'
+    path: "courses",
+    loadChildren: "./course/user-course.module#UserCourseModule"
   },
   {
-    path: 'user',
-    loadChildren: './user/user.module#UserModule'
+    path: "user",
+    loadChildren: "./user/user.module#UserModule"
   },
-  { path: 'practices', component: PracticeComponent },
-  { path: 'practices/:id', component: RecordComponent },
-  { path: 'experts', component: ExpertComponent },
-  { path: 'experts/:id', component: ExpertComponent },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-  { path: '**', component: Get404Component }
+  { path: "practices", component: PracticeComponent },
+  { path: "practices/:id", component: RecordComponent },
+  { path: "experts", component: ExpertComponent },
+  { path: "experts/:id", component: ExpertComponent },
+  { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
+  { path: "notices", component: NotificationComponent },
+  { path: "**", component: Get404Component }
 ];
 
 @NgModule({
