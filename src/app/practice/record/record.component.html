@@ -1,81 +1,94 @@
 <div class="practice-detail">
-  <div class="info">
-    <h2>请根据下面的乐谱唱:</h2>
-  </div>
-  <div class="music">
-    <img [src]="practiceDetail?.resourceUrl" alt="music" />
-  </div>
-  <div class="recordPage">
-    <button
-      nz-button
-      nzType="primary"
-      nzSize="large"
-      (click)="initiateRecording()"
-      *ngIf="!isRecord && !isStop"
-    >
-      开始录音
-    </button>
-    <button
-      nz-button
-      nzType="danger"
-      nzSize="large"
-      (click)="stopRecording()"
-      *ngIf="isRecord"
-    >
-      停止录音
-    </button>
-    <button
-      nz-button
-      nzType="primary"
-      nzSize="large"
-      (click)="uploadRecording()"
-      *ngIf="url && !isUpload"
-    >
-      上传录音
-    </button>
-    <label nz-checkbox [(ngModel)]="denoise" *ngIf="isStop && !isUpload"
-      >自动降噪</label
-    >
-    <nz-alert
-      nzType="success"
-      nzMessage="录音已成功上传"
-      nzCloseable
-      nzShowIcon
-      *ngIf="isUpload"
-      class="alertInfo"
-    ></nz-alert>
-    <nz-alert
-      nzType="danger"
-      nzMessage="录音上传失败,请重新上传"
-      nzCloseable
-      nzShowIcon
-      *ngIf="isError"
-      class="alertInfo"
-    ></nz-alert>
-    <div class="audioFile">
-      <audio controls="" *ngIf="url">
-        <source [src]="sanitize(url)" type="audio/wav" />
-      </audio>
+  <div nz-row>
+    <div nz-col nzSpan="20">
+      <div class="info">
+        <h2>请根据下面的乐谱唱:</h2>
+      </div>
+      <div class="music">
+        <img [src]="practiceDetail?.resourceUrl" alt="music" />
+      </div>
+      <div class="recordPage">
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          (click)="initiateRecording()"
+          *ngIf="!isRecord && !isStop"
+        >
+          开始录音
+        </button>
+        <button
+          nz-button
+          nzType="danger"
+          nzSize="large"
+          (click)="stopRecording()"
+          *ngIf="isRecord"
+        >
+          停止录音
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          (click)="uploadRecording()"
+          *ngIf="url && !isUpload"
+        >
+          上传录音
+        </button>
+        <label nz-checkbox [(ngModel)]="denoise" *ngIf="isStop && !isUpload"
+          >自动降噪</label
+        >
+        <nz-alert
+          nzType="danger"
+          nzMessage="录音上传失败,请重新上传"
+          nzCloseable
+          nzShowIcon
+          *ngIf="isError"
+          class="alertInfo"
+        ></nz-alert>
+        <div class="audioFile">
+          <audio controls="" *ngIf="url">
+            <source [src]="sanitize(url)" type="audio/wav" />
+          </audio>
+        </div>
+        <h2 *ngIf="isUpload">AI 评分为:</h2>
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          *ngIf="isUpload"
+          class="scoreButton"
+          (click)="applyExpertScore()"
+          [disabled]="isApplied"
+        >
+          申请专家评分
+        </button>
+      </div>
     </div>
-    <h2 *ngIf="isUpload">AI 评分为:</h2>
-    <button
-      nz-button
-      nzType="primary"
-      nzSize="large"
-      *ngIf="isUpload"
-      class="scoreButton"
-      (click)="applyExpertScore()"
-      [disabled]="applied"
-    >
-      申请专家评分
-    </button>
-    <nz-alert
-      nzType="success"
-      nzMessage="已申请专家评分"
-      nzCloseable
-      nzShowIcon
-      *ngIf="applied"
-      class="alertInfo"
-    ></nz-alert>
+    <div nz-col nzSpan="4">
+      <div class="practiceList">
+        <h2>推荐练习</h2>
+        <ng-container *ngFor="let practice of recommendPractices">
+          <div
+            [routerLink]="['/practices/', practice.id]"
+            [queryParams]="{ title: practice.title }"
+            class="card-container"
+          >
+            <div class="card-top">
+              <img
+                [src]="practice.resourceUrl"
+                [alt]="practice.title"
+                class="card-banner"
+              />
+            </div>
+            <div class="card-content">
+              <h3 class="card-name">
+                {{ practice.title }}
+              </h3>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

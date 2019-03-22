@@ -7,11 +7,12 @@ import { Practice } from "@app/gql";
 import { RecordService } from "../../core/record/record.service";
 import { AuthService } from "app/core/auth/auth.service";
 import { NoticeService } from "app/core/notice/notice.service";
+import { NzNotificationService } from "ng-zorro-antd";
 
 @Component({
   selector: "app-record",
   templateUrl: "./record.component.html",
-  styleUrls: ["./record.component.scss"]
+  styleUrls: ["./record.component.scss", "../practice.component.scss"]
 })
 export class RecordComponent implements OnInit {
   @Input() practiceDetail: Practice;
@@ -21,7 +22,8 @@ export class RecordComponent implements OnInit {
     private recordService: RecordService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private noticeService: NoticeService
+    private noticeService: NoticeService,
+    private notification: NzNotificationService
   ) {}
   // Lets initiate Record OBJ
   private record;
@@ -33,10 +35,10 @@ export class RecordComponent implements OnInit {
   private isUpload = false;
   // Option for denoise
   private denoise = false;
+  // Detect applied
+  private isApplied = false;
   // Detect errors
   private isError = false;
-  // Detect applied
-  private applied = false;
   // Url of Blob
   private url;
   private blobFile;
@@ -44,20 +46,23 @@ export class RecordComponent implements OnInit {
   private practiceId;
   private practiceTitle: String;
   private userId;
+  private recommendPractices;
   ngOnInit() {
-    this.getPracticeDetail();
+    this.route.params.subscribe(params => {
+      this.practiceId = params.id;
+      this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
+        this.practiceDetail = data;
+      });
+    });
     this.userId = this.authService.getUserId();
     this.route.queryParams.subscribe(params => {
       this.practiceTitle = params.title;
     });
-  }
-
-  getPracticeDetail() {
-    this.practiceId = this.route.snapshot.paramMap.get("id");
-    this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
-      this.practiceDetail = data;
+    this.courseService.getPracticeList().subscribe(data => {
+      this.recommendPractices = data;
     });
   }
+
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
@@ -107,7 +112,7 @@ export class RecordComponent implements OnInit {
       .subscribe(
         ({ uploadRecord: { audioUrl } }) => {
           this.isUpload = true;
-          console.log(audioUrl);
+          this.createNotification("录音上传成功");
         },
         errors => {
           this.isUpload = false;
@@ -131,8 +136,8 @@ export class RecordComponent implements OnInit {
     };
     this.noticeService.sendNotice(data).subscribe(
       data => {
-        // console.log(data.sendNotice);
-        this.applied = true;
+        this.isApplied = true;
+        this.createNotification("已成功申请专家评分");
       },
       errors => {
         if (errors !== undefined) {
@@ -140,5 +145,12 @@ export class RecordComponent implements OnInit {
         }
       }
     );
+  }
+
+  createNotification(content: string): void {
+    this.notification.config({
+      nzPlacement: "topLeft"
+    });
+    this.notification.blank("成功提示", content);
   }
 }

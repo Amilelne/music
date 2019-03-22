@@ -83,9 +83,10 @@ export class AuthService {
 
   // get user id
   getUserId() {
-    let userId;
-    this._user.subscribe(user => (userId = user.id));
-    return userId;
+    // let userId;
+    // this._user.subscribe(user => (userId = user.id));
+    // return userId;
+    return AuthService.getStoredUserId();
   }
 
   // login
