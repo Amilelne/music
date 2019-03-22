@@ -8,6 +8,12 @@ const resolveMap = {
     },
     course: async (obj, { id }, context, info) => {
       return Course.findById(id).populateFields(info);
+    },
+    courseNumberByKind: async (obj, args, context, info) => {
+      let kind0 = await Course.countDocuments({ kind: 0 });
+      let kind1 = await Course.countDocuments({ kind: 1 });
+      let kind2 = await Course.countDocuments({ kind: 2 });
+      return [kind0, kind1, kind2];
     }
   },
   Mutation: {

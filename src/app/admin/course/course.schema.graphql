@@ -42,6 +42,10 @@ query AdminPractices {
   }
 }
 
+query AdminCourseNumberByKind {
+  courseNumberByKind
+}
+
 query AdminCourseDetail($id: ID!) {
   course(id: $id) {
     ...CourseFields

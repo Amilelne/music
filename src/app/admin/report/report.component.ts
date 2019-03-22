@@ -1,74 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { CourseService } from "../course/course.service";
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: "app-report",
+  templateUrl: "./report.component.html",
+  styleUrls: ["./report.component.scss"]
 })
 export class ReportComponent implements OnInit {
-  single: any[] = [
-    {
-      name: 'Germany',
-      value: 8940000
-    },
-    {
-      name: 'USA',
-      value: 5000000
-    },
-    {
-      name: 'France',
-      value: 7200000
-    }
-  ];
-  multi: any[] = [
-    {
-      name: 'Germany',
-      series: [
+  private courseKindNumbers: any[];
+  private courseData: any[];
+  constructor(private courseService: CourseService) {}
+  ngOnInit() {
+    this.courseService.getCourseNumberByKind().subscribe(data => {
+      this.courseKindNumbers = data;
+      this.courseData = [
         {
-          name: '2010',
-          value: 7300000
+          name: "乐理",
+          value: data[0]
         },
         {
-          name: '2011',
-          value: 8940000
-        }
-      ]
-    },
-
-    {
-      name: 'USA',
-      series: [
-        {
-          name: '2010',
-          value: 7870000
+          name: "视唱",
+          value: data[1]
         },
         {
-          name: '2011',
-          value: 8270000
+          name: "练耳",
+          value: data[2]
         }
-      ]
-    },
-
-    {
-      name: 'France',
-      series: [
-        {
-          name: '2010',
-          value: 5000002
-        },
-        {
-          name: '2011',
-          value: 5800000
-        }
-      ]
-    }
-  ];
+      ];
+    });
+  }
 
   view: any[] = [700, 400];
-
-  constructor() {
-    Object.assign(this, this.single);
-  }
 
   // options
   showXAxis = true;
@@ -76,13 +38,12 @@ export class ReportComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
+  xAxisLabel = "课程类别";
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
+  yAxisLabel = "课程数量";
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
   };
-  ngOnInit() {}
 
   onSelect(event) {
     console.log(event);

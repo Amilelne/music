@@ -11,6 +11,7 @@ type Query {
   # course
   courses: [Course]!
   course(id: ID!): Course!
+  courseNumberByKind: [Int]!
 
   # tutorial
   tutorial(id: ID!): Tutorial!

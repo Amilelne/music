@@ -15,7 +15,9 @@ import {
   AdminCreatePracticeGQL,
   AdminPracticeDetailGQL,
   TutorialDetailGQL,
-  Course
+  Course,
+  AdminCourseNumberByKind,
+  AdminCourseNumberByKindGQL
 } from "../../../gql";
 
 @Injectable({
@@ -31,7 +33,8 @@ export class CourseService {
     private courseDetailGQL: AdminCourseDetailGQL,
     private practiceDetailGQL: AdminPracticeDetailGQL,
     private createPracticeGQL: AdminCreatePracticeGQL,
-    private tutorialDetailGQL: TutorialDetailGQL
+    private tutorialDetailGQL: TutorialDetailGQL,
+    private courseNumberByKindGQL: AdminCourseNumberByKindGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -88,6 +91,11 @@ export class CourseService {
     return this.tutorialDetailGQL
       .watch({ id: id })
       .valueChanges.pipe(map(result => result.data.tutorial));
+  }
+  getCourseNumberByKind() {
+    return this.courseNumberByKindGQL
+      .watch()
+      .valueChanges.pipe(map(result => result.data.courseNumberByKind));
   }
 
   createTutorial(createTutorialInput: CreateTutorialInput, id) {

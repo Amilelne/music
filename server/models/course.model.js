@@ -1,6 +1,6 @@
-const { conf } = require('../config');
-const mongoose = require('../mongoose');
-const { Tutorial } = require('./index');
+const { conf } = require("../config");
+const mongoose = require("../mongoose");
+const { Tutorial } = require("./index");
 const Schema = mongoose.Schema;
 
 const schema = new Schema(
@@ -15,6 +15,10 @@ const schema = new Schema(
       required: false,
       maxlength: 1000
     },
+    kind: {
+      type: Number,
+      required: true
+    },
     level: {
       type: Number,
       required: true,
@@ -28,7 +32,7 @@ const schema = new Schema(
       {
         type: Schema.Types.ObjectId,
         required: false,
-        ref: 'Tutorial'
+        ref: "Tutorial"
       }
     ],
     price: {
@@ -36,10 +40,10 @@ const schema = new Schema(
     }
   },
   {
-    timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' },
+    timestamps: { createdAt: "createDate", updatedAt: "updateDate" },
     versionKey: false
   }
 );
 
-const name = conf('collections.course');
+const name = conf("collections.course");
 exports.Course = mongoose.model(name, schema, name);

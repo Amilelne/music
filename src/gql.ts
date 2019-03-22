@@ -34,9 +34,9 @@ export interface CreateCourseInput {
 
   level?: Maybe<number>;
 
-  price?: Maybe<number>;
-
   kind?: Maybe<(Maybe<number>)[]>;
+
+  price?: Maybe<number>;
 
   tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
 }
@@ -139,6 +139,16 @@ export namespace AdminPractices {
 
     averageScore: Maybe<number>;
   } & PracticeFields.Fragment;
+}
+
+export namespace AdminCourseNumberByKind {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    courseNumberByKind: (Maybe<number>)[];
+  };
 }
 
 export namespace AdminCourseDetail {
@@ -788,6 +798,8 @@ export interface Query {
   courses: (Maybe<Course>)[];
 
   course: Course;
+
+  courseNumberByKind: (Maybe<number>)[];
   /** tutorial */
   tutorial: Tutorial;
 
@@ -846,6 +858,8 @@ export interface Course {
   description?: Maybe<string>;
 
   level?: Maybe<number>;
+
+  kind?: Maybe<number>;
 
   price?: Maybe<number>;
 
@@ -1267,6 +1281,19 @@ export class AdminPracticesGQL extends Apollo.Query<
     }
 
     ${PracticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminCourseNumberByKindGQL extends Apollo.Query<
+  AdminCourseNumberByKind.Query,
+  AdminCourseNumberByKind.Variables
+> {
+  document: any = gql`
+    query AdminCourseNumberByKind {
+      courseNumberByKind
+    }
   `;
 }
 @Injectable({

@@ -8,6 +8,7 @@ type Course {
   title: String!
   description: String
   level: Int
+  kind: Int
   price: Float
   pictureUrl: String
   createDate: DateTime
@@ -53,6 +54,7 @@ input CreateCourseInput {
   title: String!
   description: String
   level: Int
+  kind: Int
   price: Float
   kind: [Int]
   tutorials: [CreateTutorialInput]
