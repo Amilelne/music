@@ -23,6 +23,11 @@
     </ng-container>
   </div>
   <ul nz-menu [nzMode]="'vertical'" style="height:100%">
+    <ng-container *ngIf="userRole == 'expert'">
+      <li nz-submenu routerLink="score" routerLinkActive="active">
+        <span title><i nz-icon type="star"></i>音频评分</span>
+      </li>
+    </ng-container>
     <li nz-submenu routerLink="courses" routerLinkActive="active">
       <span title><i nz-icon type="book"></i> 我的课程</span>
     </li>

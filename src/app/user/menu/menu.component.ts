@@ -17,8 +17,10 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private currentUser: AuthCurrentUserGQL
   ) {}
-
-  ngOnInit() {}
+  private userRole;
+  ngOnInit() {
+    this.userRole = AuthService.getStoredUserRole();
+  }
 
   onFileChanged(event) {
     const file = event.target.files[0];
