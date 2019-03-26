@@ -11,7 +11,10 @@
       <ng-container *ngIf="loggedIn && user?.role == 'admin'">
         <li nz-menu-item routerLink="/admin" routerLinkActive="active">管理</li>
       </ng-container>
-
+      <!--Expert-->
+      <ng-container *ngIf="loggedIn && user?.role == 'expert'">
+        <li nz-menu-item routerLink="/score" routerLinkActive="active">评分</li>
+      </ng-container>
       <!--Auth-->
       <ng-container *ngIf="!loggedIn">
         <li

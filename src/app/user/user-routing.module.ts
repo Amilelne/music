@@ -4,7 +4,6 @@ import { UserComponent } from "./user.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { HistoryComponent } from "./history/history.component";
 import { AudioComponent } from "./audio/audio.component";
-import { ScoreComponent } from "./score/score.component";
 
 const routes: Routes = [
   {
@@ -22,10 +21,6 @@ const routes: Routes = [
       {
         path: "audios",
         component: AudioComponent
-      },
-      {
-        path: "score",
-        component: ScoreComponent
       },
       {
         path: "",

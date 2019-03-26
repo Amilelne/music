@@ -9,6 +9,7 @@ import { RecordComponent } from "./practice/record/record.component";
 import { ExpertComponent } from "./expert/expert.component";
 import { NotificationComponent } from "./notification/notification.component";
 import { ExpertDetailComponent } from "./expert/expert-detail/expert-detail.component";
+import { ScoreComponent } from "./score/score.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: "practices/:id", component: RecordComponent },
   { path: "experts", component: ExpertComponent },
   { path: "experts/:id", component: ExpertDetailComponent },
+  { path: "score", component: ScoreComponent },
   { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
   { path: "notices", component: NotificationComponent },
   { path: "**", component: Get404Component }

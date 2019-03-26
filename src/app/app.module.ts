@@ -21,6 +21,7 @@ import { RecordComponent } from './practice/record/record.component';
 import { ExpertComponent } from './expert/expert.component';
 import { ExpertDetailComponent } from './expert/expert-detail/expert-detail.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ScoreComponent } from './score/score.component';
 
 registerLocaleData(zh);
 
@@ -35,7 +36,8 @@ registerLocaleData(zh);
     RecordComponent,
     ExpertComponent,
     ExpertDetailComponent,
-    NotificationComponent
+    NotificationComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,
