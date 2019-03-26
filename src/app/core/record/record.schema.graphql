@@ -24,21 +24,30 @@ fragment scoreFields on Record {
 }
 query UserRecords($userId: ID!) {
   userRecords(userId: $userId) {
-    ...recordFields
+    ...scoreFields
   }
 }
 query Record($id: ID!) {
   record(id: $id) {
-    ...recordFields
+    ...scoreFields
   }
 }
 query Records {
   records {
-    ...recordFields
+    ...scoreFields
+  }
+}
+query UnscoredRecords {
+  unscoredRecords {
+    ...scoreFields
   }
 }
 mutation UploadRecord($data: UploadAudioInput!) {
   uploadRecord(data: $data) {
     ...recordFields
   }
+}
+
+mutation ScoreRecord($data: ScoreRecordInput!) {
+  scoreRecord(data: $data)
 }

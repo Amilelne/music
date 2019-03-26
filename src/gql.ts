@@ -74,6 +74,16 @@ export interface UploadAudioInput {
 
   practiceTitle: string;
 }
+
+export interface ScoreRecordInput {
+  id: string;
+
+  expertId: string;
+
+  expertBeatScore: number;
+
+  expertIntonationScore: number;
+}
 /** update profile */
 export interface UpdateProfileInput {
   name?: Maybe<string>;
@@ -97,6 +107,8 @@ export interface CreateNoticeInput {
   userRole?: Maybe<string>;
 
   practiceId: string;
+
+  audioId: string;
 
   content: string;
 }
@@ -423,7 +435,7 @@ export namespace UserRecords {
     userRecords: (Maybe<UserRecords>)[];
   };
 
-  export type UserRecords = RecordFields.Fragment;
+  export type UserRecords = ScoreFields.Fragment;
 }
 
 export namespace Record {
@@ -437,7 +449,7 @@ export namespace Record {
     record: Record;
   };
 
-  export type Record = RecordFields.Fragment;
+  export type Record = ScoreFields.Fragment;
 }
 
 export namespace Records {
@@ -449,7 +461,19 @@ export namespace Records {
     records: (Maybe<Records>)[];
   };
 
-  export type Records = RecordFields.Fragment;
+  export type Records = ScoreFields.Fragment;
+}
+
+export namespace UnscoredRecords {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    unscoredRecords: (Maybe<UnscoredRecords>)[];
+  };
+
+  export type UnscoredRecords = ScoreFields.Fragment;
 }
 
 export namespace UploadRecord {
@@ -464,6 +488,18 @@ export namespace UploadRecord {
   };
 
   export type UploadRecord = RecordFields.Fragment;
+}
+
+export namespace ScoreRecord {
+  export type Variables = {
+    data: ScoreRecordInput;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    scoreRecord: boolean;
+  };
 }
 
 export namespace Experts {
@@ -520,6 +556,20 @@ export namespace NoticesToUser {
   export type NoticesToUser = NoticeFields.Fragment;
 }
 
+export namespace UnreadNoticesToUser {
+  export type Variables = {
+    userId: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    unreadNoticesToUser: (Maybe<UnreadNoticesToUser>)[];
+  };
+
+  export type UnreadNoticesToUser = NoticeFields.Fragment;
+}
+
 export namespace NoticesToGroup {
   export type Variables = {
     userRole: string;
@@ -532,6 +582,20 @@ export namespace NoticesToGroup {
   };
 
   export type NoticesToGroup = NoticeFields.Fragment;
+}
+
+export namespace UnreadNoticesToGroup {
+  export type Variables = {
+    userRole: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    unreadNoticesToGroup: (Maybe<UnreadNoticesToGroup>)[];
+  };
+
+  export type UnreadNoticesToGroup = NoticeFields.Fragment;
 }
 
 export namespace NoticesSend {
@@ -560,6 +624,30 @@ export namespace SendNotice {
   };
 
   export type SendNotice = NoticeFields.Fragment;
+}
+
+export namespace ReadNotice {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    readNotice: boolean;
+  };
+}
+
+export namespace DeleteNotice {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteNotice: boolean;
+  };
 }
 
 export namespace CourseFields {
@@ -722,7 +810,7 @@ export namespace ScoreFields {
 
     AITotalScore: Maybe<number>;
 
-    expertId: string;
+    expertId: Maybe<string>;
 
     expertBeatScore: Maybe<number>;
 
@@ -765,6 +853,8 @@ export namespace NoticeFields {
     userId: Maybe<string>;
 
     practiceId: string;
+
+    audioId: string;
 
     read: boolean;
 
@@ -814,12 +904,18 @@ export interface Query {
   userRecords: (Maybe<Record>)[];
 
   records: (Maybe<Record>)[];
+
+  unscoredRecords: (Maybe<Record>)[];
   /** notice */
   notice: Notice;
 
   noticesToUser: (Maybe<Notice>)[];
 
+  unreadNoticesToUser: (Maybe<Notice>)[];
+
   noticesToGroup: (Maybe<Notice>)[];
+
+  unreadNoticesToGroup: (Maybe<Notice>)[];
 
   noticesSend: (Maybe<Notice>)[];
   /** get uploaded files */
@@ -935,7 +1031,7 @@ export interface Record {
 
   AITotalScore?: Maybe<number>;
 
-  expertId: string;
+  expertId?: Maybe<string>;
 
   expertBeatScore?: Maybe<number>;
 
@@ -958,6 +1054,8 @@ export interface Notice {
   userRole?: Maybe<string>;
 
   practiceId: string;
+
+  audioId: string;
 
   read: boolean;
 
@@ -1001,12 +1099,18 @@ export interface Mutation {
   singleUpload: File;
   /** upload record */
   uploadRecord: Record;
+  /** score record */
+  scoreRecord: boolean;
   /** update avatar */
   updateAvatar: User;
   /** update profile */
   updateProfile: User;
   /** send notice */
   sendNotice: Notice;
+
+  readNotice: boolean;
+
+  deleteNotice: boolean;
 }
 
 /** payload */
@@ -1047,7 +1151,13 @@ export interface NoticeQueryArgs {
 export interface NoticesToUserQueryArgs {
   userId: string;
 }
+export interface UnreadNoticesToUserQueryArgs {
+  userId: string;
+}
 export interface NoticesToGroupQueryArgs {
+  userRole: string;
+}
+export interface UnreadNoticesToGroupQueryArgs {
   userRole: string;
 }
 export interface NoticesSendQueryArgs {
@@ -1091,6 +1201,9 @@ export interface SingleUploadMutationArgs {
 export interface UploadRecordMutationArgs {
   data: UploadAudioInput;
 }
+export interface ScoreRecordMutationArgs {
+  data: ScoreRecordInput;
+}
 export interface UpdateAvatarMutationArgs {
   userId: string;
 
@@ -1103,6 +1216,12 @@ export interface UpdateProfileMutationArgs {
 }
 export interface SendNoticeMutationArgs {
   data: CreateNoticeInput;
+}
+export interface ReadNoticeMutationArgs {
+  id: string;
+}
+export interface DeleteNoticeMutationArgs {
+  id: string;
 }
 
 // ====================================================
@@ -1238,6 +1357,7 @@ export const NoticeFieldsFragment = gql`
     sendId
     userId
     practiceId
+    audioId
     read
     content
     createDate
@@ -1578,11 +1698,11 @@ export class UserRecordsGQL extends Apollo.Query<
   document: any = gql`
     query UserRecords($userId: ID!) {
       userRecords(userId: $userId) {
-        ...recordFields
+        ...scoreFields
       }
     }
 
-    ${RecordFieldsFragment}
+    ${ScoreFieldsFragment}
   `;
 }
 @Injectable({
@@ -1592,11 +1712,11 @@ export class RecordGQL extends Apollo.Query<Record.Query, Record.Variables> {
   document: any = gql`
     query Record($id: ID!) {
       record(id: $id) {
-        ...recordFields
+        ...scoreFields
       }
     }
 
-    ${RecordFieldsFragment}
+    ${ScoreFieldsFragment}
   `;
 }
 @Injectable({
@@ -1606,11 +1726,28 @@ export class RecordsGQL extends Apollo.Query<Records.Query, Records.Variables> {
   document: any = gql`
     query Records {
       records {
-        ...recordFields
+        ...scoreFields
       }
     }
 
-    ${RecordFieldsFragment}
+    ${ScoreFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UnscoredRecordsGQL extends Apollo.Query<
+  UnscoredRecords.Query,
+  UnscoredRecords.Variables
+> {
+  document: any = gql`
+    query UnscoredRecords {
+      unscoredRecords {
+        ...scoreFields
+      }
+    }
+
+    ${ScoreFieldsFragment}
   `;
 }
 @Injectable({
@@ -1628,6 +1765,19 @@ export class UploadRecordGQL extends Apollo.Mutation<
     }
 
     ${RecordFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ScoreRecordGQL extends Apollo.Mutation<
+  ScoreRecord.Mutation,
+  ScoreRecord.Variables
+> {
+  document: any = gql`
+    mutation ScoreRecord($data: ScoreRecordInput!) {
+      scoreRecord(data: $data)
+    }
   `;
 }
 @Injectable({
@@ -1692,6 +1842,23 @@ export class NoticesToUserGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class UnreadNoticesToUserGQL extends Apollo.Query<
+  UnreadNoticesToUser.Query,
+  UnreadNoticesToUser.Variables
+> {
+  document: any = gql`
+    query UnreadNoticesToUser($userId: ID!) {
+      unreadNoticesToUser(userId: $userId) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class NoticesToGroupGQL extends Apollo.Query<
   NoticesToGroup.Query,
   NoticesToGroup.Variables
@@ -1699,6 +1866,23 @@ export class NoticesToGroupGQL extends Apollo.Query<
   document: any = gql`
     query NoticesToGroup($userRole: String!) {
       noticesToGroup(userRole: $userRole) {
+        ...NoticeFields
+      }
+    }
+
+    ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UnreadNoticesToGroupGQL extends Apollo.Query<
+  UnreadNoticesToGroup.Query,
+  UnreadNoticesToGroup.Variables
+> {
+  document: any = gql`
+    query UnreadNoticesToGroup($userRole: String!) {
+      unreadNoticesToGroup(userRole: $userRole) {
         ...NoticeFields
       }
     }
@@ -1738,6 +1922,32 @@ export class SendNoticeGQL extends Apollo.Mutation<
     }
 
     ${NoticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class ReadNoticeGQL extends Apollo.Mutation<
+  ReadNotice.Mutation,
+  ReadNotice.Variables
+> {
+  document: any = gql`
+    mutation ReadNotice($id: ID!) {
+      readNotice(id: $id)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeleteNoticeGQL extends Apollo.Mutation<
+  DeleteNotice.Mutation,
+  DeleteNotice.Variables
+> {
+  document: any = gql`
+    mutation DeleteNotice($id: ID!) {
+      deleteNotice(id: $id)
+    }
   `;
 }
 

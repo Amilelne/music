@@ -20,6 +20,10 @@ const schema = new Schema(
       type: Schema.Types.ObjectId,
       required: true
     },
+    audioId: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
     read: {
       type: Boolean,
       required: true,

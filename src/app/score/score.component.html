@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>练习名称</th>
-          <th>我的录音</th>
+          <th>录音文件</th>
           <th>AI评分</th>
           <th>操作</th>
         </tr>
@@ -22,7 +22,13 @@
             </ng-template>
           </td>
           <td>
-            <button nz-button nzType="primary">评分</button>
+            <button
+              nz-button
+              nzType="primary"
+              [routerLink]="['/score/', data.id]"
+            >
+              评分
+            </button>
           </td>
         </tr>
       </tbody>

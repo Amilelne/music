@@ -1,0 +1,79 @@
+<div class="score-detail">
+  <div nz-row>
+    <div nz-col nzSpan="16">
+      <div class="info">
+        <h2>请听用户的录音并评分:</h2>
+      </div>
+      <div class="music">
+        <img [src]="practiceResourceUrl" alt="music" />
+      </div>
+      <ng-container *ngIf="record">
+        <div class="audioFile">
+          <audio controls="" *ngIf="record.audioUrl">
+            <source [src]="sanitize(record.audioUrl)" type="audio/wav" />
+          </audio>
+        </div>
+      </ng-container>
+    </div>
+    <div nz-col nzSpan="8">
+      <div class="scoreForm">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label
+              [nzSm]="6"
+              [nzXs]="24"
+              nzRequired
+              nzFor="expertBeatScore"
+              >节奏分</nz-form-label
+            >
+            <nz-form-control [nzSm]="10" [nzXs]="16">
+              <input
+                nz-input
+                formControlName="expertBeatScore"
+                id="expertBeatScore"
+              />
+              <nz-form-explain
+                *ngIf="
+                  validateForm.get('expertBeatScore')?.dirty &&
+                  validateForm.get('expertBeatScore')?.errors
+                "
+              >
+                请输入有效的节奏分
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label
+              [nzSm]="6"
+              [nzXs]="24"
+              nzFor="expertIntonationScore"
+              nzRequired
+              >音准分</nz-form-label
+            >
+            <nz-form-control [nzSm]="10" [nzXs]="16">
+              <input
+                nz-input
+                id="expertIntonationScore"
+                formControlName="expertIntonationScore"
+              />
+              <nz-form-explain
+                *ngIf="
+                  validateForm.get('expertIntonationScore')?.dirty &&
+                  validateForm.get('expertIntonationScore')?.errors
+                "
+                >请输入有效的音准分</nz-form-explain
+              >
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item nz-row style="margin-bottom:8px;">
+            <nz-form-control [nzSpan]="14" [nzOffset]="4">
+              <button nz-button nzType="primary" [disabled]="scored">
+                确认评分
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

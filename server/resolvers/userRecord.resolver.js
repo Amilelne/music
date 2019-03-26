@@ -11,6 +11,9 @@ const resolveMap = {
     },
     records: async (obj, args, context, info) => {
       return UserRecord.find();
+    },
+    unscoredRecords: async (obj, args, context, info) => {
+      return UserRecord.find({ expertTotalScore: null });
     }
   },
   Mutation: {
@@ -39,6 +42,23 @@ const resolveMap = {
         practiceTitle: practiceTitle
       });
       return record;
+    },
+    scoreRecord: async (obj, { data }, context, info) => {
+      let expertTotalScore =
+        (data.expertBeatScore + data.expertIntonationScore) / 2;
+      return UserRecord.updateOne(
+        { _id: data.id },
+        {
+          expertId: data.expertId,
+          expertBeatScore: data.expertBeatScore,
+          expertIntonationScore: data.expertIntonationScore,
+          expertTotalScore: expertTotalScore
+        },
+        function(err, doc) {
+          if (err) return false;
+          return true;
+        }
+      );
     }
   }
 };

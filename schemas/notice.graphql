@@ -4,6 +4,7 @@ type Notice {
   userId: ID
   userRole: String
   practiceId: ID!
+  audioId: ID!
   read: Boolean!
   content: String!
   createDate: DateTime
@@ -16,5 +17,6 @@ input CreateNoticeInput {
   userId: ID
   userRole: String
   practiceId: ID!
+  audioId: ID!
   content: String!
 }

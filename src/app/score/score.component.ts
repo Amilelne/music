@@ -11,7 +11,7 @@ export class ScoreComponent implements OnInit {
 
   private audioList;
   ngOnInit() {
-    this.recordService.getRecords().subscribe(audios => {
+    this.recordService.getUnscoredRecords().subscribe(audios => {
       this.audioList = audios;
     });
   }

@@ -23,6 +23,9 @@ type Mutation {
   # upload record
   uploadRecord(data: UploadAudioInput!): Record!
 
+  # score record
+  scoreRecord(data: ScoreRecordInput!): Boolean!
+
   # update avatar
   updateAvatar(userId: ID!, file: Upload!): User!
 
@@ -31,4 +34,6 @@ type Mutation {
 
   # send notice
   sendNotice(data: CreateNoticeInput!): Notice!
+  readNotice(id: ID!): Boolean!
+  deleteNotice(id: ID!): Boolean!
 }

@@ -47,6 +47,8 @@ export class RecordComponent implements OnInit {
   private practiceTitle: String;
   private userId;
   private recommendPractices;
+  // upload record id
+  private recordId;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.practiceId = params.id;
@@ -110,9 +112,10 @@ export class RecordComponent implements OnInit {
         this.practiceTitle
       )
       .subscribe(
-        ({ uploadRecord: { audioUrl } }) => {
+        ({ uploadRecord: { id, audioUrl } }) => {
           this.isUpload = true;
           this.createNotification("录音上传成功");
+          this.recordId = id;
         },
         errors => {
           this.isUpload = false;
@@ -132,6 +135,7 @@ export class RecordComponent implements OnInit {
       sendId: this.userId,
       userRole: "expert",
       practiceId: this.practiceId,
+      audioId: this.recordId,
       content: content
     };
     this.noticeService.sendNotice(data).subscribe(

@@ -7,7 +7,7 @@ type Record {
   AIBeatScore: Int
   AIIntonationScore: Int
   AITotalScore: Int
-  expertId: ID!
+  expertId: ID
   expertBeatScore: Int
   expertIntonationScore: Int
   expertTotalScore: Int
@@ -21,4 +21,11 @@ input UploadAudioInput {
   userId: ID!
   practiceId: ID!
   practiceTitle: String!
+}
+
+input ScoreRecordInput {
+  id: ID!
+  expertId: ID!
+  expertBeatScore: Int!
+  expertIntonationScore: Int!
 }

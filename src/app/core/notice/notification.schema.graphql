@@ -3,6 +3,7 @@ fragment NoticeFields on Notice {
   sendId
   userId
   practiceId
+  audioId
   read
   content
   createDate
@@ -20,8 +21,19 @@ query NoticesToUser($userId: ID!) {
   }
 }
 
+query UnreadNoticesToUser($userId: ID!) {
+  unreadNoticesToUser(userId: $userId) {
+    ...NoticeFields
+  }
+}
+
 query NoticesToGroup($userRole: String!) {
   noticesToGroup(userRole: $userRole) {
+    ...NoticeFields
+  }
+}
+query UnreadNoticesToGroup($userRole: String!) {
+  unreadNoticesToGroup(userRole: $userRole) {
     ...NoticeFields
   }
 }
@@ -36,4 +48,12 @@ mutation SendNotice($data: CreateNoticeInput!) {
   sendNotice(data: $data) {
     ...NoticeFields
   }
+}
+
+mutation ReadNotice($id: ID!) {
+  readNotice(id: $id)
+}
+
+mutation DeleteNotice($id: ID!) {
+  deleteNotice(id: $id)
 }

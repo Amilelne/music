@@ -5,10 +5,15 @@ import {
   NoticesToUserGQL,
   NoticesToGroupGQL,
   SendNoticeGQL,
-  CreateNoticeInput
+  CreateNoticeInput,
+  UnreadNoticesToUserGQL,
+  UnreadNoticesToGroupGQL,
+  ReadNoticeGQL,
+  DeleteNoticeGQL
 } from "@app/gql";
 import { throwError, of } from "rxjs";
 import { mergeMap, map } from "rxjs/operators";
+import { Observable } from "apollo-link";
 
 @Injectable({
   providedIn: "root"
@@ -18,7 +23,11 @@ export class NoticeService {
     private noticeGQL: NoticeGQL,
     private noticesToUserGQL: NoticesToUserGQL,
     private noticesToGroupGQL: NoticesToGroupGQL,
-    private sendNoticeGQL: SendNoticeGQL
+    private sendNoticeGQL: SendNoticeGQL,
+    private unreadNoticesToUserGQL: UnreadNoticesToUserGQL,
+    private unreadNoticesToGroupGQL: UnreadNoticesToGroupGQL,
+    private readNoticeGQL: ReadNoticeGQL,
+    private deleteNoticeGQL: DeleteNoticeGQL
   ) {}
 
   getNoticeById(id) {
@@ -27,16 +36,16 @@ export class NoticeService {
       .valueChanges.pipe(map(result => result.data.notice));
   }
 
-  getNoticesToUser(userId) {
-    return this.noticesToUserGQL
+  getUnreadNoticesToUser(userId) {
+    return this.unreadNoticesToUserGQL
       .watch({ userId })
-      .valueChanges.pipe(map(result => result.data.noticesToUser));
+      .valueChanges.pipe(map(result => result.data.unreadNoticesToUser));
   }
 
-  getNoticesToGroup(userRole) {
-    return this.noticesToGroupGQL
+  getUnreadNoticesToGroup(userRole) {
+    return this.unreadNoticesToGroupGQL
       .watch({ userRole })
-      .valueChanges.pipe(map(result => result.data.noticesToGroup));
+      .valueChanges.pipe(map(result => result.data.unreadNoticesToGroup));
   }
 
   sendNotice(createNoticeInput: CreateNoticeInput) {
@@ -49,5 +58,69 @@ export class NoticeService {
         }
       })
     );
+  }
+
+  readNotice(id, userId, userRole) {
+    return this.readNoticeGQL
+      .mutate(
+        { id },
+        {
+          refetchQueries: [
+            {
+              query: this.unreadNoticesToUserGQL.document,
+              variables: {
+                userId
+              }
+            },
+            {
+              query: this.unreadNoticesToGroupGQL.document,
+              variables: {
+                userRole
+              }
+            }
+          ]
+        }
+      )
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        })
+      );
+  }
+
+  deleteNotice(id, userId, userRole) {
+    return this.deleteNoticeGQL
+      .mutate(
+        { id },
+        {
+          refetchQueries: [
+            {
+              query: this.unreadNoticesToUserGQL.document,
+              variables: {
+                userId
+              }
+            },
+            {
+              query: this.unreadNoticesToGroupGQL.document,
+              variables: {
+                userRole
+              }
+            }
+          ]
+        }
+      )
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        })
+      );
   }
 }
