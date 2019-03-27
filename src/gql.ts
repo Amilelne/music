@@ -559,6 +559,7 @@ export namespace NoticesToUser {
 export namespace UnreadNoticesToUser {
   export type Variables = {
     userId: string;
+    userRole: string;
   };
 
   export type Query = {
@@ -1153,6 +1154,8 @@ export interface NoticesToUserQueryArgs {
 }
 export interface UnreadNoticesToUserQueryArgs {
   userId: string;
+
+  userRole: string;
 }
 export interface NoticesToGroupQueryArgs {
   userRole: string;
@@ -1847,8 +1850,8 @@ export class UnreadNoticesToUserGQL extends Apollo.Query<
   UnreadNoticesToUser.Variables
 > {
   document: any = gql`
-    query UnreadNoticesToUser($userId: ID!) {
-      unreadNoticesToUser(userId: $userId) {
+    query UnreadNoticesToUser($userId: ID!, $userRole: String!) {
+      unreadNoticesToUser(userId: $userId, userRole: $userRole) {
         ...NoticeFields
       }
     }

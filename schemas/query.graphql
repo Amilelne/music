@@ -30,7 +30,7 @@ type Query {
   # notice
   notice(id: ID!): Notice!
   noticesToUser(userId: ID!): [Notice]!
-  unreadNoticesToUser(userId: ID!): [Notice]!
+  unreadNoticesToUser(userId: ID!, userRole: String!): [Notice]!
   noticesToGroup(userRole: String!): [Notice]!
   unreadNoticesToGroup(userRole: String!): [Notice]!
   noticesSend(sendId: ID!): [Notice]!

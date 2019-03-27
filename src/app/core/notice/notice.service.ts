@@ -36,9 +36,9 @@ export class NoticeService {
       .valueChanges.pipe(map(result => result.data.notice));
   }
 
-  getUnreadNoticesToUser(userId) {
+  getUnreadNoticesToUser(userId, userRole) {
     return this.unreadNoticesToUserGQL
-      .watch({ userId })
+      .watch({ userId, userRole })
       .valueChanges.pipe(map(result => result.data.unreadNoticesToUser));
   }
 
@@ -69,7 +69,8 @@ export class NoticeService {
             {
               query: this.unreadNoticesToUserGQL.document,
               variables: {
-                userId
+                userId,
+                userRole
               }
             },
             {

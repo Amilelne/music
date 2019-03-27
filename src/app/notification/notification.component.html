@@ -5,21 +5,21 @@
     [nzItemLayout]="'horizontal'"
     [nzLoading]="loading"
   >
-    <ng-template #item let-item>
+    <ng-template #item let-item let-i="index">
       <nz-list-item [nzActions]="[readAction, deleteAction]">
         <ng-template #nzTitle>
           <a
             [routerLink]="['/score', item.audioId]"
-            (click)="readNotice(item.id)"
+            (click)="readNotice(item.id, i)"
             >{{ item.content }}</a
           >
         </ng-template>
         <ng-template #readAction
-          ><a (click)="readNotice(item.id, $event)">标记为已读</a></ng-template
+          ><a (click)="readNotice(item.id, i)">标记为已读</a></ng-template
         >
         <nz-list-item-meta [nzTitle]="nzTitle">
           <ng-template #deleteAction
-            ><a (click)="deleteNotice(item.id)">删除</a></ng-template
+            ><a (click)="deleteNotice(item.id, i)">删除</a></ng-template
           >
         </nz-list-item-meta>
       </nz-list-item>

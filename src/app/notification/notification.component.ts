@@ -27,24 +27,21 @@ export class NotificationComponent implements OnInit {
   }
 
   getNotices() {
-    this.noticeService.getUnreadNoticesToUser(this.userId).subscribe(data => {
-      this.notices = this.notices.concat(data);
-    });
     this.noticeService
-      .getUnreadNoticesToGroup(this.userRole)
+      .getUnreadNoticesToUser(this.userId, this.userRole)
       .subscribe(data => {
-        this.notices = this.notices.concat(data);
+        this.notices = data;
       });
   }
 
-  readNotice(id, event) {
+  readNotice(id, i) {
     this.noticeService
       .readNotice(id, this.userId, this.userRole)
       .subscribe(data => {
         this.getNotices();
       });
   }
-  deleteNotice(id) {
+  deleteNotice(id, i) {
     this.noticeService
       .deleteNotice(id, this.userId, this.userRole)
       .subscribe(data => {

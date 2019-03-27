@@ -21,8 +21,8 @@ query NoticesToUser($userId: ID!) {
   }
 }
 
-query UnreadNoticesToUser($userId: ID!) {
-  unreadNoticesToUser(userId: $userId) {
+query UnreadNoticesToUser($userId: ID!, $userRole: String!) {
+  unreadNoticesToUser(userId: $userId, userRole: $userRole) {
     ...NoticeFields
   }
 }

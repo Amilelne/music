@@ -8,8 +8,11 @@ const resolveMap = {
     noticesToUser: async (obj, { userId }, context, info) => {
       return Notice.find({ userId: userId });
     },
-    unreadNoticesToUser: async (obj, { userId }, context, info) => {
-      return Notice.find({ userId: userId, read: false });
+    unreadNoticesToUser: async (obj, { userId, userRole }, context, info) => {
+      return Notice.find({
+        $or: [{ userId: userId }, { userRole: userRole }],
+        read: false
+      });
     },
     noticesToGroup: async (obj, { userRole }, context, info) => {
       return Notice.find({ userRole: userRole });
