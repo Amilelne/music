@@ -76,7 +76,9 @@ export class AuthService {
   }
 
   private setUser(user: User) {
-    AuthService.storeUser(user.id, user.role);
+    if (user !== null) {
+      AuthService.storeUser(user.id, user.role);
+    }
     this._user.next(user);
     this.isLoggedIn$.next(!!user);
   }
