@@ -77,6 +77,12 @@ const resolverMap = {
     },
     updateProfile: async (obj, { userId, data }, context, info) => {
       return await User.findOneAndUpdate({ _id: userId }, data);
+    },
+    adminUpdateUserRole: async (obj, { userId, userRole }, context, info) => {
+      return User.updateOne({ _id: userId }, { role: userRole }, function(err) {
+        if (err) return false;
+        return true;
+      });
     }
   }
 };

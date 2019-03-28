@@ -1,0 +1,76 @@
+<div class="profile">
+  <ng-container *ngIf="user">
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm($event, validateForm.value)"
+    >
+      <h3>个人信息</h3>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <input
+            nz-input
+            formControlName="name"
+            [value]="user.name"
+            disabled="true"
+          />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('name').dirty && validateForm.get('name').errors
+            "
+          >
+            <ng-container *ngIf="validateForm.get('name').hasError('required')">
+              请输入您的昵称
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>身份</nz-form-label>
+        <div>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <nz-select [nzPlaceHolder]="user.name" formControlName="role">
+              <nz-option nzValue="user" nzLabel="user"></nz-option>
+              <nz-option nzValue="expert" nzLabel="expert"></nz-option>
+              <nz-option nzValue="admin" nzLabel="admin"></nz-option>
+            </nz-select>
+            <nz-form-explain
+              *ngIf="
+                validateForm.get('role').dirty &&
+                validateForm.get('role').hasError('required')
+              "
+              >请输入用户身份</nz-form-explain
+            >
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>等级</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <input
+            nz-input
+            type="text"
+            formControlName="level"
+            [value]="user.level ? user.level : ''"
+            disabled="true"
+          />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('level').dirty &&
+              validateForm.get('level').hasError('required')
+            "
+          >
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid">
+            确认修改
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</div>

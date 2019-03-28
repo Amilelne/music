@@ -14,3 +14,15 @@ query AdminUsers {
     updateDate
   }
 }
+
+query AdminUserById($id: ID!) {
+  user(id: $id) {
+    ...UserFields
+    createDate
+    updateDate
+  }
+}
+
+mutation AdminUpdateUserRole($userId: ID!, $userRole: String!) {
+  adminUpdateUserRole(userId: $userId, userRole: $userRole)
+}

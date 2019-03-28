@@ -1,0 +1,19 @@
+.profile {
+  min-height: 900px;
+  background-color: #fff;
+
+  [nz-form] {
+    max-width: 600px;
+  }
+
+  button {
+    margin-left: 8px;
+  }
+
+  form {
+    h3 {
+      text-align: center;
+      padding-top: 1rem;
+    }
+  }
+}

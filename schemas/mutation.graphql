@@ -4,6 +4,7 @@ type Mutation {
   deleteUser(id: ID!): User!
   register(data: RegisterInput!): AuthPayload!
   login(data: LoginInput!): AuthPayload!
+  adminUpdateUserRole(userId: ID!, userRole: String!): Boolean!
 
   # course
   addCourse(data: CreateCourseInput!): Course!

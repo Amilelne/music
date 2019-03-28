@@ -386,6 +386,39 @@ export namespace AdminUsers {
   } & UserFields.Fragment;
 }
 
+export namespace AdminUserById {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    user: User;
+  };
+
+  export type User = {
+    __typename?: "User";
+
+    createDate: Maybe<DateTime>;
+
+    updateDate: Maybe<DateTime>;
+  } & UserFields.Fragment;
+}
+
+export namespace AdminUpdateUserRole {
+  export type Variables = {
+    userId: string;
+    userRole: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    adminUpdateUserRole: boolean;
+  };
+}
+
 export namespace UpdateAvatar {
   export type Variables = {
     userId: string;
@@ -1084,6 +1117,8 @@ export interface Mutation {
   register: AuthPayload;
 
   login: AuthPayload;
+
+  adminUpdateUserRole: boolean;
   /** course */
   addCourse: Course;
 
@@ -1177,6 +1212,11 @@ export interface RegisterMutationArgs {
 }
 export interface LoginMutationArgs {
   data: LoginInput;
+}
+export interface AdminUpdateUserRoleMutationArgs {
+  userId: string;
+
+  userRole: string;
 }
 export interface AddCourseMutationArgs {
   data: CreateCourseInput;
@@ -1652,6 +1692,38 @@ export class AdminUsersGQL extends Apollo.Query<
     }
 
     ${UserFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminUserByIdGQL extends Apollo.Query<
+  AdminUserById.Query,
+  AdminUserById.Variables
+> {
+  document: any = gql`
+    query AdminUserById($id: ID!) {
+      user(id: $id) {
+        ...UserFields
+        createDate
+        updateDate
+      }
+    }
+
+    ${UserFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminUpdateUserRoleGQL extends Apollo.Mutation<
+  AdminUpdateUserRole.Mutation,
+  AdminUpdateUserRole.Variables
+> {
+  document: any = gql`
+    mutation AdminUpdateUserRole($userId: ID!, $userRole: String!) {
+      adminUpdateUserRole(userId: $userId, userRole: $userRole)
+    }
   `;
 }
 @Injectable({

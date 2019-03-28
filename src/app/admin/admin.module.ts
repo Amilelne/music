@@ -11,6 +11,7 @@ import { ReportComponent } from './report/report.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NotificationComponent } from './dashboard/notification/notification.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 registerLocaleData(zh);
 
@@ -20,7 +21,8 @@ registerLocaleData(zh);
     UserComponent,
     AdminComponent,
     ReportComponent,
-    NotificationComponent
+    NotificationComponent,
+    UserDetailComponent
   ],
   imports: [
     CommonModule,

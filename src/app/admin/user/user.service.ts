@@ -1,15 +1,40 @@
 import { Injectable } from "@angular/core";
 import { throwError, of } from "rxjs";
 import { mergeMap, tap, map } from "rxjs/operators";
-import { AdminUsersGQL, User } from "@app/gql";
+import {
+  AdminUsersGQL,
+  User,
+  AdminUserByIdGQL,
+  AdminUpdateUserRoleGQL
+} from "@app/gql";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  constructor(private userListGQL: AdminUsersGQL) {}
+  constructor(
+    private userListGQL: AdminUsersGQL,
+    private userByIdGQL: AdminUserByIdGQL,
+    private updateUserRoleGQL: AdminUpdateUserRoleGQL
+  ) {}
 
   getUserList() {
     return this.userListGQL.fetch().pipe(map(result => result.data.users));
+  }
+  getUserById(id) {
+    return this.userByIdGQL
+      .watch({ id })
+      .valueChanges.pipe(map(result => result.data.user));
+  }
+  updateUserRole(userId, userRole) {
+    return this.updateUserRoleGQL.mutate({ userId, userRole }).pipe(
+      mergeMap(({ data, errors }) => {
+        if (errors) {
+          return throwError(errors);
+        } else {
+          return of(data);
+        }
+      })
+    );
   }
 }

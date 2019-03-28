@@ -33,8 +33,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of filterTable.data">
-        <td [routerLink]="['/admin/user/', data.id]">{{ data.id }}</td>
+      <tr
+        *ngFor="let data of filterTable.data"
+        [routerLink]="['/admin/user/', data.id]"
+      >
+        <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.role }}</td>
         <td>{{ data.level }}</td>
