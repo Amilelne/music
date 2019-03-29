@@ -5,11 +5,7 @@
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
 >
-  <form
-    nz-form
-    [formGroup]="validateForm"
-    (ngSubmit)="submitForm($event, validateForm.value)"
-  >
+  <form nz-form [formGroup]="validateForm">
     <nz-alert
       *ngIf="errorState"
       nzType="error"
@@ -90,7 +86,7 @@
           [nzLimit]="1"
           (nzChange)="handleChange($event)"
         >
-          <p class="ant-upload-drag-icon"> <i nz-icon type="inbox"></i> </p>
+          <p class="ant-upload-drag-icon"><i nz-icon type="inbox"></i></p>
           <p class="ant-upload-text">点击或拖拽文件上传</p>
           <p class="ant-upload-hint">支持单文件或多文件上传</p>
         </nz-upload>

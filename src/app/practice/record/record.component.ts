@@ -28,25 +28,25 @@ export class RecordComponent implements OnInit {
   // Lets initiate Record OBJ
   private record;
   // Detect recording
-  private isRecord = false;
+  isRecord = false;
   // Detect stopping
-  private isStop = false;
+  isStop = false;
   // Detect uploading
-  private isUpload = false;
+  isUpload = false;
   // Option for denoise
-  private denoise = false;
+  denoise = false;
   // Detect applied
-  private isApplied = false;
+  isApplied = false;
   // Detect errors
-  private isError = false;
+  isError = false;
   // Url of Blob
-  private url;
-  private blobFile;
-  private error;
+  url;
+  blobFile;
+  error;
   private practiceId;
   private practiceTitle: String;
   private userId;
-  private recommendPractices;
+  recommendPractices;
   // upload record id
   private recordId;
   ngOnInit() {

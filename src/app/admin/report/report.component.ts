@@ -7,8 +7,8 @@ import { CourseService } from "../course/course.service";
   styleUrls: ["./report.component.scss"]
 })
 export class ReportComponent implements OnInit {
-  private courseKindNumbers: any[];
-  private courseData: any[];
+  courseKindNumbers: any[];
+  courseData: any[];
   constructor(private courseService: CourseService) {}
   ngOnInit() {
     this.courseService.getCourseNumberByKind().subscribe(data => {

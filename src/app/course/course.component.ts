@@ -8,7 +8,7 @@ import { CourseService } from "app/admin/course/course.service";
 })
 export class CourseComponent implements OnInit {
   @Input() courses;
-  private totalCourse;
+  totalCourse;
   imgUrls = [
     "http://www.ixzds.com/wp-content/uploads/elementor/thumbs/newbanner1-nv7w1t9nncjfdquxgyjpbp7qibvjzqxzktynnwh35w.png",
     "http://www.ixzds.com/wp-content/uploads/elementor/thumbs/newbanner2-nv7w1u7hu6kppctkbgybw6z73pqx7g1pwym556fozo.png",

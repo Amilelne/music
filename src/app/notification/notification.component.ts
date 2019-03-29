@@ -13,8 +13,8 @@ import { subscribeOn } from "rxjs/operators";
 export class NotificationComponent implements OnInit {
   private userId;
   private userRole;
-  private loading = false;
-  private notices = [];
+  loading = false;
+  notices = [];
   constructor(
     private noticeService: NoticeService,
     private authService: AuthService

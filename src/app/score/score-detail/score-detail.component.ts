@@ -20,10 +20,10 @@ import { AuthService } from "app/core/auth/auth.service";
 })
 export class ScoreDetailComponent implements OnInit {
   private audioId;
-  private record;
-  private practiceResourceUrl;
+  record;
+  practiceResourceUrl;
   private expertId;
-  private scored = false;
+  scored = false;
   constructor(
     private route: ActivatedRoute,
     private recordService: RecordService,

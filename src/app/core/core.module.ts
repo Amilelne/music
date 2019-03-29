@@ -1,10 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Get404Component } from './get404/get404.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
-  declarations: [Get404Component],
-  imports: [CommonModule],
-  exports: [Get404Component]
+  declarations: [],
+  imports: [CommonModule]
 })
 export class CoreModule {}

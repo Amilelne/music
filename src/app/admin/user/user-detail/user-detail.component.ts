@@ -18,7 +18,7 @@ import { NzMessageService } from "ng-zorro-antd";
 export class UserDetailComponent implements OnInit {
   validateForm: FormGroup;
   private userId;
-  private user;
+  user;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,

@@ -8,7 +8,7 @@ import { ExpertService } from "./expert.service";
 })
 export class ExpertComponent implements OnInit {
   @Input() expertsList;
-  private totalExpert = 0;
+  totalExpert = 0;
   constructor(private expertService: ExpertService) {}
 
   ngOnInit() {

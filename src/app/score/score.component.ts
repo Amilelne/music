@@ -9,7 +9,7 @@ import { RecordService } from "app/core/record/record.service";
 export class ScoreComponent implements OnInit {
   constructor(private recordService: RecordService) {}
 
-  private audioList;
+  audioList;
   ngOnInit() {
     this.recordService.getUnscoredRecords().subscribe(audios => {
       this.audioList = audios;

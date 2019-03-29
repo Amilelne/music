@@ -18,7 +18,7 @@ export class AudioComponent implements OnInit {
     });
   }
 
-  private audioList;
+  audioList;
   private userId;
   ngOnInit() {
     this.recordService.getRecordsByUserId(this.userId).subscribe(audios => {

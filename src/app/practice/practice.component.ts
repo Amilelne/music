@@ -8,7 +8,7 @@ import { CourseService } from "app/admin/course/course.service";
 })
 export class PracticeComponent implements OnInit {
   @Input() practices;
-  private totalPractice;
+  totalPractice;
   constructor(private courseService: CourseService) {}
   ngOnInit() {
     this.courseService.getPracticeList().subscribe(data => {
