@@ -128,13 +128,7 @@ h3 {
     }
   }
 }
-clearfix::after {
-  content: "\0020";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
+
 ul {
   display: inline;
   list-style: none;
@@ -155,11 +149,11 @@ ul {
       color: #1c1f21;
     }
   }
-  .nav-item.on a {
+  .on {
     background: rgba(242, 13, 13, 0.06);
     border-radius: 6px;
     font-weight: 700;
-    color: #f20d0d;
+    color: #f20d0d !important;
   }
 }
 

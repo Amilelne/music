@@ -19,7 +19,7 @@ type Query {
 
   # practice
   practice(id: ID!): Practice!
-  practices: [Practice]!
+  practices(kind: Int, level: Int): [Practice]!
 
   # record
   record(id: ID!): Record!

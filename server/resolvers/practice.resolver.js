@@ -1,12 +1,19 @@
-const { Practice } = require('../models');
+const { Practice } = require("../models");
 
 const resolveMap = {
   Query: {
     practice: async (obj, { id }, context, info) => {
       return Practice.findById(id);
     },
-    practices: async (obj, args, context, info) => {
-      return Practice.find();
+    practices: async (obj, { kind, level }, context, info) => {
+      const cursor = Practice.find();
+      if (kind) {
+        cursor.where("kind", kind);
+      }
+      if (level) {
+        cursor.where("level", level);
+      }
+      return cursor;
     }
   },
   Mutation: {

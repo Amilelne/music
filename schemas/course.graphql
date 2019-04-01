@@ -37,6 +37,7 @@ type Practice {
   description: String
   averageScore: Float
   level: Int!
+  kind: Int!
   participants: Int
   likes: Int
   createDate: DateTime
@@ -54,7 +55,6 @@ input CreateCourseInput {
   title: String!
   description: String
   level: Int
-  kind: Int
   price: Float
   kind: [Int]
   tutorials: [CreateTutorialInput]
@@ -74,4 +74,5 @@ input CreatePracticeInput {
   resourceType: Int!
   description: String
   level: Int!
+  kind: Int!
 }

@@ -35,9 +35,9 @@ export class AddCourseComponent implements OnInit {
   errorState: boolean;
   errorMessage: string;
   listOfKind = [
-    { value: 0, label: "乐理" },
-    { value: 1, label: "视唱" },
-    { value: 2, label: "练耳" }
+    { value: 1, label: "乐理" },
+    { value: 2, label: "视唱" },
+    { value: 3, label: "练耳" }
   ];
   listOfLevel = [
     { value: 1, label: "易" },

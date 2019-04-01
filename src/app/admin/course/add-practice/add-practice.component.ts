@@ -5,16 +5,16 @@ import {
   SimpleChanges,
   SimpleChange,
   OnChanges
-} from '@angular/core';
-import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CourseService } from '../course.service';
+} from "@angular/core";
+import { NzMessageService, UploadXHRArgs } from "ng-zorro-antd";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { CourseService } from "../course.service";
 
 @Component({
-  selector: 'app-add-practice',
-  templateUrl: './add-practice.component.html',
-  styleUrls: ['./add-practice.component.scss']
+  selector: "app-add-practice",
+  templateUrl: "./add-practice.component.html",
+  styleUrls: ["./add-practice.component.scss"]
 })
 export class AddPracticeComponent implements OnInit, OnChanges {
   @Input() isVisible = false;
@@ -25,30 +25,36 @@ export class AddPracticeComponent implements OnInit, OnChanges {
     private courseService: CourseService
   ) {
     this.validateForm = this.fb.group({
-      title: ['', [Validators.required]],
+      title: ["", [Validators.required]],
+      kind: [[], [Validators.required]],
       resourceType: [[], [Validators.required]],
       level: [[], [Validators.required]],
-      description: ['', [Validators.required]],
-      resourceUrl: ['']
+      description: ["", [Validators.required]],
+      resourceUrl: [""]
     });
   }
   isOkLoading = false;
   validateForm: FormGroup;
   errorState: boolean;
   errorMessage: string;
+  listOfKind = [
+    { value: 1, label: "乐理" },
+    { value: 2, label: "视唱" },
+    { value: 3, label: "练耳" }
+  ];
   listOfresourceType = [
-    { value: 0, label: '图片' },
-    { value: 1, label: '文档' },
-    { value: 2, label: 'PPT' },
-    { value: 3, label: '音频' },
-    { value: 4, label: '视频' }
+    { value: 1, label: "文档" },
+    { value: 2, label: "PPT" },
+    { value: 3, label: "音频" },
+    { value: 4, label: "视频" },
+    { value: 5, label: "图片" }
   ];
   listOfLevel = [
-    { value: 1, label: '易' },
-    { value: 2, label: '偏易' },
-    { value: 3, label: '适中' },
-    { value: 4, label: '难' },
-    { value: 5, label: '偏难' }
+    { value: 1, label: "易" },
+    { value: 2, label: "偏易" },
+    { value: 3, label: "适中" },
+    { value: 4, label: "难" },
+    { value: 5, label: "偏难" }
   ];
   data: any[];
   ngOnInit() {}
@@ -64,7 +70,7 @@ export class AddPracticeComponent implements OnInit, OnChanges {
     return this.courseService.singleUploadFile(file).subscribe(
       ({ singleUpload: { filename, mimetype, encoding } }) => {
         item.onSuccess(filename, item.file, mimetype);
-        this.validateForm.controls['resourceUrl'].setValue(filename);
+        this.validateForm.controls["resourceUrl"].setValue(filename);
       },
       errors => {
         if (errors !== undefined) {
@@ -75,19 +81,19 @@ export class AddPracticeComponent implements OnInit, OnChanges {
         }
       }
     );
-  }
+  };
   onChange(evt) {
     this.uploadFile(evt.target.files);
   }
 
   handleChange({ file, fileList }): void {
     const status = file.status;
-    if (status !== 'uploading') {
+    if (status !== "uploading") {
     }
-    if (status === 'done') {
-      this.msg.success(`${file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      this.msg.error(`${file.name} file upload failed.`);
+    if (status === "done") {
+      this.msg.success(`${file.name} 文件上传成功.`);
+    } else if (status === "error") {
+      this.msg.error(`${file.name} 文件上传失败.`);
     }
   }
 

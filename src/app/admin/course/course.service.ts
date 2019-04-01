@@ -72,9 +72,9 @@ export class CourseService {
       .valueChanges.pipe(map(result => result.data.courses));
   }
 
-  getPracticeList() {
+  getPracticeList(kind, level) {
     return this.practiceListGQL
-      .watch()
+      .watch({ kind, level })
       .valueChanges.pipe(map(result => result.data.practices));
   }
   getCourseDetail(id) {

@@ -34,9 +34,9 @@ export interface CreateCourseInput {
 
   level?: Maybe<number>;
 
-  kind?: Maybe<(Maybe<number>)[]>;
-
   price?: Maybe<number>;
+
+  kind?: Maybe<(Maybe<number>)[]>;
 
   tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
 }
@@ -63,6 +63,8 @@ export interface CreatePracticeInput {
   description?: Maybe<string>;
 
   level: number;
+
+  kind: number;
 }
 /** input type */
 export interface UploadAudioInput {
@@ -138,7 +140,10 @@ export namespace AdminCourses {
 }
 
 export namespace AdminPractices {
-  export type Variables = {};
+  export type Variables = {
+    kind?: Maybe<number>;
+    level?: Maybe<number>;
+  };
 
   export type Query = {
     __typename?: "Query";
@@ -744,6 +749,8 @@ export namespace PracticeFields {
 
     level: number;
 
+    kind: number;
+
     createDate: Maybe<DateTime>;
 
     updateDate: Maybe<DateTime>;
@@ -1039,6 +1046,8 @@ export interface Practice {
 
   level: number;
 
+  kind: number;
+
   participants?: Maybe<number>;
 
   likes?: Maybe<number>;
@@ -1174,6 +1183,11 @@ export interface TutorialQueryArgs {
 }
 export interface PracticeQueryArgs {
   id: string;
+}
+export interface PracticesQueryArgs {
+  kind?: Maybe<number>;
+
+  level?: Maybe<number>;
 }
 export interface RecordQueryArgs {
   id: string;
@@ -1314,6 +1328,7 @@ export const PracticeFieldsFragment = gql`
     resourceUrl
     description
     level
+    kind
     createDate
     updateDate
   }
@@ -1436,8 +1451,8 @@ export class AdminPracticesGQL extends Apollo.Query<
   AdminPractices.Variables
 > {
   document: any = gql`
-    query AdminPractices {
-      practices {
+    query AdminPractices($kind: Int, $level: Int) {
+      practices(kind: $kind, level: $level) {
         ...PracticeFields
         averageScore
       }

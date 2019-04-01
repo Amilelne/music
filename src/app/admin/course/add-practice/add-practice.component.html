@@ -29,6 +29,18 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>练习种类</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-select nzPlaceHolder="请选择练习种类" formControlName="kind">
+          <nz-option
+            *ngFor="let option of listOfKind"
+            [nzLabel]="option.label"
+            [nzValue]="option.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>练习难度</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback>
         <nz-select nzPlaceHolder="请选择练习难度" formControlName="level">

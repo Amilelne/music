@@ -1,5 +1,5 @@
-const { conf } = require('../config');
-const mongoose = require('../mongoose');
+const { conf } = require("../config");
+const mongoose = require("../mongoose");
 const Schema = mongoose.Schema;
 
 const schema = new Schema(
@@ -23,6 +23,10 @@ const schema = new Schema(
       required: false,
       maxlength: 1000
     },
+    kind: {
+      type: Number,
+      required: false
+    },
     level: {
       type: Number,
       required: false
@@ -44,10 +48,10 @@ const schema = new Schema(
     }
   },
   {
-    timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' },
+    timestamps: { createdAt: "createDate", updatedAt: "updateDate" },
     versionKey: false
   }
 );
 
-const name = conf('collections.practice');
+const name = conf("collections.practice");
 exports.Practice = mongoose.model(name, schema, name);

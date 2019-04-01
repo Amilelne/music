@@ -25,6 +25,7 @@ fragment PracticeFields on Practice {
   resourceUrl
   description
   level
+  kind
   createDate
   updateDate
 }
@@ -35,8 +36,8 @@ query AdminCourses {
   }
 }
 
-query AdminPractices {
-  practices {
+query AdminPractices($kind: Int, $level: Int) {
+  practices(kind: $kind, level: $level) {
     ...PracticeFields
     averageScore
   }

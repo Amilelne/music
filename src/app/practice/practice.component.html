@@ -5,40 +5,102 @@
       <div class="practice-class-nav clearfix">
         <span class="hd">方向:</span>
         <ul>
-          <li class="nav-item on">
-            <a href="">全部</a>
+          <li class="nav-item">
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ kind: null }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >全部</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">乐理</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ kind: 1 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >乐理</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">视唱</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ kind: 2 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >视唱</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">练耳</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ kind: 3 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >练耳</a
+            >
           </li>
         </ul>
       </div>
       <div class="practice-level-nav">
         <span class="hd">难度:</span>
         <ul>
-          <li class="nav-item on">
-            <a href="">全部</a>
+          <li class="nav-item">
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: null }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >全部</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">易</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: 1 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >易</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">偏易</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: 2 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >偏易</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">适中</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: 3 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >适中</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">偏难</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: 4 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >偏难</a
+            >
           </li>
           <li class="nav-item">
-            <a href="">难</a>
+            <a
+              [routerLink]="practice"
+              [queryParams]="{ level: 5 }"
+              queryParamsHandling="merge"
+              routerLinkActive="on"
+              >难</a
+            >
           </li>
         </ul>
       </div>
@@ -50,7 +112,7 @@
         <div
           nz-col
           nzSpan="4"
-          [routerLink]="['/practices/', practice.id]"
+          [routerLink]="[practice.id]"
           [queryParams]="{ title: practice.title }"
           class="card-container"
         >
