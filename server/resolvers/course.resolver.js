@@ -27,13 +27,8 @@ const resolveMap = {
           })
         );
       }
-      let course = await Course.create({
-        title: data.title,
-        description: data.description,
-        level: data.level,
-        price: data.price,
-        tutorials: tutorials
-      });
+      Object.assign(data, { tutorials: tutorials });
+      let course = await Course.create(data);
       return course;
     },
     deleteCourse: async (obj, { id }, context, info) => {

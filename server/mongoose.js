@@ -1,7 +1,7 @@
-const { configure } = require('./config');
-const mongoose = require('mongoose');
+const { configure } = require("./config");
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-const graphqlFields = require('graphql-fields');
+const graphqlFields = require("graphql-fields");
 
 // configure
 const { mongodb } = configure;
@@ -10,7 +10,7 @@ for (const key of Object.keys(mongodb)) {
 }
 
 // plugins query helpers
-mongoose.plugin((schema) => {
+mongoose.plugin(schema => {
   schema.query.populateFields = function(info) {
     let fieldsName = [];
     const fields = graphqlFields(info);
@@ -20,19 +20,19 @@ mongoose.plugin((schema) => {
       } else {
         this.populate({
           path: key,
-          select: Object.keys(fields[key]).join(' ')
+          select: Object.keys(fields[key]).join(" ")
         });
       }
     }
-    return this.select(fieldsName.join(' '));
+    return this.select(fieldsName.join(" "));
   };
 });
 
 // plugins
-mongoose.plugin((schema) => {
+mongoose.plugin(schema => {
   schema.statics.findByIdAndValidate = async function(id, info) {
     // Validate id
-    if (!ObjectId.isValid(id)) throw new Error('Input ID is not a valid ID');
+    if (!ObjectId.isValid(id)) throw new Error("Input ID is not a valid ID");
 
     // Find item by id
     const item = await this.findById(id).populateFields(info);
@@ -44,11 +44,11 @@ mongoose.plugin((schema) => {
 });
 
 // event
-mongoose.connection.on('open', () => {
-  console.log(`Connected to MongoDB`);
+mongoose.connection.on("open", () => {
+  console.log(`Connected to MongoDB ${mongoose.get("db_uri")}`);
 });
 
-mongoose.connection.on('error', () => {
+mongoose.connection.on("error", () => {
   console.log(`Failed to connect MongoDB`);
   // do something else
   process.exit(-1);

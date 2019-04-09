@@ -8,7 +8,7 @@ type Course {
   title: String!
   description: String
   level: Int
-  kind: Int
+  kind: [Int]
   price: Float
   pictureUrl: String
   createDate: DateTime

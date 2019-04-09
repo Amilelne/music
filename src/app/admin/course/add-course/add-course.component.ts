@@ -58,6 +58,7 @@ export class AddCourseComponent implements OnInit {
         this.router.navigate(["/admin/course", id]);
       },
       errors => {
+        console.log(errors);
         this.errorState = true;
         this.errorMessage = errors.message;
       }
@@ -99,7 +100,7 @@ export class AddCourseComponent implements OnInit {
       },
       errors => {
         this.errorState = true;
-        this.errorMessage = errors.message;
+        this.errorMessage = errors[0].message || errors.message;
       }
     );
     this.isOkLoading = true;

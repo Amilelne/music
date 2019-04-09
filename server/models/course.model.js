@@ -16,7 +16,7 @@ const schema = new Schema(
       maxlength: 1000
     },
     kind: {
-      type: Number,
+      type: [Number],
       required: true
     },
     level: {

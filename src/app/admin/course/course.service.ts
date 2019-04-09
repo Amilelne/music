@@ -55,6 +55,7 @@ export class CourseService {
       .pipe(
         mergeMap(({ data, errors }) => {
           if (errors) {
+            console.log(errors);
             return throwError(errors);
           } else {
             return of(data);
