@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  HOST: "59.110.154.187",
+  HOST: "localhost",
   PORT: 4455,
   GRAPHQL_PATH: "/graphql"
 };

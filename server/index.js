@@ -25,9 +25,10 @@ const readGqlFiles = require("./utils/readGqlFiles");
   });
   server.applyMiddleware({ app });
 
+  const host = app.get("host");
   const port = app.get("port");
 
   app.listen({ port }, () => {
-    console.log(`Server ready at ${port}`);
+    console.log(`Server ready at ${host}:${port}`);
   });
 })();
