@@ -8,14 +8,8 @@ import { AuthService } from "app/core/auth/auth.service";
   styleUrls: ["./audio.component.scss"]
 })
 export class AudioComponent implements OnInit {
-  constructor(
-    private recordService: RecordService,
-    private authService: AuthService
-  ) {
-    this.authService._user.subscribe(user => {
-      console.log(user);
-      this.userId = user.id;
-    });
+  constructor(private recordService: RecordService) {
+    this.userId = AuthService.getStoredUserId();
   }
 
   audioList;
@@ -23,7 +17,6 @@ export class AudioComponent implements OnInit {
   ngOnInit() {
     this.recordService.getRecordsByUserId(this.userId).subscribe(audios => {
       this.audioList = audios;
-      console.log(audios);
     });
   }
 }
