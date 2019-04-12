@@ -1,6 +1,16 @@
-<nz-avatar [nzText]="expert.name" nzSize="large" [ngStyle]="{'background-color': color}" style="vertical-align: middle">
-</nz-avatar>
+<ng-container *ngIf="expert">
+  <nz-avatar
+    [nzText]="expert.name"
+    nzSize="large"
+    [ngStyle]="{ 'background-color': color }"
+    style="vertical-align: middle"
+  >
+  </nz-avatar>
 
-<nz-card [nzTitle]="expert.name" nzBordered="false">
-  <nz-card-meta [nzDescription]="expert.introduction" nzLoading="true"></nz-card-meta>
-</nz-card>
+  <nz-card [nzTitle]="expert.name" nzBordered="false">
+    <nz-card-meta
+      [nzDescription]="expert.introduction"
+      nzLoading="true"
+    ></nz-card-meta>
+  </nz-card>
+</ng-container>
