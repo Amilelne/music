@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators
-} from '@angular/forms';
-import { AuthService } from '../core/auth/auth.service';
-import { Router } from '@angular/router';
+} from "@angular/forms";
+import { AuthService } from "../core/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
@@ -31,10 +31,14 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    const identifier = this.validateForm.value['email'];
-    const credential = this.validateForm.value['password'];
+    const identifier = this.validateForm.value["email"];
+    const credential = this.validateForm.value["password"];
     this.authService.login({ identifier, credential }).subscribe(
-      () => this.router.navigate(['/admin']),
+      () => {
+        if (AuthService.getStoredUserRole() == "admin") {
+          this.router.navigate(["/admin"]);
+        } else this.router.navigate(["/"]);
+      },
       errors => {
         this.errorState = true;
         this.errorMessage = errors[0].message;
