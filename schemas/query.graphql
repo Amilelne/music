@@ -9,7 +9,7 @@ type Query {
   expert(id: ID!): User!
 
   # course
-  courses: [Course]!
+  courses(kind: Int): [Course]!
   course(id: ID!): Course!
   courseNumberByKind: [Int]!
 

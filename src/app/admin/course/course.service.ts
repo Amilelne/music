@@ -67,9 +67,9 @@ export class CourseService {
       );
   }
 
-  getCourseList() {
+  getCourseList(kind) {
     return this.courseListGQL
-      .watch({})
+      .watch({ kind })
       .valueChanges.pipe(map(result => result.data.courses));
   }
 

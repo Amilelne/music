@@ -128,7 +128,9 @@ export type Upload = any;
 // ====================================================
 
 export namespace AdminCourses {
-  export type Variables = {};
+  export type Variables = {
+    kind?: Maybe<number>;
+  };
 
   export type Query = {
     __typename?: "Query";
@@ -1177,6 +1179,9 @@ export interface UserQueryArgs {
 export interface ExpertQueryArgs {
   id: string;
 }
+export interface CoursesQueryArgs {
+  kind?: Maybe<number>;
+}
 export interface CourseQueryArgs {
   id: string;
 }
@@ -1437,8 +1442,8 @@ export class AdminCoursesGQL extends Apollo.Query<
   AdminCourses.Variables
 > {
   document: any = gql`
-    query AdminCourses {
-      courses {
+    query AdminCourses($kind: Int) {
+      courses(kind: $kind) {
         ...CourseFields
       }
     }

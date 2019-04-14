@@ -3,8 +3,12 @@ const storeFS = require("../utils/storeFile");
 
 const resolveMap = {
   Query: {
-    courses: async (obj, args, context, info) => {
-      return Course.find().populateFields(info);
+    courses: async (obj, { kind }, context, info) => {
+      const cursor = Course.find().populateFields(info);
+      if (kind) {
+        cursor.where("kind").in(kind);
+      }
+      return cursor;
     },
     course: async (obj, { id }, context, info) => {
       return Course.findById(id).populateFields(info);

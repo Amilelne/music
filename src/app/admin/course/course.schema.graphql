@@ -31,8 +31,8 @@ fragment PracticeFields on Practice {
   updateDate
 }
 
-query AdminCourses {
-  courses {
+query AdminCourses($kind: Int = null) {
+  courses(kind: $kind) {
     ...CourseFields
   }
 }

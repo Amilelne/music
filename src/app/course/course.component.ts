@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { CourseService } from "app/admin/course/course.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-course",
@@ -15,12 +16,17 @@ export class CourseComponent implements OnInit {
     "http://www.ixzds.com/wp-content/uploads/elementor/thumbs/newbanner3-1-nv80hnplv3ctqioa31xqcd3n780myriq7zt7nvgx1g.png"
   ];
 
-  constructor(private courseService: CourseService) {}
+  constructor(
+    private courseService: CourseService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.courseService.getCourseList().subscribe(data => {
-      this.courses = data;
-      this.totalCourse = this.courses.length;
+    this.route.queryParams.subscribe(queryParams => {
+      this.courseService.getCourseList(queryParams.kind).subscribe(data => {
+        this.courses = data;
+        this.totalCourse = this.courses.length;
+      });
     });
   }
 }
