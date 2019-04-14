@@ -2,13 +2,13 @@
   <nz-content>
     <ng-container *ngIf="tutorialType">
       <ng-container [ngSwitch]="tutorialType">
-        <ng-container *ngSwitchCase="4">
-          <video [src]="tutorialUrl" controls="controls"></video>
-        </ng-container>
         <ng-container *ngSwitchCase="3">
           <audio [src]="tutorialUrl" controls="controls"></audio>
         </ng-container>
-        <ng-container *ngSwitchCase="0">
+        <ng-container *ngSwitchCase="4">
+          <video [src]="tutorialUrl" controls="controls"></video>
+        </ng-container>
+        <ng-container *ngSwitchCase="5">
           <img [src]="tutorialUrl" alt="tutorial" />
         </ng-container>
         <ng-container *ngSwitchDefault>

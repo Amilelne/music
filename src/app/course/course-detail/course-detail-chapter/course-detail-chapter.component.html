@@ -24,7 +24,14 @@
             </ng-template>
           </nz-list-item-meta>
         </nz-skeleton>
-        <button nz-button nzType="primary">开始学习</button>
+        <button
+          nz-button
+          nzType="primary"
+          [routerLink]="['/courses/tutorial', item.id]"
+          (click)="addToMyCourses()"
+        >
+          开始学习
+        </button>
       </nz-list-item>
     </ng-template>
   </nz-list>

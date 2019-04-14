@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CourseService } from 'app/admin/course/course.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { CourseService } from "app/admin/course/course.service";
+import { AuthService } from "app/core/auth/auth.service";
 
 @Component({
-  selector: 'app-course-detail-chapter',
-  templateUrl: './course-detail-chapter.component.html',
-  styleUrls: ['./course-detail-chapter.component.scss']
+  selector: "app-course-detail-chapter",
+  templateUrl: "./course-detail-chapter.component.html",
+  styleUrls: ["./course-detail-chapter.component.scss"]
 })
 export class CourseDetailChapterComponent implements OnInit {
   constructor(
@@ -15,10 +16,14 @@ export class CourseDetailChapterComponent implements OnInit {
 
   data: any[];
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.courseService.getCourseDetail(id).subscribe((data) => {
+    const id = this.route.snapshot.paramMap.get("id");
+    this.courseService.getCourseDetail(id).subscribe(data => {
       this.data = data.tutorials;
       console.log(this.data);
     });
+  }
+
+  addToMyCourses() {
+    const userId = AuthService.getStoredUserId();
   }
 }
