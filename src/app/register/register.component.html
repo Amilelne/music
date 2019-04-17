@@ -4,6 +4,13 @@
   class="register-form"
   (ngSubmit)="submitForm()"
 >
+  <nz-alert
+    class="registerAlert"
+    *ngIf="!emailUnique"
+    nzType="error"
+    nzCloseable
+    nzMessage="该邮箱已被注册，请检查您输入的邮箱是否正确！"
+  ></nz-alert>
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
       >邮箱</nz-form-label
@@ -93,7 +100,7 @@
       >
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
+  <!-- <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="captcha" nzRequired
       >验证码</nz-form-label
     >
@@ -115,14 +122,14 @@
       >
       <nz-form-extra>查看邮箱收到的验证码</nz-form-extra>
     </nz-form-control>
-  </nz-form-item>
-  <nz-form-item nz-row style="margin-bottom:8px;">
+  </nz-form-item> -->
+  <!-- <nz-form-item nz-row style="margin-bottom:8px;">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <label nz-checkbox formControlName="agree">
         <span>我已阅读 <a>协议</a></span>
       </label>
     </nz-form-control>
-  </nz-form-item>
+  </nz-form-item> -->
   <nz-form-item nz-row style="margin-bottom:8px;">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <button nz-button nzType="primary">注册</button>

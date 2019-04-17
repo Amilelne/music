@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
   FormControl
-} from '@angular/forms';
-import { AuthService } from '../core/auth/auth.service';
-import { Router } from '@angular/router';
+} from "@angular/forms";
+import { AuthService } from "../core/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.scss"]
 })
 export class RegisterComponent implements OnInit {
   validateForm: FormGroup;
+  emailUnique: Boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -28,15 +29,19 @@ export class RegisterComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    const name = this.validateForm.value['nickname'];
-    const identifier = this.validateForm.value['email'];
-    const credential = this.validateForm.value['password'];
-    this.authService
-      .register({ name, identifier, credential })
-      .subscribe(
-        () => this.router.navigate(['/login']),
-        errors => console.log(errors)
-      );
+    const name = this.validateForm.value["nickname"];
+    const identifier = this.validateForm.value["email"];
+    const credential = this.validateForm.value["password"];
+    this.authService.register({ name, identifier, credential }).subscribe(
+      () => this.router.navigate(["/login"]),
+      errors => {
+        console.log(errors);
+        if (errors[0].extensions.exception["code"] == 11000) {
+          this.emailUnique = false;
+        }
+        console.log(errors[0].extensions.exception["code"] === 11000);
+      }
+    );
   }
 
   updateConfirmValidator(): void {
@@ -52,20 +57,14 @@ export class RegisterComponent implements OnInit {
     } else if (control.value !== this.validateForm.controls.password.value) {
       return { confirm: true, error: true };
     }
-  }
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
+  };
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      nickname: [null, [Validators.required]],
-      captcha: [null, [Validators.required]],
-      agree: [false]
+      nickname: [null, [Validators.required]]
     });
   }
 }
