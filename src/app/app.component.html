@@ -15,6 +15,15 @@
       <ng-container *ngIf="loggedIn && user?.role == 'expert'">
         <li nz-menu-item routerLink="/score" routerLinkActive="active">评分</li>
       </ng-container>
+      <ng-container *ngIf="loggedIn && user?.role == 'expert'">
+        <li
+          nz-menu-item
+          routerLink="expert/manage/courses"
+          routerLinkActive="active"
+        >
+          课程管理
+        </li>
+      </ng-container>
       <!--Auth-->
       <ng-container *ngIf="!loggedIn">
         <li

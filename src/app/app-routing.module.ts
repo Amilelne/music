@@ -36,6 +36,10 @@ const routes: Routes = [
   { path: "score/:id", component: ScoreDetailComponent },
   { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
   { path: "notices", component: NotificationComponent },
+  {
+    path: "expert/manage/courses",
+    loadChildren: "./admin/course/course.module#CourseModule"
+  },
   { path: "**", component: Get404Component }
 ];
 
