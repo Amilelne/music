@@ -30,11 +30,11 @@ export class AdminCourseDetailContentComponent implements OnInit {
   errorState: boolean;
   errorMessage: string;
   listOfresourceType = [
-    { value: 0, label: "图片" },
     { value: 1, label: "文档" },
     { value: 2, label: "PPT" },
     { value: 3, label: "音频" },
-    { value: 4, label: "视频" }
+    { value: 4, label: "视频" },
+    { value: 5, label: "图片" }
   ];
   listOfLevel = [
     { value: 1, label: "易" },
