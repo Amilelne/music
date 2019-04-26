@@ -96,5 +96,8 @@ h3 {
 
 .pagination-style {
   text-align: center;
-  padding-top: 50px;
+  padding-bottom: 10px;
+}
+#pagination-bar:focus {
+  outline: none;
 }

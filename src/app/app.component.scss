@@ -1,6 +1,9 @@
 ul {
   margin: 10px;
 }
+li:focus {
+  outline: none;
+}
 
 .nav-right {
   float: right;
