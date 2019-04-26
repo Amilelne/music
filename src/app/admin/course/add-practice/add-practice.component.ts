@@ -19,7 +19,7 @@ import { CourseService } from "../course.service";
   styleUrls: ["./add-practice.component.scss"]
 })
 export class AddPracticeComponent implements OnInit, OnChanges {
-  private isVisible = false;
+  public isVisible = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
