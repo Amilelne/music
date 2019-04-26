@@ -17,7 +17,9 @@ import {
   TutorialDetailGQL,
   Course,
   AdminCourseNumberByKind,
-  AdminCourseNumberByKindGQL
+  AdminCourseNumberByKindGQL,
+  CoursesCountGQL,
+  PracticesCountGQL
 } from "../../../gql";
 
 @Injectable({
@@ -34,7 +36,9 @@ export class CourseService {
     private practiceDetailGQL: AdminPracticeDetailGQL,
     private createPracticeGQL: AdminCreatePracticeGQL,
     private tutorialDetailGQL: TutorialDetailGQL,
-    private courseNumberByKindGQL: AdminCourseNumberByKindGQL
+    private courseNumberByKindGQL: AdminCourseNumberByKindGQL,
+    private coursesCountGQL: CoursesCountGQL,
+    private practiceCountGQL: PracticesCountGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -67,16 +71,26 @@ export class CourseService {
       );
   }
 
-  getCourseList(kind) {
+  getCourseList(pageIndex, pageSize, kind) {
     return this.courseListGQL
-      .watch({ kind })
+      .watch({ pageIndex, pageSize, kind })
       .valueChanges.pipe(map(result => result.data.courses));
   }
+  getCoursesCount(kind) {
+    return this.coursesCountGQL
+      .watch({ kind })
+      .valueChanges.pipe(map(result => result.data.coursesCount));
+  }
 
-  getPracticeList(kind, level) {
+  getPracticeList(pageIndex, pageSize, kind, level) {
     return this.practiceListGQL
-      .watch({ kind, level })
+      .watch({ pageIndex, pageSize, kind, level })
       .valueChanges.pipe(map(result => result.data.practices));
+  }
+  getPracticeCount(kind, level) {
+    return this.practiceCountGQL
+      .watch({ kind, level })
+      .valueChanges.pipe(map(result => result.data.practicesCount));
   }
   getCourseDetail(id) {
     return this.courseDetailGQL

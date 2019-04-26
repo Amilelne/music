@@ -10,18 +10,36 @@ import { ActivatedRoute } from "@angular/router";
 export class PracticeComponent implements OnInit {
   @Input() practices;
   totalPractice;
+  pageIndex = 1;
+  pageSize = 10;
+
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute
   ) {}
   ngOnInit() {
     this.route.queryParams.subscribe(queryParams => {
+      if (queryParams.page) {
+        this.pageIndex = queryParams.page;
+      }
       this.courseService
-        .getPracticeList(queryParams.kind, queryParams.level)
+        .getPracticeCount(queryParams.kind, queryParams.level)
+        .subscribe(data => {
+          this.totalPractice = data;
+        });
+      this.courseService
+        .getPracticeList(
+          this.pageIndex,
+          this.pageSize,
+          queryParams.kind,
+          queryParams.level
+        )
         .subscribe(data => {
           this.practices = data;
-          this.totalPractice = this.practices.length;
         });
     });
+  }
+  pageIndexChange(pageIndex) {
+    this.pageIndex = pageIndex;
   }
 }

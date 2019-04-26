@@ -31,17 +31,39 @@ fragment PracticeFields on Practice {
   updateDate
 }
 
-query AdminCourses($kind: Int = null) {
-  courses(kind: $kind) {
+query AdminCourses(
+  $pageIndex: Int = null
+  $pageSize: Int = null
+  $kind: Int = null
+) {
+  courses(pageIndex: $pageIndex, pageSize: $pageSize, kind: $kind) {
     ...CourseFields
   }
 }
 
-query AdminPractices($kind: Int, $level: Int) {
-  practices(kind: $kind, level: $level) {
+query CoursesCount($kind: Int = null) {
+  coursesCount(kind: $kind)
+}
+
+query AdminPractices(
+  $pageIndex: Int = null
+  $pageSize: Int = null
+  $kind: Int
+  $level: Int
+) {
+  practices(
+    pageIndex: $pageIndex
+    pageSize: $pageSize
+    kind: $kind
+    level: $level
+  ) {
     ...PracticeFields
     averageScore
   }
+}
+
+query PracticesCount($kind: Int, $level: Int) {
+  practicesCount(kind: $kind, level: $level)
 }
 
 query AdminCourseNumberByKind {

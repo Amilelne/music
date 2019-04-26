@@ -153,7 +153,12 @@
       <nz-pagination
         [nzPageIndex]="1"
         [nzTotal]="totalPractice"
-        [nzPageSize]="50"
+        [nzPageSize]="8"
+        routerLink="/practices"
+        [queryParams]="{ page: pageIndex }"
+        queryParamsHandling="merge"
+        routerLinkActive
+        (nzPageIndexChange)="pageIndexChange($event)"
       ></nz-pagination>
     </div>
   </div>

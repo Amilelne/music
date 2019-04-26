@@ -3,21 +3,29 @@ const storeFS = require("../utils/storeFile");
 
 const resolveMap = {
   Query: {
-    courses: async (obj, { kind }, context, info) => {
+    courses: async (obj, { pageIndex, pageSize, kind }, context, info) => {
       const cursor = Course.find().populateFields(info);
       if (kind) {
         cursor.where("kind").in(kind);
       }
+      cursor.skip((pageIndex - 1) * pageSize).limit(pageSize);
       return cursor;
     },
     course: async (obj, { id }, context, info) => {
       return Course.findById(id).populateFields(info);
     },
+    coursesCount: async (obj, { kind }, context, info) => {
+      const countCursor = Course.find();
+      if (kind) {
+        countCursor.where("kind").in(kind);
+      }
+      return countCursor.countDocuments();
+    },
     courseNumberByKind: async (obj, args, context, info) => {
-      let kind0 = await Course.countDocuments({ kind: 0 });
       let kind1 = await Course.countDocuments({ kind: 1 });
       let kind2 = await Course.countDocuments({ kind: 2 });
-      return [kind0, kind1, kind2];
+      let kind3 = await Course.countDocuments({ kind: 3 });
+      return [kind1, kind2, kind3];
     }
   },
   Mutation: {

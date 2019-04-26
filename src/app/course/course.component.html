@@ -5,11 +5,11 @@
 </nz-carousel>
 <app-menu></app-menu>
 <div class="courseList">
-  <div nz-row [nzGutter]="8">
+  <div nz-row [nzGutter]="6">
     <ng-container *ngFor="let course of courses">
       <div
         nz-col
-        nzSpan="6"
+        nzSpan="5"
         [routerLink]="['/courses/', course.id]"
         class="card-container"
       >
@@ -53,9 +53,14 @@
   </div>
   <div class="pagination-style">
     <nz-pagination
-      [nzPageIndex]="1"
+      [nzPageIndex]="pageIndex"
       [nzTotal]="totalCourse"
-      [nzPageSize]="50"
+      [nzPageSize]="8"
+      routerLink="/courses"
+      [queryParams]="{ page: pageIndex }"
+      queryParamsHandling="merge"
+      routerLinkActive
+      (nzPageIndexChange)="pageIndexChange($event)"
     ></nz-pagination>
   </div>
 </div>

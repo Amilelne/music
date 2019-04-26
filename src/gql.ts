@@ -129,6 +129,8 @@ export type Upload = any;
 
 export namespace AdminCourses {
   export type Variables = {
+    pageIndex?: Maybe<number>;
+    pageSize?: Maybe<number>;
     kind?: Maybe<number>;
   };
 
@@ -141,8 +143,22 @@ export namespace AdminCourses {
   export type Courses = CourseFields.Fragment;
 }
 
+export namespace CoursesCount {
+  export type Variables = {
+    kind?: Maybe<number>;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    coursesCount: number;
+  };
+}
+
 export namespace AdminPractices {
   export type Variables = {
+    pageIndex?: Maybe<number>;
+    pageSize?: Maybe<number>;
     kind?: Maybe<number>;
     level?: Maybe<number>;
   };
@@ -158,6 +174,19 @@ export namespace AdminPractices {
 
     averageScore: Maybe<number>;
   } & PracticeFields.Fragment;
+}
+
+export namespace PracticesCount {
+  export type Variables = {
+    kind?: Maybe<number>;
+    level?: Maybe<number>;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    practicesCount: number;
+  };
 }
 
 export namespace AdminCourseNumberByKind {
@@ -932,6 +961,8 @@ export interface Query {
   /** course */
   courses: (Maybe<Course>)[];
 
+  coursesCount: number;
+
   course: Course;
 
   courseNumberByKind: (Maybe<number>)[];
@@ -943,6 +974,10 @@ export interface Query {
   practice: Practice;
 
   practices: (Maybe<Practice>)[];
+
+  practicesCount: number;
+
+  recommendPractices: (Maybe<Practice>)[];
   /** record */
   record: Record;
 
@@ -1180,6 +1215,13 @@ export interface ExpertQueryArgs {
   id: string;
 }
 export interface CoursesQueryArgs {
+  pageIndex?: Maybe<number>;
+
+  pageSize?: Maybe<number>;
+
+  kind?: Maybe<number>;
+}
+export interface CoursesCountQueryArgs {
   kind?: Maybe<number>;
 }
 export interface CourseQueryArgs {
@@ -1192,9 +1234,21 @@ export interface PracticeQueryArgs {
   id: string;
 }
 export interface PracticesQueryArgs {
+  pageIndex?: Maybe<number>;
+
+  pageSize?: Maybe<number>;
+
   kind?: Maybe<number>;
 
   level?: Maybe<number>;
+}
+export interface PracticesCountQueryArgs {
+  kind?: Maybe<number>;
+
+  level?: Maybe<number>;
+}
+export interface RecommendPracticesQueryArgs {
+  id: string;
 }
 export interface RecordQueryArgs {
   id: string;
@@ -1442,8 +1496,12 @@ export class AdminCoursesGQL extends Apollo.Query<
   AdminCourses.Variables
 > {
   document: any = gql`
-    query AdminCourses($kind: Int) {
-      courses(kind: $kind) {
+    query AdminCourses(
+      $pageIndex: Int = null
+      $pageSize: Int = null
+      $kind: Int = null
+    ) {
+      courses(pageIndex: $pageIndex, pageSize: $pageSize, kind: $kind) {
         ...CourseFields
       }
     }
@@ -1454,19 +1512,55 @@ export class AdminCoursesGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class CoursesCountGQL extends Apollo.Query<
+  CoursesCount.Query,
+  CoursesCount.Variables
+> {
+  document: any = gql`
+    query CoursesCount($kind: Int = null) {
+      coursesCount(kind: $kind)
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class AdminPracticesGQL extends Apollo.Query<
   AdminPractices.Query,
   AdminPractices.Variables
 > {
   document: any = gql`
-    query AdminPractices($kind: Int, $level: Int) {
-      practices(kind: $kind, level: $level) {
+    query AdminPractices(
+      $pageIndex: Int = null
+      $pageSize: Int = null
+      $kind: Int
+      $level: Int
+    ) {
+      practices(
+        pageIndex: $pageIndex
+        pageSize: $pageSize
+        kind: $kind
+        level: $level
+      ) {
         ...PracticeFields
         averageScore
       }
     }
 
     ${PracticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class PracticesCountGQL extends Apollo.Query<
+  PracticesCount.Query,
+  PracticesCount.Variables
+> {
+  document: any = gql`
+    query PracticesCount($kind: Int, $level: Int) {
+      practicesCount(kind: $kind, level: $level)
+    }
   `;
 }
 @Injectable({

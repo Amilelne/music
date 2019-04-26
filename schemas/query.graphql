@@ -9,7 +9,8 @@ type Query {
   expert(id: ID!): User!
 
   # course
-  courses(kind: Int): [Course]!
+  courses(pageIndex: Int, pageSize: Int, kind: Int): [Course]!
+  coursesCount(kind: Int): Int!
   course(id: ID!): Course!
   courseNumberByKind: [Int]!
 
@@ -19,7 +20,9 @@ type Query {
 
   # practice
   practice(id: ID!): Practice!
-  practices(kind: Int, level: Int): [Practice]!
+  practices(pageIndex: Int, pageSize: Int, kind: Int, level: Int): [Practice]!
+  practicesCount(kind: Int, level: Int): Int!
+  recommendPractices(id: ID!): [Practice]!
 
   # record
   record(id: ID!): Record!

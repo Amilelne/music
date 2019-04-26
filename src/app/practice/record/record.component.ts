@@ -60,9 +60,11 @@ export class RecordComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.practiceTitle = params.title;
     });
-    this.courseService.getPracticeList(null, null).subscribe(data => {
-      this.recommendPractices = data;
-    });
+    this.courseService
+      .getPracticeList(null, null, null, null)
+      .subscribe(data => {
+        this.recommendPractices = data;
+      });
   }
 
   sanitize(url: string) {
