@@ -6,25 +6,29 @@ div {
 fa-icon {
   color: #fff;
 }
-.ant-menu-horizontal{
+.ant-menu-horizontal {
   border-bottom: none;
-  box-shadow:0px 4px 8px 0px rgba(7, 17, 27, 0.1);
+  box-shadow: 0px 4px 8px 0px rgba(7, 17, 27, 0.1);
 }
-ul.ant-menu{
+ul.ant-menu {
   text-align: center;
 }
-li.ant-menu-item{
+li.ant-menu-item {
   margin: 0 2rem;
 }
-.musicTheory{
+.musicTheory {
   background-color: #fda33e;
 }
-.sightSinging{
+.sightSinging {
   background-color: #53c9e1;
 }
-.earTraining{
+.earTraining {
   background-color: #fd88cb;
 }
-.square{
+.square {
   background-color: #4be598;
+}
+
+li:focus {
+  outline: none;
 }
