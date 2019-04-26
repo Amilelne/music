@@ -12,7 +12,12 @@
     <div nz-col class="gutter-row" nzSpan="6">
       <nz-card [nzBordered]="false">
         <h2>添加练习</h2>
-        <button nz-button nzType="primary" nzBlock (click)="createPractice()">
+        <button
+          nz-button
+          nzType="primary"
+          nzBlock
+          (click)="addPractice.showModal()"
+        >
           创建练习
         </button>
         <button nz-button nzType="default" nzBlock>导入练习</button>
@@ -33,7 +38,7 @@
       </nz-card>
     </div>
   </div>
-  <app-add-practice [(isVisible)]="isPracticeVisible"></app-add-practice>
+  <app-add-practice #addPractice></app-add-practice>
   <app-add-course [(isVisible)]="isCourseVisible"></app-add-course>
 </div>
 <app-course-list></app-course-list>

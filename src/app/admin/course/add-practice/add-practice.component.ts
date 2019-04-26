@@ -19,18 +19,7 @@ import { CourseService } from "../course.service";
   styleUrls: ["./add-practice.component.scss"]
 })
 export class AddPracticeComponent implements OnInit, OnChanges {
-  private isVisibleValue = false;
-
-  @Output() isVisibleChange = new EventEmitter();
-  @Input()
-  set isVisible(input: boolean) {
-    this.isVisibleValue = input;
-    this.isVisibleChange.emit(input);
-  }
-  get isVisible() {
-    return this.isVisibleValue;
-  }
-
+  private isVisible = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -111,10 +100,10 @@ export class AddPracticeComponent implements OnInit, OnChanges {
   }
 
   showModal(): void {
-    this.isVisibleValue = true;
+    this.isVisible = true;
   }
   hideModal(): void {
-    this.isVisibleValue = false;
+    this.isVisible = false;
   }
 
   handleOk(): void {
@@ -131,7 +120,7 @@ export class AddPracticeComponent implements OnInit, OnChanges {
     );
     this.isOkLoading = true;
     window.setTimeout(() => {
-      this.isVisibleValue = false;
+      this.isVisible = false;
       this.isOkLoading = false;
     }, 2000);
   }
