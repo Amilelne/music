@@ -4,7 +4,9 @@ import {
   Input,
   SimpleChanges,
   SimpleChange,
-  OnChanges
+  OnChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { NzMessageService, UploadXHRArgs } from "ng-zorro-antd";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -17,7 +19,18 @@ import { CourseService } from "../course.service";
   styleUrls: ["./add-practice.component.scss"]
 })
 export class AddPracticeComponent implements OnInit, OnChanges {
-  @Input() isVisible = false;
+  private isVisibleValue = false;
+
+  @Output() isVisibleChange = new EventEmitter();
+  @Input()
+  set isVisible(input: boolean) {
+    this.isVisibleValue = input;
+    this.isVisibleChange.emit(input);
+  }
+  get isVisible() {
+    return this.isVisibleValue;
+  }
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -98,7 +111,10 @@ export class AddPracticeComponent implements OnInit, OnChanges {
   }
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisibleValue = true;
+  }
+  hideModal(): void {
+    this.isVisibleValue = false;
   }
 
   handleOk(): void {
@@ -115,7 +131,7 @@ export class AddPracticeComponent implements OnInit, OnChanges {
     );
     this.isOkLoading = true;
     window.setTimeout(() => {
-      this.isVisible = false;
+      this.isVisibleValue = false;
       this.isOkLoading = false;
     }, 2000);
   }

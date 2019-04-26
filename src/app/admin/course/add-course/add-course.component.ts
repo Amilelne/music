@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -16,7 +16,17 @@ import { Router } from "@angular/router";
   styleUrls: ["./add-course.component.scss"]
 })
 export class AddCourseComponent implements OnInit {
-  @Input() isVisible = false;
+  private isVisibleValue = false;
+
+  @Output() isVisibleChange = new EventEmitter();
+  @Input()
+  set isVisible(input: boolean) {
+    this.isVisibleValue = input;
+    this.isVisibleChange.emit(input);
+  }
+  get isVisible() {
+    return this.isVisibleValue;
+  }
   isOkLoading = false;
   constructor(
     private fb: FormBuilder,
@@ -86,7 +96,7 @@ export class AddCourseComponent implements OnInit {
       }, 1000);
     });
   showModal(): void {
-    this.isVisible = true;
+    this.isVisibleValue = true;
   }
 
   handleOk(): void {
@@ -105,7 +115,7 @@ export class AddCourseComponent implements OnInit {
     );
     this.isOkLoading = true;
     window.setTimeout(() => {
-      this.isVisible = false;
+      this.isVisibleValue = false;
       this.isOkLoading = false;
     }, 2000);
   }
