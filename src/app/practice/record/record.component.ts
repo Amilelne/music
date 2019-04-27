@@ -43,7 +43,7 @@ export class RecordComponent implements OnInit {
   url;
   blobFile;
   error;
-  private practiceId;
+  public practiceId;
   private practiceTitle: String;
   private userId;
   recommendPractices;

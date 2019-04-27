@@ -69,24 +69,27 @@
       <div class="practiceList">
         <h2>推荐练习</h2>
         <ng-container *ngFor="let practice of recommendPractices">
-          <div
-            [routerLink]="['/practices/', practice.id]"
-            [queryParams]="{ title: practice.title }"
-            class="card-container"
-          >
-            <div class="card-top">
-              <img
-                [src]="practice.resourceUrl"
-                [alt]="practice.title"
-                class="card-banner"
-              />
+          <ng-container *ngIf="practiceId && practice.id !== practiceId">
+            <div
+              [routerLink]="['/practices/', practice.id]"
+              [queryParams]="{ title: practice.title }"
+              class="card-container"
+            >
+              <div class="card-top">
+                <img
+                  [src]="practice.resourceUrl"
+                  [alt]="practice.title"
+                  class="card-banner"
+                />
+              </div>
+
+              <div class="card-content">
+                <h3 class="card-name">
+                  {{ practice.title }}
+                </h3>
+              </div>
             </div>
-            <div class="card-content">
-              <h3 class="card-name">
-                {{ practice.title }}
-              </h3>
-            </div>
-          </div>
+          </ng-container>
         </ng-container>
       </div>
     </div>
