@@ -455,6 +455,20 @@ export namespace AdminUpdateUserRole {
   };
 }
 
+export namespace AdminDeleteUserById {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteUser: DeleteUser;
+  };
+
+  export type DeleteUser = UserFields.Fragment;
+}
+
 export namespace UpdateAvatar {
   export type Variables = {
     userId: string;
@@ -1841,6 +1855,23 @@ export class AdminUpdateUserRoleGQL extends Apollo.Mutation<
     mutation AdminUpdateUserRole($userId: ID!, $userRole: String!) {
       adminUpdateUserRole(userId: $userId, userRole: $userRole)
     }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminDeleteUserByIdGQL extends Apollo.Mutation<
+  AdminDeleteUserById.Mutation,
+  AdminDeleteUserById.Variables
+> {
+  document: any = gql`
+    mutation AdminDeleteUserById($id: ID!) {
+      deleteUser(id: $id) {
+        ...UserFields
+      }
+    }
+
+    ${UserFieldsFragment}
   `;
 }
 @Injectable({

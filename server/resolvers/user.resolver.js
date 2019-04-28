@@ -31,7 +31,9 @@ const resolverMap = {
       return User.create(data);
     },
     deleteUser: async (obj, { id }, context, info) => {
-      return User.remove({ _id: id });
+      let user = await User.findByIdAndValidate(id, info);
+      await user.remove();
+      return user;
     },
     register: async (obj, { data }, context, info) => {
       // create new user by username

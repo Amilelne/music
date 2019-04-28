@@ -5,7 +5,8 @@ import {
   AdminUsersGQL,
   User,
   AdminUserByIdGQL,
-  AdminUpdateUserRoleGQL
+  AdminUpdateUserRoleGQL,
+  AdminDeleteUserByIdGQL
 } from "@app/gql";
 
 @Injectable({
@@ -15,11 +16,14 @@ export class UserService {
   constructor(
     private userListGQL: AdminUsersGQL,
     private userByIdGQL: AdminUserByIdGQL,
-    private updateUserRoleGQL: AdminUpdateUserRoleGQL
+    private updateUserRoleGQL: AdminUpdateUserRoleGQL,
+    private deleteUserByIdGQL: AdminDeleteUserByIdGQL
   ) {}
 
   getUserList() {
-    return this.userListGQL.fetch().pipe(map(result => result.data.users));
+    return this.userListGQL
+      .watch({})
+      .valueChanges.pipe(map(result => result.data.users));
   }
   getUserById(id) {
     return this.userByIdGQL
@@ -36,5 +40,27 @@ export class UserService {
         }
       })
     );
+  }
+  deleteUserById(id) {
+    return this.deleteUserByIdGQL
+      .mutate(
+        { id },
+        {
+          refetchQueries: [
+            {
+              query: this.userListGQL.document
+            }
+          ]
+        }
+      )
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        })
+      );
   }
 }

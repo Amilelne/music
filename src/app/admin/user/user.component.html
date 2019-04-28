@@ -30,19 +30,22 @@
         <th nzShowSort nzSortKey="level">用户级别</th>
         <th nzShowSort nzSortKey="createDate">账号创建时间</th>
         <th nzShowSort nzSortKey="updateDate">资料更新时间</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let data of filterTable.data"
-        [routerLink]="['/admin/user/', data.id]"
-      >
-        <td>{{ data.id }}</td>
-        <td>{{ data.name }}</td>
+      <tr *ngFor="let data of filterTable.data">
+        <td [routerLink]="['/admin/user/', data.id]">{{ data.id }}</td>
+        <td [routerLink]="['/admin/user/', data.id]">{{ data.name }}</td>
         <td>{{ data.role }}</td>
         <td>{{ data.level }}</td>
         <td>{{ data.createDate | date: "shortDate" }}</td>
         <td>{{ data.updateDate | date: "shortDate" }}</td>
+        <td>
+          <button nz-button nzType="danger" (click)="deleteUser(data.id)">
+            删除
+          </button>
+        </td>
       </tr>
     </tbody>
   </nz-table>

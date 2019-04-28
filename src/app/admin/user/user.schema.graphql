@@ -26,3 +26,9 @@ query AdminUserById($id: ID!) {
 mutation AdminUpdateUserRole($userId: ID!, $userRole: String!) {
   adminUpdateUserRole(userId: $userId, userRole: $userRole)
 }
+
+mutation AdminDeleteUserById($id: ID!) {
+  deleteUser(id: $id) {
+    ...UserFields
+  }
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CourseService } from "../course.service";
+import { NzMessageService } from "ng-zorro-antd";
 
 @Component({
   selector: "app-course-list",
@@ -7,7 +8,10 @@ import { CourseService } from "../course.service";
   styleUrls: ["./course-list.component.scss"]
 })
 export class CourseListComponent implements OnInit {
-  constructor(private courseService: CourseService) {}
+  constructor(
+    private courseService: CourseService,
+    private message: NzMessageService
+  ) {}
 
   sortName = null;
   sortValue = null;
@@ -21,6 +25,12 @@ export class CourseListComponent implements OnInit {
     this.courseService.getCourseList(null, null, null).subscribe(data => {
       this.data = data;
       this.displayData = [...this.data];
+    });
+  }
+
+  delete(id) {
+    this.courseService.deleteCourseById(id).subscribe(data => {
+      this.createMessage("success", `已成功删除${data["deleteCourse"].title}`);
     });
   }
 
@@ -50,5 +60,9 @@ export class CourseListComponent implements OnInit {
     } else {
       this.displayData = data;
     }
+  }
+
+  createMessage(type: string, info: string): void {
+    this.message.create(type, info);
   }
 }

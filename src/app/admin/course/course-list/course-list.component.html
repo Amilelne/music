@@ -28,8 +28,8 @@
         </th>
         <th nzShowSort nzSortKey="price">课程价格</th>
         <th nzShowSort nzSortKey="level">课程难度</th>
-        <th nzShowSort nzSortKey="createDate">课程创建时间</th>
         <th nzShowSort nzSortKey="updateDate">课程更新时间</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
@@ -38,8 +38,12 @@
         <td>{{ data.title }}</td>
         <td>{{ data.price }}</td>
         <td>{{ data.level }}</td>
-        <td>{{ data.createDate | date: "shortDate" }}</td>
         <td>{{ data.updateDate | date: "shortDate" }}</td>
+        <td>
+          <button nz-button nzType="danger" (click)="delete(data.id)">
+            删除
+          </button>
+        </td>
       </tr>
     </tbody>
   </nz-table>
