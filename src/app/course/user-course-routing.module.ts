@@ -4,6 +4,7 @@ import { CourseDetailChapterComponent } from "./course-detail/course-detail-chap
 import { CourseComponent } from "./course.component";
 import { CourseDetailComponent } from "./course-detail/course-detail.component";
 import { TutorialComponent } from "./tutorial/tutorial.component";
+import { AuthGuard } from "app/core/auth/auth.guard";
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: ":id",
     component: CourseDetailComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",

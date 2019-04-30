@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router
-} from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { filter, map, take, tap } from 'rxjs/operators';
+} from "@angular/router";
+import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
+import { filter, map, take, tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const url: string = state.url;
 
-    return this.process();
+    return this.process(route, state);
   }
   canActivateChild(
     route: ActivatedRouteSnapshot,
@@ -28,14 +28,16 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.canActivate(route, state);
   }
-  process() {
-    return this.authService.isLoggedIn$.pipe(
-      filter(value => value != null),
-      tap(value => {
-        if (!value) {
-          this.router.navigate(['/login']);
-        }
-      })
-    );
+  process(route, state) {
+    const userRole = AuthService.getStoredUserRole();
+    if (userRole) {
+      if (route.data.roles && route.data.roles.indexOf(userRole) === -1) {
+        this.router.navigate(["/"]);
+        return false;
+      }
+      return true;
+    }
+    this.router.navigate(["/login"], { queryParams: { returnUrl: state.url } });
+    return false;
   }
 }

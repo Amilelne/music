@@ -8,8 +8,7 @@ class Role {
     if (this.name === role) {
       return true;
     } else if (this.inherits.size) {
-      console.log(this.inherits);
-      return Array.from(this.inherits).some((r) => r.can(role));
+      return Array.from(this.inherits).some(r => r.can(role));
     } else {
       return false;
     }
@@ -24,7 +23,7 @@ class RBAC {
     }
   }
   findRole(name) {
-    return Array.from(this.roles).find((role) => role.name === name);
+    return Array.from(this.roles).find(role => role.name === name);
   }
   addRoles(name, inherits) {
     // check role if already exists

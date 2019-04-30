@@ -11,6 +11,7 @@ import { NotificationComponent } from "./notification/notification.component";
 import { ExpertDetailComponent } from "./expert/expert-detail/expert-detail.component";
 import { ScoreComponent } from "./score/score.component";
 import { ScoreDetailComponent } from "./score/score-detail/score-detail.component";
+import { AuthGuard } from "./core/auth/auth.guard";
 
 const routes: Routes = [
   {
@@ -29,17 +30,28 @@ const routes: Routes = [
     loadChildren: "./user/user.module#UserModule"
   },
   { path: "practices", component: PracticeComponent },
-  { path: "practices/:id", component: RecordComponent },
+  {
+    path: "practices/:id",
+    component: RecordComponent,
+    canActivate: [AuthGuard]
+  },
   { path: "experts", component: ExpertComponent },
   { path: "experts/:id", component: ExpertDetailComponent },
-  { path: "score", component: ScoreComponent },
+  {
+    path: "score",
+    component: ScoreComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ["expert", "admin"] }
+  },
   { path: "score/:id", component: ScoreDetailComponent },
-  { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
-  { path: "notices", component: NotificationComponent },
   {
     path: "expert/manage/courses",
-    loadChildren: "./admin/course/course.module#CourseModule"
+    loadChildren: "./admin/course/course.module#CourseModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["expert", "admin"] }
   },
+  { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
+  { path: "notices", component: NotificationComponent },
   { path: "**", component: Get404Component }
 ];
 
