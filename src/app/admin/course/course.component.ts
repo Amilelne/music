@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthService } from "../../core/auth/auth.service";
 
 @Component({
   selector: "app-course",
@@ -8,9 +9,12 @@ import { Component, OnInit } from "@angular/core";
 export class CourseComponent implements OnInit {
   isCourseVisible = false;
   isPracticeVisible = false;
+  userRole;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userRole = AuthService.AUTH_USER_ROLE;
+  }
 
   createPractice() {
     this.isPracticeVisible = true;

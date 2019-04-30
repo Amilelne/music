@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminCourseDetailComponent } from './admin-course-detail/admin-course-detail.component';
 import { AdminCourseDetailContentComponent } from './admin-course-detail/admin-course-detail-content/admin-course-detail-content.component';
 import { AddPracticeComponent } from './add-practice/add-practice.component';
+import { PracticeListComponent } from './practice-list/practice-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AddPracticeComponent } from './add-practice/add-practice.component';
     CourseListComponent,
     AdminCourseDetailComponent,
     AdminCourseDetailContentComponent,
-    AddPracticeComponent
+    AddPracticeComponent,
+    PracticeListComponent
   ],
   imports: [
     CommonModule,

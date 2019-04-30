@@ -41,4 +41,7 @@
   <app-add-practice #addPractice></app-add-practice>
   <app-add-course [(isVisible)]="isCourseVisible"></app-add-course>
 </div>
-<app-course-list></app-course-list>
+<!--Admin-->
+<ng-container *ngIf="userRole == 'admin'">
+  <app-course-list></app-course-list>
+</ng-container>

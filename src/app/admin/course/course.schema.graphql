@@ -128,3 +128,9 @@ mutation AdminCreatePractice($data: CreatePracticeInput!) {
     ...PracticeFields
   }
 }
+
+mutation AdminDeletePractice($id: ID!) {
+  deletePractice(id: $id) {
+    ...PracticeFields
+  }
+}

@@ -1,0 +1,50 @@
+<div class="practiceListPage">
+  <nz-table #filterTable [nzData]="displayData">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+      <tr>
+        <th nzShowSort nzSortKey="id">ID</th>
+        <th nzShowSort nzCustomFilter nzSortKey="title">
+          练习名称
+          <nz-dropdown nzTrigger="click" [nzClickHide]="false" #dropdown>
+            <i
+              nz-icon
+              type="search-o"
+              class="ant-table-filter-icon"
+              [class.ant-table-filter-open]="dropdown.nzVisible"
+              nz-dropdown
+            ></i>
+            <div class="custom-filter-dropdown">
+              <input
+                type="text"
+                nz-input
+                placeholder="搜索练习"
+                [(ngModel)]="searchValue"
+              />
+              <button nz-button [nzType]="'primary'" (click)="search()">
+                搜索
+              </button>
+            </div>
+          </nz-dropdown>
+        </th>
+        <th nzShowSort nzSortKey="kind">分类</th>
+        <th nzShowSort nzSortKey="level">练习难度</th>
+        <th nzShowSort nzSortKey="updateDate">练习更新时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of filterTable.data">
+        <td>{{ data.id }}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.kind }}</td>
+        <td>{{ data.level }}</td>
+        <td>{{ data.updateDate | date: "shortDate" }}</td>
+        <td>
+          <button nz-button nzType="danger" (click)="delete(data.id)">
+            删除
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

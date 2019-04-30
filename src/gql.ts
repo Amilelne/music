@@ -344,6 +344,20 @@ export namespace AdminCreatePractice {
   export type AddPractice = PracticeFields.Fragment;
 }
 
+export namespace AdminDeletePractice {
+  export type Variables = {
+    id: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deletePractice: DeletePractice;
+  };
+
+  export type DeletePractice = PracticeFields.Fragment;
+}
+
 export namespace AuthLogin {
   export type Variables = {
     data: LoginInput;
@@ -1741,6 +1755,23 @@ export class AdminCreatePracticeGQL extends Apollo.Mutation<
   document: any = gql`
     mutation AdminCreatePractice($data: CreatePracticeInput!) {
       addPractice(data: $data) {
+        ...PracticeFields
+      }
+    }
+
+    ${PracticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminDeletePracticeGQL extends Apollo.Mutation<
+  AdminDeletePractice.Mutation,
+  AdminDeletePractice.Variables
+> {
+  document: any = gql`
+    mutation AdminDeletePractice($id: ID!) {
+      deletePractice(id: $id) {
         ...PracticeFields
       }
     }

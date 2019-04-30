@@ -96,6 +96,9 @@
 - 用户上传音频时，添加降噪选项
 - 用户管理
 
-## User:
+## 项目须知:
 
-- 添加字段：email,work,city,sex
+- mongoDB 版本需为 4.0 以上，经测试发现，当 mongoDB 版本为 2.6.10 时，系统无法正常运行。
+- 代码的默认连接的主机为 localhost，mongoDB 为在云服务器上的数据库。如果需要更换连接的主机，需要设置 HOST=主机地址。如果需要更换连接的数据库，设置 MONGODB_URI=mongodb 的地址。以设置 host 参数为例，linux 和 mac 环境的设置方式为`export HOST=主机地址`，windows 环境下的设置方式为`SET HOST=主机地址`。
+- 代码分为两个版本，一个是开发版，一个是产品版。默认运行的是开发版的代码。如果需要运行产品版的代码，需要设置`NODE_ENV=production`。
+- 在该项目中有使用到录音功能，该录音功能利用了浏览器自带的`getUserMedia()`，但是目前 73 版本的 chrome 浏览器只支持在 localhost 或安全的网站源（如 https）使用，因此需要设定参数 `--unsafely-treat-insecure-origin-as-secure="example.com:port"`。其他浏览器如 Firefox 仍然支持该函数。
