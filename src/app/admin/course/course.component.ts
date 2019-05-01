@@ -13,7 +13,7 @@ export class CourseComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.userRole = AuthService.AUTH_USER_ROLE;
+    this.userRole = AuthService.getStoredUserRole();
   }
 
   createPractice() {
