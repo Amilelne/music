@@ -1,5 +1,6 @@
 const { UserRecord } = require("../models");
 const storeFS = require("../utils/storeFile");
+const { PythonShell } = require("python-shell");
 
 const resolveMap = {
   Query: {
@@ -44,6 +45,20 @@ const resolveMap = {
       return record;
     },
     scoreRecord: async (obj, { data }, context, info) => {
+      let options = {
+        mode: "text",
+        pythonPath: "python3",
+        pythonOptions: ["-u"], // get print results in real-time
+        scriptPath: "/home/musicAI/ml/test/code/",
+        args: [
+          "/home/musicAI/ml/test/code/1.abc",
+          "/home/musicAI/ml/test/code/1.mp3"
+        ]
+      };
+      let shell = new PythonShell("estimate.py", options);
+      shell.on("message", function(message) {
+        console.log(message);
+      });
       let expertTotalScore =
         (data.expertBeatScore + data.expertIntonationScore) / 2;
       return UserRecord.updateOne(
