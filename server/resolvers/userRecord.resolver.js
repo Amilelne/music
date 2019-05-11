@@ -35,16 +35,7 @@ const resolveMap = {
       const stream = createReadStream();
       const folder = "recorders";
       const { id, path } = await storeFS({ stream, suffix, folder });
-      // Save record into userRecord
-      let record = await UserRecord.create({
-        userId: userId,
-        practiceId: practiceId,
-        audioUrl: path,
-        practiceTitle: practiceTitle
-      });
-      return record;
-    },
-    scoreRecord: async (obj, { data }, context, info) => {
+      // Run python shell
       let options = {
         mode: "text",
         pythonPath: "python3",
@@ -58,7 +49,25 @@ const resolveMap = {
       let shell = new PythonShell("estimate.py", options);
       shell.on("message", function(message) {
         console.log(message);
+        let score = message.split(' ');
+        let AIIntonationScore = score[0];
+        let AIBeatScore = score[1];
+        let AITotalScore = (score[0]+score[1])/2;
+        // Save record into userRecord
+        let record = await UserRecord.create({
+          userId: userId,
+          practiceId: practiceId,
+          audioUrl: path,
+          practiceTitle: practiceTitle,
+          AIIntonationScore: AIIntonationScore,
+          AIBeatScore: AIBeatScore,
+          AITotalScore: AITotalScore
+        });
+        return record;
       });
+    },
+    scoreRecord: async (obj, { data }, context, info) => {
+
       let expertTotalScore =
         (data.expertBeatScore + data.expertIntonationScore) / 2;
       return UserRecord.updateOne(
