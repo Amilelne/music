@@ -72,8 +72,8 @@ const resolverMap = {
       let suffix = filename.split(".").slice(-1)[0];
       const stream = createReadStream();
       const folder = "avatars";
-      const { id, path } = await storeFS({ stream, suffix, folder });
-      await User.updateOne({ _id: userId }, { avatar: path });
+      const { id, httpPath } = await storeFS({ stream, suffix, folder });
+      await User.updateOne({ _id: userId }, { avatar: httpPath });
       const user = await User.findById({ _id: userId });
       return user;
     },

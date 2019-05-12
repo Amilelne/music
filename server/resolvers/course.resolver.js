@@ -56,8 +56,8 @@ const resolveMap = {
       }
       const stream = createReadStream();
       const folder = "tutorials";
-      const { id, path } = await storeFS({ stream, suffix, folder });
-      return { filename: path, mimetype: mimetype, encoding: "utf-8" };
+      const { id, httpPath } = await storeFS({ stream, suffix, folder });
+      return { filename: httpPath, mimetype: mimetype, encoding: "utf-8" };
     }
   }
 };

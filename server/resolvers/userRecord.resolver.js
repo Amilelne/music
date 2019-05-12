@@ -63,7 +63,7 @@ const resolveMap = {
       // Store audio file into folder
       const stream = createReadStream();
       const folder = "recorders";
-      const { id, serverPath } = await storeFS({
+      const { id, httpPath, serverPath } = await storeFS({
         stream,
         suffix,
         folder
@@ -79,7 +79,7 @@ const resolveMap = {
       let record = UserRecord.create({
         userId: userId,
         practiceId: practiceId,
-        audioUrl: path,
+        audioUrl: httpPath,
         practiceTitle: practiceTitle,
         AIIntonationScore: output[0],
         AIBeatScore: output[1],

@@ -21,6 +21,6 @@ module.exports = ({ stream, suffix, folder }) => {
       })
       .pipe(fs.createWriteStream(uploadDir + folderPath))
       .on("error", error => reject(error))
-      .on("finish", () => resolve({ id, path: httpPath, serverPath }));
+      .on("finish", () => resolve({ id, httpPath, serverPath }));
   });
 };
