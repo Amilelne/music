@@ -51,7 +51,10 @@
             <source [src]="sanitize(url)" type="audio/wav" />
           </audio>
         </div>
-        <h2 *ngIf="isUpload">AI 评分为: 4 分</h2>
+        <h2 *ngIf="isUpload">
+          AI 评分结果为为: 音准 {{ AIIntonationScore }} 分, 节奏
+          {{ AIIntonationScore }}
+        </h2>
         <button
           nz-button
           nzType="primary"

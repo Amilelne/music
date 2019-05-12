@@ -44,7 +44,7 @@ query UnscoredRecords {
 }
 mutation UploadRecord($data: UploadAudioInput!) {
   uploadRecord(data: $data) {
-    ...recordFields
+    ...scoreFields
   }
 }
 

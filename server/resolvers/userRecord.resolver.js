@@ -2,6 +2,36 @@ const { UserRecord } = require("../models");
 const storeFS = require("../utils/storeFile");
 const { PythonShell } = require("python-shell");
 
+function runPython() {
+  return new Promise((resolve, reject) => {
+    let options = {
+      mode: "text",
+      pythonPath: "python3",
+      pythonOptions: ["-u"], // get print results in real-time
+      scriptPath: "/home/musicAI/ml/test/code/",
+      args: [
+        "/home/musicAI/ml/test/code/1.abc",
+        "/home/musicAI/ml/test/code/1.mp3"
+      ]
+    };
+    let shell = new PythonShell("estimate.py", options);
+    const out = [];
+    shell.on("message", function(message) {
+      if (message) {
+        let score = message.split(" ");
+        let AIIntonationScore = score[0];
+        let AIBeatScore = score[1];
+        let AITotalScore = (score[0] + score[1]) / 2;
+        out.push(AIIntonationScore, AIBeatScore, AITotalScore);
+      }
+    });
+    shell.end(function(err, code, signal) {
+      if (err) throw err;
+      resolve(out);
+    });
+  });
+}
+
 const resolveMap = {
   Query: {
     record: async (obj, { id }, context, info) => {
@@ -36,35 +66,19 @@ const resolveMap = {
       const folder = "recorders";
       const { id, path } = await storeFS({ stream, suffix, folder });
       // Run python shell
-      let options = {
-        mode: "text",
-        pythonPath: "python3",
-        pythonOptions: ["-u"], // get print results in real-time
-        scriptPath: "/home/musicAI/ml/test/code/",
-        args: [
-          "/home/musicAI/ml/test/code/1.abc",
-          "/home/musicAI/ml/test/code/1.mp3"
-        ]
-      };
-      let shell = new PythonShell("estimate.py", options);
-      shell.on("message", function(message) {
-        console.log(message);
-        let score = message.split(" ");
-        let AIIntonationScore = score[0];
-        let AIBeatScore = score[1];
-        let AITotalScore = (score[0] + score[1]) / 2;
-        // Save record into userRecord
-        let record = UserRecord.create({
-          userId: userId,
-          practiceId: practiceId,
-          audioUrl: path,
-          practiceTitle: practiceTitle,
-          AIIntonationScore: AIIntonationScore,
-          AIBeatScore: AIBeatScore,
-          AITotalScore: AITotalScore
-        });
-        return record;
+      const output = await runPython();
+      console.log(output);
+      // Save record into userRecord
+      let record = UserRecord.create({
+        userId: userId,
+        practiceId: practiceId,
+        audioUrl: path,
+        practiceTitle: practiceTitle,
+        AIIntonationScore: output[0],
+        AIBeatScore: output[1],
+        AITotalScore: output[2]
       });
+      return record;
     },
     scoreRecord: async (obj, { data }, context, info) => {
       let expertTotalScore =

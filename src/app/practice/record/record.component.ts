@@ -28,27 +28,29 @@ export class RecordComponent implements OnInit {
   // Lets initiate Record OBJ
   private record;
   // Detect recording
-  isRecord = false;
+  public isRecord = false;
   // Detect stopping
-  isStop = false;
+  public isStop = false;
   // Detect uploading
-  isUpload = false;
+  public isUpload = false;
   // Option for denoise
-  denoise = false;
+  public denoise = false;
   // Detect applied
-  isApplied = false;
+  public isApplied = false;
   // Detect errors
-  isError = false;
+  public isError = false;
   // Url of Blob
-  url;
-  blobFile;
-  error;
+  public url;
+  public blobFile;
+  public error;
   public practiceId;
   private practiceTitle: String;
   private userId;
-  recommendPractices;
+  public recommendPractices;
   // upload record id
   private recordId;
+  public AIIntonationScore;
+  public AIBeatScore;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.practiceId = params.id;
@@ -114,10 +116,14 @@ export class RecordComponent implements OnInit {
         this.practiceTitle
       )
       .subscribe(
-        ({ uploadRecord: { id, audioUrl } }) => {
+        ({
+          uploadRecord: { id, audioUrl, AIIntonationScore, AIBeatScore }
+        }) => {
           this.isUpload = true;
           this.createNotification("录音上传成功");
           this.recordId = id;
+          this.AIIntonationScore = AIIntonationScore;
+          this.AIBeatScore = AIBeatScore;
         },
         errors => {
           this.isUpload = false;
