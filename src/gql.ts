@@ -584,7 +584,7 @@ export namespace UploadRecord {
     uploadRecord: UploadRecord;
   };
 
-  export type UploadRecord = RecordFields.Fragment;
+  export type UploadRecord = ScoreFields.Fragment;
 }
 
 export namespace ScoreRecord {
@@ -2014,11 +2014,11 @@ export class UploadRecordGQL extends Apollo.Mutation<
   document: any = gql`
     mutation UploadRecord($data: UploadAudioInput!) {
       uploadRecord(data: $data) {
-        ...recordFields
+        ...scoreFields
       }
     }
 
-    ${RecordFieldsFragment}
+    ${ScoreFieldsFragment}
   `;
 }
 @Injectable({
