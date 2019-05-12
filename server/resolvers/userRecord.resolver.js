@@ -18,9 +18,9 @@ function runPython(standardFile, userFile) {
     shell.on("message", function(message) {
       if (message) {
         let score = message.split(" ");
-        let AIIntonationScore = score[0];
-        let AIBeatScore = score[1];
-        let AITotalScore = (score[0] + score[1]) / 2;
+        let AIIntonationScore = parseInt(score[0]);
+        let AIBeatScore = parseInt(score[1]);
+        let AITotalScore = (AIIntonationScore + AIBeatScore) / 2;
         out.push(AIIntonationScore, AIBeatScore, AITotalScore);
       }
     });

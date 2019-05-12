@@ -8,8 +8,8 @@ const port = conf("server.port");
 module.exports = ({ stream, suffix, folder }) => {
   const id = nanoid(10);
   let folderPath = `${folder}/${id}.${suffix}`;
-  let serverPath = path.resolve("/server/uploads/", folderPath);
-  console.log(serverPath);
+  let serverPath = path.join("server/uploads/", folderPath);
+  console.log(`serverPath: ${serverPath}`);
   const httpPath = "http://" + host + ":" + port + "/" + folderPath;
   return new Promise((resolve, reject) => {
     stream
