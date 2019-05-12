@@ -49,8 +49,8 @@ export class RecordService {
       .valueChanges.pipe(map(result => result.data.record));
   }
 
-  uploadRecord(file, userId, practiceId, practiceTitle) {
-    let data = { file, userId, practiceId, practiceTitle };
+  uploadRecord(file, userId, practiceId, practiceTitle, abcUrl) {
+    let data = { file, userId, practiceId, practiceTitle, abcUrl };
     return this.uploadRecordGQL
       .mutate(
         { data },

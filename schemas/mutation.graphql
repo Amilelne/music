@@ -21,6 +21,9 @@ type Mutation {
   # upload file
   singleUpload(file: Upload!): File!
 
+  # upload practice abc file
+  abcUpload(file: Upload!): File!
+
   # upload record
   uploadRecord(data: UploadAudioInput!): Record!
 

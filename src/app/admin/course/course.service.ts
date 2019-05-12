@@ -21,7 +21,8 @@ import {
   CoursesCountGQL,
   PracticesCountGQL,
   AdminDeleteCourseGQL,
-  AdminDeletePracticeGQL
+  AdminDeletePracticeGQL,
+  AdminAbcUploadGQL
 } from "../../../gql";
 
 @Injectable({
@@ -42,7 +43,8 @@ export class CourseService {
     private coursesCountGQL: CoursesCountGQL,
     private practiceCountGQL: PracticesCountGQL,
     private deleteCourseGQL: AdminDeleteCourseGQL,
-    private deletePracticeGQL: AdminDeletePracticeGQL
+    private deletePracticeGQL: AdminDeletePracticeGQL,
+    private abcUploadGQL: AdminAbcUploadGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -186,6 +188,23 @@ export class CourseService {
           }
         }),
         tap(({ singleUpload: { filename } }) => {
+          // console.log(filename);
+        })
+      );
+  }
+
+  abcUploadFile(file: Upload) {
+    return this.abcUploadGQL
+      .mutate({ file: file }, { errorPolicy: "all", fetchPolicy: "no-cache" })
+      .pipe(
+        mergeMap(({ data, errors }) => {
+          if (errors) {
+            return throwError(errors);
+          } else {
+            return of(data);
+          }
+        }),
+        tap(({ abcUpload: { filename } }) => {
           // console.log(filename);
         })
       );

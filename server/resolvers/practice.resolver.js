@@ -1,6 +1,6 @@
 const { Practice } = require("../models");
 let { PythonShell } = require("python-shell");
-const spawn = require("child_process").spawn;
+const storeFS = require("../utils/storeFile");
 
 const resolveMap = {
   Query: {
@@ -65,6 +65,16 @@ const resolveMap = {
       let practice = await Practice.findByIdAndValidate(id, info);
       practice.remove();
       return practice;
+    },
+    abcUpload: async (obj, { file }, context, info) => {
+      const { createReadStream, filename, mimetype } = await file;
+      let suffix = filename.split(".").slice(-1)[0];
+      if (suffix === "abc") {
+        const stream = createReadStream();
+        const folder = "abc";
+        const { id, serverPath } = await storeFS({ stream, suffix, folder });
+        return { filename: serverPath, mimetype: mimetype, encoding: "utf-8" };
+      }
     }
   }
 };

@@ -24,6 +24,7 @@ fragment PracticeFields on Practice {
   title
   resourceType
   resourceUrl
+  abcUrl
   description
   level
   kind
@@ -117,6 +118,14 @@ mutation AdminDeleteTutorial($id: ID!) {
 
 mutation AdminUploadFile($file: Upload!) {
   singleUpload(file: $file) {
+    filename
+    mimetype
+    encoding
+  }
+}
+
+mutation AdminAbcUpload($file: Upload!) {
+  abcUpload(file: $file) {
     filename
     mimetype
     encoding

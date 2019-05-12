@@ -31,6 +31,10 @@ const schema = new Schema(
       type: Number,
       required: false
     },
+    abcUrl: {
+      type: String,
+      required: true
+    },
     averageScore: {
       type: Number,
       required: false,

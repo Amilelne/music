@@ -18,7 +18,7 @@ import { CourseService } from "../course.service";
   templateUrl: "./add-practice.component.html",
   styleUrls: ["./add-practice.component.scss"]
 })
-export class AddPracticeComponent implements OnInit, OnChanges {
+export class AddPracticeComponent implements OnInit {
   public isVisible = false;
   constructor(
     private fb: FormBuilder,
@@ -32,7 +32,8 @@ export class AddPracticeComponent implements OnInit, OnChanges {
       resourceType: [[], [Validators.required]],
       level: [[], [Validators.required]],
       description: ["", [Validators.required]],
-      resourceUrl: [""]
+      resourceUrl: [""],
+      abcUrl: [""]
     });
   }
   isOkLoading = false;
@@ -61,28 +62,43 @@ export class AddPracticeComponent implements OnInit, OnChanges {
   data: any[];
   ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    const isVisible: SimpleChange = changes.isVisible;
-    // console.log('prev value: ', isVisible.previousValue);
-    // console.log('got value: ', isVisible.currentValue);
-  }
-
   uploadFile = (item: UploadXHRArgs) => {
     const file = item.file;
-    return this.courseService.singleUploadFile(file).subscribe(
-      ({ singleUpload: { filename, mimetype, encoding } }) => {
-        item.onSuccess(filename, item.file, mimetype);
-        this.validateForm.controls["resourceUrl"].setValue(filename);
-      },
-      errors => {
-        if (errors !== undefined) {
-          console.log(errors);
-          item.onError(errors, item.file);
-          this.errorState = true;
-          this.errorMessage = errors.message || errors[0].message;
+    console.log(file, file.name);
+    let suffix = file.name.split(".").slice(-1)[0];
+    if (suffix == "abc") {
+      return this.courseService.abcUploadFile(file).subscribe(
+        ({ abcUpload: { filename, mimetype, encoding } }) => {
+          item.onSuccess(filename, item.file, mimetype);
+          console.log(filename);
+          this.validateForm.controls["abcUrl"].setValue(filename);
+        },
+        errors => {
+          if (errors !== undefined) {
+            console.log(errors);
+            item.onError(errors, item.file);
+            this.errorState = true;
+            this.errorMessage = errors.message || errors[0].message;
+          }
         }
-      }
-    );
+      );
+    } else {
+      return this.courseService.singleUploadFile(file).subscribe(
+        ({ singleUpload: { filename, mimetype, encoding } }) => {
+          item.onSuccess(filename, item.file, mimetype);
+          console.log(filename);
+          this.validateForm.controls["resourceUrl"].setValue(filename);
+        },
+        errors => {
+          if (errors !== undefined) {
+            console.log(errors);
+            item.onError(errors, item.file);
+            this.errorState = true;
+            this.errorMessage = errors.message || errors[0].message;
+          }
+        }
+      );
+    }
   };
   onChange(evt) {
     this.uploadFile(evt.target.files);

@@ -7,6 +7,8 @@
 !.gitkeep
 /server/uploads/recorders/*
 !.gitkeep
+/server/uploads/abc/*
+!.gitkeep
 
 
 # compiled output

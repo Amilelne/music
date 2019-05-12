@@ -1,18 +1,17 @@
 const { UserRecord } = require("../models");
 const storeFS = require("../utils/storeFile");
 const { PythonShell } = require("python-shell");
+const path = require("path");
 
-function runPython() {
+function runPython(standardFile, userFile) {
+  console.log(standardFile, userFile);
   return new Promise((resolve, reject) => {
     let options = {
       mode: "text",
       pythonPath: "python3",
       pythonOptions: ["-u"], // get print results in real-time
       scriptPath: "/home/musicAI/ml/test/code/",
-      args: [
-        "/home/musicAI/ml/test/code/1.abc",
-        "/home/musicAI/ml/test/code/1.mp3"
-      ]
+      args: [standardFile, userFile]
     };
     let shell = new PythonShell("estimate.py", options);
     const out = [];
@@ -50,7 +49,7 @@ const resolveMap = {
   Mutation: {
     uploadRecord: async (
       obj,
-      { data: { file, userId, practiceId, practiceTitle } },
+      { data: { file, userId, practiceId, practiceTitle, abcUrl } },
       context,
       info
     ) => {
@@ -64,9 +63,17 @@ const resolveMap = {
       // Store audio file into folder
       const stream = createReadStream();
       const folder = "recorders";
-      const { id, path } = await storeFS({ stream, suffix, folder });
+      const { id, serverPath } = await storeFS({
+        stream,
+        suffix,
+        folder
+      });
       // Run python shell
-      const output = await runPython();
+      let abcFilePath = path.resolve(process.cwd(), abcUrl);
+      let userFilePath = path.resolve(process.cwd(), serverPath);
+      console.log(abcFilePath, userFilePath);
+
+      const output = await runPython(abcFilePath, userFilePath);
       console.log(output);
       // Save record into userRecord
       let record = UserRecord.create({

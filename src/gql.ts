@@ -60,6 +60,8 @@ export interface CreatePracticeInput {
 
   resourceType: number;
 
+  abcUrl: string;
+
   description?: Maybe<string>;
 
   level: number;
@@ -320,6 +322,28 @@ export namespace AdminUploadFile {
   };
 
   export type SingleUpload = {
+    __typename?: "File";
+
+    filename: string;
+
+    mimetype: string;
+
+    encoding: string;
+  };
+}
+
+export namespace AdminAbcUpload {
+  export type Variables = {
+    file: Upload;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    abcUpload: AbcUpload;
+  };
+
+  export type AbcUpload = {
     __typename?: "File";
 
     filename: string;
@@ -806,6 +830,8 @@ export namespace PracticeFields {
 
     resourceUrl: string;
 
+    abcUrl: string;
+
     description: Maybe<string>;
 
     level: number;
@@ -1107,6 +1133,8 @@ export interface Practice {
 
   resourceType: number;
 
+  abcUrl: string;
+
   description?: Maybe<string>;
 
   averageScore?: Maybe<number>;
@@ -1209,6 +1237,8 @@ export interface Mutation {
   deletePractice: Practice;
   /** upload file */
   singleUpload: File;
+  /** upload practice abc file */
+  abcUpload: File;
   /** upload record */
   uploadRecord: Record;
   /** score record */
@@ -1344,6 +1374,9 @@ export interface DeletePracticeMutationArgs {
 export interface SingleUploadMutationArgs {
   file: Upload;
 }
+export interface AbcUploadMutationArgs {
+  file: Upload;
+}
 export interface UploadRecordMutationArgs {
   data: UploadAudioInput;
 }
@@ -1416,6 +1449,7 @@ export const PracticeFieldsFragment = gql`
     title
     resourceType
     resourceUrl
+    abcUrl
     description
     level
     kind
@@ -1738,6 +1772,23 @@ export class AdminUploadFileGQL extends Apollo.Mutation<
   document: any = gql`
     mutation AdminUploadFile($file: Upload!) {
       singleUpload(file: $file) {
+        filename
+        mimetype
+        encoding
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminAbcUploadGQL extends Apollo.Mutation<
+  AdminAbcUpload.Mutation,
+  AdminAbcUpload.Variables
+> {
+  document: any = gql`
+    mutation AdminAbcUpload($file: Upload!) {
+      abcUpload(file: $file) {
         filename
         mimetype
         encoding

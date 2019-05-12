@@ -34,6 +34,7 @@ type Practice {
   title: String!
   resourceUrl: String!
   resourceType: Int!
+  abcUrl: String!
   description: String
   averageScore: Float
   level: Int!
@@ -72,6 +73,7 @@ input CreatePracticeInput {
   title: String!
   resourceUrl: String!
   resourceType: Int!
+  abcUrl: String!
   description: String
   level: Int!
   kind: Int!

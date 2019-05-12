@@ -21,6 +21,7 @@ input UploadAudioInput {
   userId: ID!
   practiceId: ID!
   practiceTitle: String!
+  abcUrl: String!
 }
 
 input ScoreRecordInput {

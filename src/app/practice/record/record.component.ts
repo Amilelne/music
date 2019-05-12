@@ -46,6 +46,7 @@ export class RecordComponent implements OnInit {
   public practiceId;
   private practiceTitle: String;
   private userId;
+  private abcUrl;
   public recommendPractices;
   // upload record id
   private recordId;
@@ -56,6 +57,7 @@ export class RecordComponent implements OnInit {
       this.practiceId = params.id;
       this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
         this.practiceDetail = data;
+        this.abcUrl = data.abcUrl;
       });
     });
     this.userId = this.authService.getUserId();
@@ -113,7 +115,8 @@ export class RecordComponent implements OnInit {
         this.record.blob,
         this.userId,
         this.practiceId,
-        this.practiceTitle
+        this.practiceTitle,
+        this.abcUrl
       )
       .subscribe(
         ({
