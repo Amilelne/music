@@ -88,14 +88,15 @@ const resolveMap = {
       return record;
     },
     scoreRecord: async (obj, { data }, context, info) => {
-      let expertTotalScore =
-        (data.expertBeatScore + data.expertIntonationScore) / 2;
+      let expertTotalScore = Math.round(
+        (data.expertBeatScore + data.expertIntonationScore) / 2
+      );
       return UserRecord.updateOne(
         { _id: data.id },
         {
           expertId: data.expertId,
-          expertBeatScore: data.expertBeatScore,
-          expertIntonationScore: data.expertIntonationScore,
+          expertBeatScore: Math.round(data.expertBeatScore),
+          expertIntonationScore: Math.round(data.expertIntonationScore),
           expertTotalScore: expertTotalScore
         },
         function(err, doc) {
