@@ -13,7 +13,7 @@
           nzType="primary"
           nzSize="large"
           (click)="initiateRecording()"
-          *ngIf="!isRecord && !isStop"
+          *ngIf="recordState === 'beforeRecord'"
         >
           开始录音
         </button>
@@ -22,7 +22,7 @@
           nzType="danger"
           nzSize="large"
           (click)="stopRecording()"
-          *ngIf="isRecord"
+          *ngIf="recordState === 'recording'"
         >
           停止录音
         </button>
@@ -35,7 +35,10 @@
         >
           上传录音
         </button>
-        <label nz-checkbox [(ngModel)]="denoise" *ngIf="isStop && !isUpload"
+        <label
+          nz-checkbox
+          [(ngModel)]="denoise"
+          *ngIf="recordState === 'stop' && !isUpload"
           >自动降噪</label
         >
         <nz-alert
@@ -52,8 +55,7 @@
           </audio>
         </div>
         <h2 *ngIf="isUpload">
-          AI评分为: 音准 {{ AIIntonationScore }} 分, 节奏
-          {{ AIIntonationScore }}分
+          AI评分为: 音准 {{ AIIntonationScore }} 分, 节奏 {{ AIBeatScore }}分
         </h2>
         <button
           nz-button

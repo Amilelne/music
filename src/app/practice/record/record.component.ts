@@ -26,13 +26,11 @@ export class RecordComponent implements OnInit {
     private notification: NzNotificationService
   ) {}
   // Lets initiate Record OBJ
-  private record;
-  // Detect recording
-  public isRecord = false;
-  // Detect stopping
-  public isStop = false;
-  // Detect uploading
-  public isUpload = false;
+  private recorder;
+  // Detect recording state
+  public recordState = "beforeRecord";
+  // Upload state
+  public isUpload;
   // Option for denoise
   public denoise = false;
   // Detect applied
@@ -54,6 +52,12 @@ export class RecordComponent implements OnInit {
   public AIBeatScore;
   ngOnInit() {
     this.route.params.subscribe(params => {
+      // Init states
+      this.recordState = "beforeRecord";
+      this.isUpload = false;
+      this.url = null;
+      this.isError = false;
+
       this.practiceId = params.id;
       this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
         this.practiceDetail = data;
@@ -77,7 +81,7 @@ export class RecordComponent implements OnInit {
 
   // Start recording.
   initiateRecording() {
-    this.isRecord = true;
+    this.recordState = "recording";
     const mediaConstraints = {
       video: false,
       audio: true
@@ -94,14 +98,13 @@ export class RecordComponent implements OnInit {
     };
     // Start Actuall Recording
     const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.record = new StereoAudioRecorder(stream, options);
-    this.record.record();
+    this.recorder = new StereoAudioRecorder(stream, options);
+    this.recorder.record();
   }
 
   stopRecording() {
-    this.isRecord = false;
-    this.isStop = true;
-    this.record.stop(this.processRecording.bind(this));
+    this.recordState = "stop";
+    this.recorder.stop(this.processRecording.bind(this));
   }
 
   processRecording(blob) {
@@ -112,7 +115,7 @@ export class RecordComponent implements OnInit {
   uploadRecording() {
     this.recordService
       .uploadRecord(
-        this.record.blob,
+        this.recorder.blob,
         this.userId,
         this.practiceId,
         this.practiceTitle,
