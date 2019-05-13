@@ -20,7 +20,7 @@ function runPython(standardFile, userFile) {
         let score = message.split(" ");
         let AIIntonationScore = parseInt(score[0]);
         let AIBeatScore = parseInt(score[1]);
-        let AITotalScore = (AIIntonationScore + AIBeatScore) / 2;
+        let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
         out.push(AIIntonationScore, AIBeatScore, AITotalScore);
       }
     });
