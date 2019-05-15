@@ -1,34 +1,20 @@
 const { UserRecord } = require("../models");
 const storeFS = require("../utils/storeFile");
-const { PythonShell } = require("python-shell");
+const { spawnSync } = require("child_process");
 const path = require("path");
 
 function runPython(standardFile, userFile) {
-  console.log(standardFile, userFile);
-  return new Promise((resolve, reject) => {
-    let options = {
-      mode: "text",
-      pythonPath: "python3",
-      pythonOptions: ["-u"], // get print results in real-time
-      scriptPath: "/home/musicAI/ml/test/code/",
-      args: [standardFile, userFile]
-    };
-    let shell = new PythonShell("estimate.py", options);
-    const out = [];
-    shell.on("message", function(message) {
-      if (message) {
-        let score = message.split(" ");
-        let AIIntonationScore = parseInt(score[0]);
-        let AIBeatScore = parseInt(score[1]);
-        let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
-        out.push(AIIntonationScore, AIBeatScore, AITotalScore);
-      }
-    });
-    shell.end(function(err, code, signal) {
-      if (err) throw err;
-      resolve(out);
-    });
+  const spawnShell = spawnSync("python3", ["main.py", standardFile, userFile], {
+    cwd: "/home/musicAI/ml/test/code",
+    encoding: "utf-8"
   });
+  const message = spawnShell.stdout;
+  let score = message.split(" ");
+  let AIIntonationScore = parseInt(score[0]);
+  let AIBeatScore = parseInt(score[1]);
+  let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
+  let imageUrl = score[2];
+  return AIIntonationScore, AIBeatScore, AITotalScore, imageUrl;
 }
 
 const resolveMap = {
@@ -72,8 +58,7 @@ const resolveMap = {
       let abcFilePath = path.resolve(process.cwd(), abcUrl);
       let userFilePath = path.resolve(process.cwd(), serverPath);
       console.log(abcFilePath, userFilePath);
-
-      const output = await runPython(abcFilePath, userFilePath);
+      const output = runPython(abcFilePath, userFilePath);
       console.log(output);
       // Save record into userRecord
       let record = UserRecord.create({
