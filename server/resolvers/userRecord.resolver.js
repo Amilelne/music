@@ -20,8 +20,8 @@ function runPython(standardFile, userFile) {
   let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
 
   // Get fault http url
-  let faultImageFolder = result[2].split("server")[1];
-  const faultImageUrl = "http://" + host + ":" + port + "/" + faultImageFolder;
+  let faultImageFolder = result[2].split("uploads")[1];
+  const faultImageUrl = "http://" + host + ":" + port + faultImageFolder;
   return [AIIntonationScore, AIBeatScore, AITotalScore, faultImageUrl];
 }
 
