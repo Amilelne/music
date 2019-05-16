@@ -8,12 +8,11 @@ function runPython(standardFile, userFile) {
     cwd: "/home/musicAI/ml/test/code",
     encoding: "utf-8"
   });
-  const message = spawnShell.stdout;
-  let score = message.split(" ");
-  let AIIntonationScore = parseInt(score[0]);
-  let AIBeatScore = parseInt(score[1]);
+  const result = spawnShell.stdout;
+  let AIIntonationScore = parseInt(result[0]);
+  let AIBeatScore = parseInt(result[1]);
   let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
-  let imageUrl = score[2];
+  let imageUrl = result[2];
   return AIIntonationScore, AIBeatScore, AITotalScore, imageUrl;
 }
 
