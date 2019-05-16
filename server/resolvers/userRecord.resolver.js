@@ -13,7 +13,7 @@ function runPython(standardFile, userFile) {
   let AIBeatScore = parseInt(result[1]);
   let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
   let imageUrl = result[2];
-  return AIIntonationScore, AIBeatScore, AITotalScore, imageUrl;
+  return [AIIntonationScore, AIBeatScore, AITotalScore, imageUrl];
 }
 
 const resolveMap = {
@@ -56,7 +56,6 @@ const resolveMap = {
       // Run python shell
       let abcFilePath = path.resolve(process.cwd(), abcUrl);
       let userFilePath = path.resolve(process.cwd(), serverPath);
-      console.log(abcFilePath, userFilePath);
       const output = runPython(abcFilePath, userFilePath);
       console.log(output);
       // Save record into userRecord
