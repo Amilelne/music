@@ -8,7 +8,7 @@ function runPython(standardFile, userFile) {
     cwd: "/home/musicAI/ml/test/code",
     encoding: "utf-8"
   });
-  const result = spawnShell.stdout;
+  const result = JSON.parse(spawnShell.stdout);
   let AIIntonationScore = parseInt(result[0]);
   let AIBeatScore = parseInt(result[1]);
   let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
