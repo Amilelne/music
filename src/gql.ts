@@ -77,6 +77,8 @@ export interface UploadAudioInput {
   practiceId: string;
 
   practiceTitle: string;
+
+  abcUrl: string;
 }
 
 export interface ScoreRecordInput {
@@ -949,6 +951,8 @@ export namespace ScoreFields {
     createDate: Maybe<DateTime>;
 
     updateDate: Maybe<DateTime>;
+
+    faultImageUrl: Maybe<string>;
   };
 }
 
@@ -1180,6 +1184,8 @@ export interface Record {
   createDate?: Maybe<DateTime>;
 
   updateDate?: Maybe<DateTime>;
+
+  faultImageUrl?: Maybe<string>;
 }
 
 export interface Notice {
@@ -1519,6 +1525,7 @@ export const ScoreFieldsFragment = gql`
     expertTotalScore
     createDate
     updateDate
+    faultImageUrl
   }
 `;
 

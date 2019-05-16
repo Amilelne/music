@@ -25,31 +25,43 @@ export class RecordComponent implements OnInit {
     private noticeService: NoticeService,
     private notification: NzNotificationService
   ) {}
+
   // Lets initiate Record OBJ
   private recorder;
+
   // Detect recording state
   public recordState = "beforeRecord";
+
   // Upload state
   public isUpload;
+
   // Option for denoise
   public denoise = false;
+
   // Detect applied
   public isApplied = false;
+
   // Detect errors
   public isError = false;
+
   // Url of Blob
   public url;
   public blobFile;
+
   public error;
   public practiceId;
   private practiceTitle: String;
   private userId;
   private abcUrl;
   public recommendPractices;
+
   // upload record id
   private recordId;
   public AIIntonationScore;
   public AIBeatScore;
+
+  // Image src url
+  public imgSrc;
   ngOnInit() {
     this.route.params.subscribe(params => {
       // Init states
@@ -62,6 +74,7 @@ export class RecordComponent implements OnInit {
       this.courseService.getPracticeDetail(this.practiceId).subscribe(data => {
         this.practiceDetail = data;
         this.abcUrl = data.abcUrl;
+        this.imgSrc = data.resourceUrl;
       });
     });
     this.userId = this.authService.getUserId();
@@ -123,13 +136,20 @@ export class RecordComponent implements OnInit {
       )
       .subscribe(
         ({
-          uploadRecord: { id, audioUrl, AIIntonationScore, AIBeatScore }
+          uploadRecord: {
+            id,
+            audioUrl,
+            AIIntonationScore,
+            AIBeatScore,
+            faultImageUrl
+          }
         }) => {
           this.isUpload = true;
           this.createNotification("录音上传成功");
           this.recordId = id;
           this.AIIntonationScore = AIIntonationScore;
           this.AIBeatScore = AIBeatScore;
+          this.imgSrc = faultImageUrl;
         },
         errors => {
           this.isUpload = false;

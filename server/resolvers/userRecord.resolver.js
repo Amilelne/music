@@ -9,11 +9,16 @@ function runPython(standardFile, userFile) {
     encoding: "utf-8"
   });
   const result = JSON.parse(spawnShell.stdout);
+
+  // Calculate AI Score
   let AIIntonationScore = parseInt(result[0]);
   let AIBeatScore = parseInt(result[1]);
   let AITotalScore = Math.round((AIIntonationScore + AIBeatScore) / 2);
-  let imageUrl = result[2];
-  return [AIIntonationScore, AIBeatScore, AITotalScore, imageUrl];
+
+  // Get fault http url
+  let faultImageFolder = result[2].split("server")[1];
+  const faultImageUrl = "http://" + host + ":" + port + "/" + faultImageFolder;
+  return [AIIntonationScore, AIBeatScore, AITotalScore, faultImageUrl];
 }
 
 const resolveMap = {
@@ -66,7 +71,8 @@ const resolveMap = {
         practiceTitle: practiceTitle,
         AIIntonationScore: output[0],
         AIBeatScore: output[1],
-        AITotalScore: output[2]
+        AITotalScore: output[2],
+        faultImageUrl: output[3]
       });
       return record;
     },

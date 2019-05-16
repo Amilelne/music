@@ -21,6 +21,7 @@ fragment scoreFields on Record {
   expertTotalScore
   createDate
   updateDate
+  faultImageUrl
 }
 query UserRecords($userId: ID!) {
   userRecords(userId: $userId) {

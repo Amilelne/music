@@ -13,6 +13,7 @@ type Record {
   expertTotalScore: Int
   createDate: DateTime
   updateDate: DateTime
+  faultImageUrl: String
 }
 
 # input type

@@ -47,6 +47,10 @@ const schema = new Schema(
     expertTotalScore: {
       type: Number,
       required: false
+    },
+    faultImageUrl: {
+      type: String,
+      required: false
     }
   },
   {
