@@ -2,6 +2,10 @@ const { UserRecord } = require("../models");
 const storeFS = require("../utils/storeFile");
 const { spawnSync } = require("child_process");
 const path = require("path");
+const { conf } = require("../config");
+
+const host = conf("server.host");
+const port = conf("server.port");
 
 function runPython(standardFile, userFile) {
   const spawnShell = spawnSync("python3", ["main.py", standardFile, userFile], {
