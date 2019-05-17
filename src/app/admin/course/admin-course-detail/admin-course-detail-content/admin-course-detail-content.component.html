@@ -1,4 +1,43 @@
-<div class="content">
+<div class="contentList">
+  <nz-list
+    [nzDataSource]="data"
+    [nzRenderItem]="item"
+    [nzItemLayout]="'horizontal'"
+  >
+    <ng-template #item let-item>
+      <nz-list-item
+        [nzContent]="content"
+        [nzActions]="[editAction, moreAction]"
+        class="content-item"
+      >
+        <nz-skeleton
+          [nzAvatar]="true"
+          [nzActive]="true"
+          [nzTitle]="false"
+          [nzLoading]="item.loading"
+        >
+          <ng-template #editAction
+            ><a (click)="edit(item)">编辑</a></ng-template
+          >
+          <ng-template #moreAction
+            ><a (click)="edit(item)">删除</a></ng-template
+          >
+          <nz-list-item-meta
+            [nzTitle]="nzTitle"
+            [nzAvatar]="nzAvatar"
+            [nzDescription]="item.description"
+          >
+            <ng-template #nzTitle>
+              <a [href]="item.resourceUrl">{{ item.title }}</a>
+            </ng-template>
+            <ng-template #nzAvatar>
+              <nz-avatar nzIcon="file"></nz-avatar>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-skeleton>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
   <div class="modal">
     <button nz-button nzType="primary" (click)="showModal()" nzSize="large">
       <span>添加内容</span>
@@ -106,42 +145,5 @@
         </nz-form-item>
       </form>
     </nz-modal>
-  </div>
-  <div class="contentList">
-    <nz-list
-      [nzDataSource]="data"
-      [nzRenderItem]="item"
-      [nzItemLayout]="'horizontal'"
-    >
-      <ng-template #item let-item>
-        <nz-list-item
-          [nzContent]="content"
-          [nzActions]="[editAction, moreAction]"
-        >
-          <nz-skeleton
-            [nzAvatar]="true"
-            [nzActive]="true"
-            [nzTitle]="false"
-            [nzLoading]="item.loading"
-          >
-            <ng-template #editAction
-              ><a (click)="edit(item)">编辑</a></ng-template
-            >
-            <ng-template #moreAction
-              ><a (click)="edit(item)">删除</a></ng-template
-            >
-            <nz-list-item-meta
-              [nzTitle]="nzTitle"
-              [nzDescription]="item.description"
-            >
-              <ng-template #nzTitle>
-                <nz-avatar nzIcon="file"></nz-avatar>
-                <a [href]="item.resourceUrl">{{ item.title }}</a>
-              </ng-template>
-            </nz-list-item-meta>
-          </nz-skeleton>
-        </nz-list-item>
-      </ng-template>
-    </nz-list>
   </div>
 </div>

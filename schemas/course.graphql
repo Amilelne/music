@@ -59,6 +59,7 @@ input CreateCourseInput {
   price: Float
   kind: [Int]
   tutorials: [CreateTutorialInput]
+  pictureUrl: String
 }
 
 input CreateTutorialInput {

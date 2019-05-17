@@ -23,6 +23,7 @@ type Query {
   practices(pageIndex: Int, pageSize: Int, kind: Int, level: Int): [Practice]!
   practicesCount(kind: Int, level: Int): Int!
   recommendPractices(id: ID!): [Practice]!
+  practiceNumberByKind: [Int]!
 
   # record
   record(id: ID!): Record!

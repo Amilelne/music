@@ -1,25 +1,43 @@
+:host ::ng-deep nz-upload {
+  display: block;
+}
+:host ::ng-deep .ant-upload.ant-upload-drag {
+  height: 180px;
+}
 
-  :host ::ng-deep nz-upload { display: block; }
-  :host ::ng-deep .ant-upload.ant-upload-drag { height: 180px; }
-
-  :host ::ng-deep .demo-loadmore-list {
-    min-height: 350px;
-  }
-  :host ::ng-deep .loadmore {
+:host ::ng-deep .demo-loadmore-list {
+  min-height: 350px;
+}
+:host ::ng-deep .loadmore {
+  text-align: center;
+  margin-top: 12px;
+  height: 32px;
+  line-height: 32px;
+}
+.ant-upload.ant-upload-drag {
+  width: 70%;
+  margin: 0 auto;
+}
+.contentList {
+  background-color: #f8fafc;
+  min-height: 800px;
+  padding-top: 2rem;
+  .modal {
     text-align: center;
-    margin-top: 12px;
-    height: 32px;
-    line-height: 32px;
-  }
-  .ant-upload.ant-upload-drag {
-    width: 70%;
-    margin: 0 auto;
-  }
-  .content{
-    background-color: #fff;
-    min-height: 800px;
-    button{
-      margin-top: 1rem;
+    button {
+      margin: 1rem auto;
+      box-shadow: 0 8px 16px 0 rgba(7, 17, 27, 0.1);
     }
   }
- 
+  .content-item {
+    background-color: #fff;
+    width: 80%;
+    margin: 0rem auto 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 10px 0 rgba(7, 17, 27, 0.1);
+    border-radius: 12px;
+  }
+}
+.ant-list-split .ant-list-item {
+  border-bottom: none;
+}

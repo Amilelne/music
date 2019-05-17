@@ -104,5 +104,23 @@
         >
       </nz-form-control>
     </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>课程图片</nz-form-label>
+      <br /><br />
+      <nz-form-control>
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="false"
+          nzAction="http://localhost:4455/graphql"
+          [nzCustomRequest]="uploadFile"
+          [nzLimit]="1"
+          (nzChange)="handleChange($event)"
+        >
+          <p class="ant-upload-drag-icon"><i nz-icon type="inbox"></i></p>
+          <p class="ant-upload-text">点击或拖拽文件上传</p>
+          <p class="ant-upload-hint">支持单文件或多文件上传</p>
+        </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
   </form>
 </nz-modal>

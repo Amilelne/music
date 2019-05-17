@@ -1,5 +1,6 @@
-<div style="min-height: 810px;">
+<div style="min-height: 840px;">
   <ngx-charts-bar-vertical
+    class="bar-chart"
     [view]="view"
     [scheme]="colorScheme"
     [results]="courseData"
@@ -11,6 +12,22 @@
     [showYAxisLabel]="showYAxisLabel"
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)"
+  >
+  </ngx-charts-bar-vertical>
+  <ngx-charts-bar-vertical
+    class="bar-chart"
+    [view]="view"
+    [scheme]="pcolorScheme"
+    [results]="practiceData"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="pxAxisLabel"
+    [yAxisLabel]="pyAxisLabel"
     (select)="onSelect($event)"
   >
   </ngx-charts-bar-vertical>

@@ -39,6 +39,8 @@ export interface CreateCourseInput {
   kind?: Maybe<(Maybe<number>)[]>;
 
   tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
+
+  pictureUrl?: Maybe<string>;
 }
 
 export interface CreateTutorialInput {
@@ -200,6 +202,16 @@ export namespace AdminCourseNumberByKind {
     __typename?: "Query";
 
     courseNumberByKind: (Maybe<number>)[];
+  };
+}
+
+export namespace AdminPracticeNumberByKind {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    practiceNumberByKind: (Maybe<number>)[];
   };
 }
 
@@ -1036,6 +1048,8 @@ export interface Query {
   practicesCount: number;
 
   recommendPractices: (Maybe<Practice>)[];
+
+  practiceNumberByKind: (Maybe<number>)[];
   /** record */
   record: Record;
 
@@ -1642,6 +1656,19 @@ export class AdminCourseNumberByKindGQL extends Apollo.Query<
   document: any = gql`
     query AdminCourseNumberByKind {
       courseNumberByKind
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminPracticeNumberByKindGQL extends Apollo.Query<
+  AdminPracticeNumberByKind.Query,
+  AdminPracticeNumberByKind.Variables
+> {
+  document: any = gql`
+    query AdminPracticeNumberByKind {
+      practiceNumberByKind
     }
   `;
 }

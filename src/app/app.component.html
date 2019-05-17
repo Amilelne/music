@@ -102,23 +102,25 @@
           </button>
         </ng-template>
       </ng-container>
-      <li
-        nz-menu-item
-        nz-popover
-        nzType="primary"
-        class="nav-right"
-        routerLink="/notices"
-        routerLinkActive="active"
-      >
-        <nz-badge nzDot>
-          <i
-            nz-icon
-            type="notification"
-            theme="fill"
-            class="notification-message"
-          ></i
-        ></nz-badge>
-      </li>
+      <ng-container *ngIf="loggedIn && user?.role == 'expert'">
+        <li
+          nz-menu-item
+          nz-popover
+          nzType="primary"
+          class="nav-right"
+          routerLink="/notices"
+          routerLinkActive="active"
+        >
+          <nz-badge nzDot>
+            <i
+              nz-icon
+              type="notification"
+              theme="fill"
+              class="notification-message"
+            ></i
+          ></nz-badge>
+        </li>
+      </ng-container>
     </ul>
   </nz-header>
   <nz-content> <router-outlet></router-outlet> </nz-content>

@@ -15,11 +15,7 @@
       >
         <div class="card-top">
           <ng-container *ngIf="!course.pictureUrl">
-            <img
-              class="card-banner"
-              alt="example"
-              src="../../assets/images/composer.jpg"
-            />
+            <img class="card-banner" alt="example" [src]="course?.pictureUrl" />
           </ng-container>
           <ng-container *ngIf="course.pictureUrl">
             <img class="card-banner" alt="example" [src]="course.pictureUrl" />

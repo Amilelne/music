@@ -9,6 +9,7 @@ import {
 import { Observable, Observer } from "rxjs";
 import { CourseService } from "../course.service";
 import { Router } from "@angular/router";
+import { NzMessageService, UploadXHRArgs } from "ng-zorro-antd";
 
 @Component({
   selector: "app-add-course",
@@ -31,14 +32,16 @@ export class AddCourseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private msg: NzMessageService
   ) {
     this.validateForm = this.fb.group({
       title: ["", [Validators.required], [this.titleAsyncValidator]],
       kind: [[], [Validators.required]],
       level: [[], [Validators.required]],
       price: [0.0, [Validators.required]],
-      description: ["", [Validators.required]]
+      description: ["", [Validators.required]],
+      pictureUrl: [""]
     });
   }
   validateForm: FormGroup;
@@ -57,6 +60,43 @@ export class AddCourseComponent implements OnInit {
     { value: 5, label: "偏难" }
   ];
   ngOnInit() {}
+
+  uploadFile = (item: UploadXHRArgs) => {
+    const file = item.file;
+    console.log(file, file.name);
+
+    return this.courseService.singleUploadFile(file).subscribe(
+      ({ singleUpload: { filename, mimetype, encoding } }) => {
+        item.onSuccess(filename, item.file, mimetype);
+        console.log(filename);
+        this.validateForm.controls["pictureUrl"].setValue(filename);
+      },
+      errors => {
+        if (errors !== undefined) {
+          console.log(errors);
+          item.onError(errors, item.file);
+          this.errorState = true;
+          this.errorMessage = errors.message || errors[0].message;
+        }
+      }
+    );
+  };
+
+  onChange(evt) {
+    this.uploadFile(evt.target.files);
+  }
+
+  handleChange({ file, fileList }): void {
+    const status = file.status;
+    if (status !== "uploading") {
+    }
+    if (status === "done") {
+      this.msg.success(`${file.name} 文件上传成功.`);
+    } else if (status === "error") {
+      this.msg.error(`${file.name} 文件上传失败.`);
+    }
+  }
+
   submitForm = ($event, value) => {
     $event.preventDefault();
     for (const key in this.validateForm.controls) {

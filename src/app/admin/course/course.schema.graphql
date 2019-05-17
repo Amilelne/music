@@ -71,6 +71,10 @@ query AdminCourseNumberByKind {
   courseNumberByKind
 }
 
+query AdminPracticeNumberByKind {
+  practiceNumberByKind
+}
+
 query AdminCourseDetail($id: ID!) {
   course(id: $id) {
     ...CourseFields

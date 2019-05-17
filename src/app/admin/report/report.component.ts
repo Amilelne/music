@@ -9,11 +9,30 @@ import { CourseService } from "../course/course.service";
 export class ReportComponent implements OnInit {
   courseKindNumbers: any[];
   courseData: any[];
+  practiceKindNumbers: any[];
+  practiceData: any[];
   constructor(private courseService: CourseService) {}
   ngOnInit() {
     this.courseService.getCourseNumberByKind().subscribe(data => {
       this.courseKindNumbers = data;
       this.courseData = [
+        {
+          name: "乐理",
+          value: data[0]
+        },
+        {
+          name: "视唱",
+          value: data[1]
+        },
+        {
+          name: "练耳",
+          value: data[2]
+        }
+      ];
+    });
+    this.courseService.getPracticeNumberByKind().subscribe(data => {
+      this.practiceKindNumbers = data;
+      this.practiceData = [
         {
           name: "乐理",
           value: data[0]
@@ -42,32 +61,15 @@ export class ReportComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = "课程数量";
   colorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
+    domain: ["#9c405d", "#81a3e0", "#9c80a5"]
   };
 
-  // online user options
-  onLineData = [
-    {
-      value: 6182,
-      name: "2016-09-20T23:36:01.723Z"
-    },
-    {
-      value: 5213,
-      name: "2016-09-15T19:11:17.167Z"
-    },
-    {
-      value: 6761,
-      name: "2016-09-21T08:01:49.734Z"
-    },
-    {
-      value: 4056,
-      name: "2016-09-13T10:32:22.957Z"
-    },
-    {
-      value: 6189,
-      name: "2016-09-15T00:09:26.995Z"
-    }
-  ];
+  // practice options
+  pxAxisLabel = "练习类别";
+  pyAxisLabel = "练习数量";
+  pcolorScheme = {
+    domain: ["#b5e2f3", "#b3cdea", "#9f5d64"]
+  };
 
   onSelect(event) {
     console.log(event);

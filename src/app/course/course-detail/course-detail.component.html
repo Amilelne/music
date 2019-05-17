@@ -2,13 +2,14 @@
   <div class="courseTitle">
     <div class="courseImage">
       <ng-template *ngIf=""> </ng-template>
-      <img src="assets/images/music.png" alt="course image" />
+      <img [src]="courseDetail?.pictureUrl" alt="course image" />
     </div>
     <div
       class="courseDescription"
       *ngIf="courseDetail && courseDetail.title && courseDetail.description"
     >
-      <h2>{{ courseDetail.title }}</h2> <p>{{ courseDetail.description }}</p>
+      <h2>{{ courseDetail.title }}</h2>
+      <p>{{ courseDetail.description }}</p>
     </div>
   </div>
   <ul nz-menu [nzMode]="'horizontal'">

@@ -54,6 +54,12 @@ const resolveMap = {
       });
 
       return cursor;
+    },
+    practiceNumberByKind: async (obj, args, context, info) => {
+      let kind1 = await Practice.countDocuments({ kind: 1 });
+      let kind2 = await Practice.countDocuments({ kind: 2 });
+      let kind3 = await Practice.countDocuments({ kind: 3 });
+      return [kind1, kind2, kind3];
     }
   },
   Mutation: {
