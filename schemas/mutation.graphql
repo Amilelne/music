@@ -9,6 +9,7 @@ type Mutation {
   # course
   addCourse(data: CreateCourseInput!): Course!
   deleteCourse(id: ID!): Course!
+  updateCoursePicture(id: ID!, file: Upload!): Course!
 
   # tutorial
   addTutorial(data: CreateTutorialInput!, id: ID): Tutorial!

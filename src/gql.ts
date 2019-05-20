@@ -396,6 +396,27 @@ export namespace AdminDeletePractice {
   export type DeletePractice = PracticeFields.Fragment;
 }
 
+export namespace AdminUpdateCoursePicture {
+  export type Variables = {
+    id: string;
+    file: Upload;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateCoursePicture: UpdateCoursePicture;
+  };
+
+  export type UpdateCoursePicture = {
+    __typename?: "Course";
+
+    id: string;
+
+    pictureUrl: Maybe<string>;
+  };
+}
+
 export namespace AuthLogin {
   export type Variables = {
     data: LoginInput;
@@ -1247,6 +1268,8 @@ export interface Mutation {
   addCourse: Course;
 
   deleteCourse: Course;
+
+  updateCoursePicture: Course;
   /** tutorial */
   addTutorial: Tutorial;
 
@@ -1376,6 +1399,11 @@ export interface AddCourseMutationArgs {
 }
 export interface DeleteCourseMutationArgs {
   id: string;
+}
+export interface UpdateCoursePictureMutationArgs {
+  id: string;
+
+  file: Upload;
 }
 export interface AddTutorialMutationArgs {
   data: CreateTutorialInput;
@@ -1862,6 +1890,22 @@ export class AdminDeletePracticeGQL extends Apollo.Mutation<
     }
 
     ${PracticeFieldsFragment}
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class AdminUpdateCoursePictureGQL extends Apollo.Mutation<
+  AdminUpdateCoursePicture.Mutation,
+  AdminUpdateCoursePicture.Variables
+> {
+  document: any = gql`
+    mutation AdminUpdateCoursePicture($id: ID!, $file: Upload!) {
+      updateCoursePicture(id: $id, file: $file) {
+        id
+        pictureUrl
+      }
+    }
   `;
 }
 @Injectable({

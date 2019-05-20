@@ -147,3 +147,10 @@ mutation AdminDeletePractice($id: ID!) {
     ...PracticeFields
   }
 }
+
+mutation AdminUpdateCoursePicture($id: ID!, $file: Upload!) {
+  updateCoursePicture(id: $id, file: $file) {
+    id
+    pictureUrl
+  }
+}

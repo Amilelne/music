@@ -58,6 +58,16 @@ const resolveMap = {
       const folder = "tutorials";
       const { id, httpPath } = await storeFS({ stream, suffix, folder });
       return { filename: httpPath, mimetype: mimetype, encoding: "utf-8" };
+    },
+    updateCoursePicture: async (obj, { id, file }, context, info) => {
+      const { createReadStream, filename, mimetype } = await file;
+      let suffix = filename.split(".").slice(-1)[0];
+      const stream = createReadStream();
+      const folder = "coursepictures";
+      const { httpPath } = await storeFS({ stream, suffix, folder });
+      await Course.updateOne({ _id: id }, { pictureUrl: httpPath });
+      const course = await Course.findById({ _id: id });
+      return course;
     }
   }
 };

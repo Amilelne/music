@@ -9,6 +9,8 @@
 !.gitkeep
 /server/uploads/abc/*
 !.gitkeep
+/server/uploads/coursepictures/*
+!.gitkeep
 
 
 # compiled output

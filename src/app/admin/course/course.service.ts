@@ -21,7 +21,8 @@ import {
   AdminDeleteCourseGQL,
   AdminDeletePracticeGQL,
   AdminAbcUploadGQL,
-  AdminPracticeNumberByKindGQL
+  AdminPracticeNumberByKindGQL,
+  AdminUpdateCoursePictureGQL
 } from "../../../gql";
 
 @Injectable({
@@ -44,7 +45,8 @@ export class CourseService {
     private practiceCountGQL: PracticesCountGQL,
     private deleteCourseGQL: AdminDeleteCourseGQL,
     private deletePracticeGQL: AdminDeletePracticeGQL,
-    private abcUploadGQL: AdminAbcUploadGQL
+    private abcUploadGQL: AdminAbcUploadGQL,
+    private updateCoursePictureGQL: AdminUpdateCoursePictureGQL
   ) {}
 
   createCourse(createCourseInput: CreateCourseInput) {
@@ -266,5 +268,17 @@ export class CourseService {
           }
         })
       );
+  }
+
+  updateCoursePicture(id, file) {
+    return this.updateCoursePictureGQL.mutate({ id, file }).pipe(
+      mergeMap(({ data, errors }) => {
+        if (errors) {
+          return throwError(errors);
+        } else {
+          return of(data);
+        }
+      })
+    );
   }
 }

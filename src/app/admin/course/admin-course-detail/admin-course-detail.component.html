@@ -1,8 +1,18 @@
 <div class="courseHeader">
   <div class="courseTitle">
     <div class="courseImage">
-      <ng-template *ngIf=""> </ng-template>
       <img [src]="courseDetail?.pictureUrl" alt="course image" />
+      <div class="update-mode">
+        <p>
+          <input
+            type="file"
+            style="display:none;"
+            #fileInput
+            (change)="onFileChanged($event)"
+          />
+          <a (click)="fileInput.click()">更换图片</a>
+        </p>
+      </div>
     </div>
     <div
       class="courseDescription"
