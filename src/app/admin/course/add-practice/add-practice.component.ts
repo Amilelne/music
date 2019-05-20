@@ -56,8 +56,8 @@ export class AddPracticeComponent implements OnInit {
     { value: 1, label: "易" },
     { value: 2, label: "偏易" },
     { value: 3, label: "适中" },
-    { value: 4, label: "难" },
-    { value: 5, label: "偏难" }
+    { value: 4, label: "偏难" },
+    { value: 5, label: "难" }
   ];
   data: any[];
   ngOnInit() {}
