@@ -10,6 +10,7 @@ import { Observable, Observer } from "rxjs";
 import { CourseService } from "../course.service";
 import { Router } from "@angular/router";
 import { NzMessageService, UploadXHRArgs } from "ng-zorro-antd";
+import { AuthService } from "app/core/auth/auth.service";
 
 @Component({
   selector: "app-add-course",
@@ -35,13 +36,15 @@ export class AddCourseComponent implements OnInit {
     private courseService: CourseService,
     private msg: NzMessageService
   ) {
+    let userId = AuthService.getStoredUserId();
     this.validateForm = this.fb.group({
       title: ["", [Validators.required], [this.titleAsyncValidator]],
       kind: [[], [Validators.required]],
       level: [[], [Validators.required]],
       price: [0.0, [Validators.required]],
       description: ["", [Validators.required]],
-      pictureUrl: [""]
+      pictureUrl: [""],
+      createId: [userId]
     });
   }
   validateForm: FormGroup;

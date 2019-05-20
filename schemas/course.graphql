@@ -60,6 +60,7 @@ input CreateCourseInput {
   kind: [Int]
   tutorials: [CreateTutorialInput]
   pictureUrl: String
+  createId: ID!
 }
 
 input CreateTutorialInput {

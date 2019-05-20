@@ -36,8 +36,14 @@ query AdminCourses(
   $pageIndex: Int = null
   $pageSize: Int = null
   $kind: Int = null
+  $createId: ID = null
 ) {
-  courses(pageIndex: $pageIndex, pageSize: $pageSize, kind: $kind) {
+  courses(
+    pageIndex: $pageIndex
+    pageSize: $pageSize
+    kind: $kind
+    createId: $createId
+  ) {
     ...CourseFields
   }
 }

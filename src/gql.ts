@@ -41,6 +41,8 @@ export interface CreateCourseInput {
   tutorials?: Maybe<(Maybe<CreateTutorialInput>)[]>;
 
   pictureUrl?: Maybe<string>;
+
+  createId: string;
 }
 
 export interface CreateTutorialInput {
@@ -138,6 +140,7 @@ export namespace AdminCourses {
     pageIndex?: Maybe<number>;
     pageSize?: Maybe<number>;
     kind?: Maybe<number>;
+    createId?: Maybe<string>;
   };
 
   export type Query = {
@@ -1321,6 +1324,8 @@ export interface CoursesQueryArgs {
   pageSize?: Maybe<number>;
 
   kind?: Maybe<number>;
+
+  createId: string;
 }
 export interface CoursesCountQueryArgs {
   kind?: Maybe<number>;
@@ -1611,8 +1616,14 @@ export class AdminCoursesGQL extends Apollo.Query<
       $pageIndex: Int = null
       $pageSize: Int = null
       $kind: Int = null
+      $createId: ID = null
     ) {
-      courses(pageIndex: $pageIndex, pageSize: $pageSize, kind: $kind) {
+      courses(
+        pageIndex: $pageIndex
+        pageSize: $pageSize
+        kind: $kind
+        createId: $createId
+      ) {
         ...CourseFields
       }
     }

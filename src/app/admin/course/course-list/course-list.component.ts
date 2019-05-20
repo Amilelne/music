@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CourseService } from "../course.service";
 import { NzMessageService } from "ng-zorro-antd";
+import { AuthService } from "app/core/auth/auth.service";
 
 @Component({
   selector: "app-course-list",
@@ -22,10 +23,23 @@ export class CourseListComponent implements OnInit {
   displayData: any[];
 
   ngOnInit() {
-    this.courseService.getCourseList(null, null, null).subscribe(data => {
-      this.data = data;
-      this.displayData = [...this.data];
-    });
+    let userRole = AuthService.getStoredUserRole();
+    if (userRole === "expert") {
+      let createId = AuthService.getStoredUserId();
+      this.courseService
+        .getCourseList(null, null, null, createId)
+        .subscribe(data => {
+          this.data = data;
+          this.displayData = [...this.data];
+        });
+    } else {
+      this.courseService
+        .getCourseList(null, null, null, null)
+        .subscribe(data => {
+          this.data = data;
+          this.displayData = [...this.data];
+        });
+    }
   }
 
   delete(id) {

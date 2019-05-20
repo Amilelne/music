@@ -28,7 +28,7 @@ export class CourseComponent implements OnInit {
         this.totalCourse = data;
       });
       this.courseService
-        .getCourseList(this.pageIndex, this.pageSize, queryParams.kind)
+        .getCourseList(this.pageIndex, this.pageSize, queryParams.kind, null)
         .subscribe(data => {
           this.courses = data;
         });

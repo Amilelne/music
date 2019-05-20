@@ -37,6 +37,10 @@ const schema = new Schema(
     ],
     price: {
       type: Schema.Types.Decimal128
+    },
+    createId: {
+      type: Schema.Types.ObjectId,
+      required: false
     }
   },
   {

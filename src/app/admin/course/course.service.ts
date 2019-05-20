@@ -79,9 +79,9 @@ export class CourseService {
       );
   }
 
-  getCourseList(pageIndex, pageSize, kind) {
+  getCourseList(pageIndex, pageSize, kind, createId) {
     return this.courseListGQL
-      .watch({ pageIndex, pageSize, kind })
+      .watch({ pageIndex, pageSize, kind, createId })
       .valueChanges.pipe(map(result => result.data.courses));
   }
   getCoursesCount(kind) {

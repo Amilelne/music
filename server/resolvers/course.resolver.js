@@ -3,10 +3,18 @@ const storeFS = require("../utils/storeFile");
 
 const resolveMap = {
   Query: {
-    courses: async (obj, { pageIndex, pageSize, kind }, context, info) => {
+    courses: async (
+      obj,
+      { pageIndex, pageSize, kind, createId },
+      context,
+      info
+    ) => {
       const cursor = Course.find().populateFields(info);
       if (kind) {
         cursor.where("kind").in(kind);
+      }
+      if (createId) {
+        cursor.where("createId").in(createId);
       }
       cursor.skip((pageIndex - 1) * pageSize).limit(pageSize);
       return cursor;
