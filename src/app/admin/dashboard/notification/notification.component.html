@@ -1,4 +1,4 @@
-<nz-card nzTitle="消息" [nzExtra]="extraTemplate">
+<nz-card nzTitle="通知" [nzExtra]="extraTemplate">
   <nz-list
     [nzDataSource]="data"
     [nzRenderItem]="item"
@@ -7,11 +7,7 @@
   >
     <ng-template #item let-item>
       <nz-list-item>
-        <nz-list-item-meta
-          [nzTitle]="nzTitle"
-          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          nzDescription="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        >
+        <nz-list-item-meta [nzTitle]="nzTitle">
           <ng-template #nzTitle>
             <a href="https://ng.ant.design">{{ item.title }}</a>
           </ng-template>
