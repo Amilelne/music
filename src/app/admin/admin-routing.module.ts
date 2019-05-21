@@ -12,21 +12,52 @@ const routes: Routes = [
     path: "",
     component: AdminComponent,
     canActivate: [AuthGuard],
-    data: { roles: ["admin"] },
+    data: { roles: ["admin", "expert"] },
     children: [
       {
         path: "",
         children: [
-          { path: "", component: DashboardComponent, pathMatch: "full" },
+          {
+            path: "",
+            component: DashboardComponent,
+            pathMatch: "full",
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          },
           {
             path: "course",
             loadChildren: "./course/course.module#CourseModule"
           },
-          { path: "users", component: UserComponent },
-          { path: "user/:id", component: UserDetailComponent },
-          { path: "reports", component: ReportComponent },
-          { path: "messages", component: DashboardComponent },
-          { path: "notifications", component: DashboardComponent }
+          {
+            path: "users",
+            component: UserComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          },
+          {
+            path: "user/:id",
+            component: UserDetailComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          },
+          {
+            path: "reports",
+            component: ReportComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          },
+          {
+            path: "messages",
+            component: DashboardComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          },
+          {
+            path: "notifications",
+            component: DashboardComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ["admin"] }
+          }
         ]
       }
     ]
