@@ -59,6 +59,10 @@ export class CourseService {
           refetchQueries: [
             {
               query: this.courseListGQL.document
+            },
+            {
+              query: this.courseListGQL.document,
+              variables: { createId: createCourseInput.createId }
             }
           ],
           errorPolicy: "all"
