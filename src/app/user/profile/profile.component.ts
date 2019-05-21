@@ -8,6 +8,8 @@ import {
 } from "@angular/forms";
 import { AuthService } from "app/core/auth/auth.service";
 import { ProfileUpdateService } from "../profileUpdate.service";
+import { NzMessageService } from "ng-zorro-antd";
+
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
@@ -17,7 +19,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public authService: AuthService,
-    public profileUpdateService: ProfileUpdateService
+    public profileUpdateService: ProfileUpdateService,
+    private message: NzMessageService
   ) {
     this.validateForm = this.fb.group({
       name: ["", [Validators.required]],
@@ -44,6 +47,7 @@ export class ProfileComponent implements OnInit {
       ({ updateProfile }) => {
         //success
         this.authService._user.next(updateProfile);
+        this.createMessage("success", "更新个人信息成功");
       },
       errors => {
         if (errors !== undefined) {
@@ -60,5 +64,9 @@ export class ProfileComponent implements OnInit {
       this.validateForm.controls[key].markAsPristine();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+  }
+
+  createMessage(type: string, content: string): void {
+    this.message.create(type, content);
   }
 }
