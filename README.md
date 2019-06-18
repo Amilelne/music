@@ -65,3 +65,28 @@
 - 代码的默认连接的主机为 localhost，mongoDB 为在云服务器上的数据库。如果需要更换连接的主机，需要设置 HOST=主机地址。如果需要更换连接的数据库，设置 MONGODB_URI=mongodb 的地址。以设置 host 参数为例，linux 和 mac 环境的设置方式为`export HOST=主机地址`，windows 环境下的设置方式为`SET HOST=主机地址`。
 - 代码分为两个版本，一个是开发版，一个是产品版。默认运行的是开发版的代码。如果需要运行产品版的代码，需要设置`NODE_ENV=production`。
 - 在该项目中有使用到录音功能，该录音功能利用了浏览器自带的`getUserMedia()`，但是目前 73 版本的 chrome 浏览器只支持在 localhost 或安全的网站源（如 https）使用，因此需要设定参数 `--unsafely-treat-insecure-origin-as-secure="example.com:port"`。其他浏览器如 Firefox 仍然支持该函数。
+
+## 项目目录结构：
+
+1. MUSIC-AI 为本系统的根目录。
+2. server 是后端目录。
+3. src 是前端目录。
+4. .vscode 是 visual studio code 的配置文件。
+5. config 是后端的配置文件，包括 MongoDB 的 URI，HOST 地址和 PORT 端口的配置。
+6. dist 是 Angular build 后默认存放代码的文件夹。
+7. e2e 是 Angular 默认存放 e2e 测试代码的文件夹。
+8. node_modules 是用 npm 安装各种需要的包时，包的默认存放地址。
+9. schemas 是存放 graphql 的数据模型。
+10. shared 存放前后端共同使用的代码。
+11. .editorconfig 是默认的编辑器设置。
+12. .gitignore 中是 git 忽略的文件或文件夹。
+13. angular.json 是 Angular 的配置文件。
+14. codegen.yml 是 graphql-code-generator 的配置文件。
+15. docker-compose.yaml 是 docker 的配置文件。
+16. package-lock.json 记录当前状态下实际安装的每个 npm package 的具体来源以及版本号。
+17. package.json 用来定义项目中需要依赖的包。
+18. README.md 是关于项目的简单说明文档，包括如何运行项目等。
+19. tsconfig.json 是 typescript 的配置文件。
+20. tslint.json 是 tslint 的配置文件。
+21. webpack.config.js 是 webpack 的配置文件。
+22. server/uploads 存放了上传的文件。
