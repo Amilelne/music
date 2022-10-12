@@ -31,7 +31,7 @@
     "apollo-client": "^2.4.0",
     "apollo-link": "^1.2.0",
     "apollo-link-context": "^1.0.12",
-    "apollo-server": "^2.3.1",
+    "apollo-server": "^2.25.4",
     "apollo-server-express": "^2.3.1",
     "apollo-upload-client": "^10.0.0",
     "bcrypt": "^3.0.3",
